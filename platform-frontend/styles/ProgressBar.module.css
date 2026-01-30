@@ -1,0 +1,38 @@
+.ProgressBar{
+    position: relative;
+    height:1.1rem;
+    width: 10vw;
+    border-radius: 0.3rem;
+    background-color: #E8E1F0;
+}
+
+.ProgressBarV2{
+  position: relative;
+  height:1.5rem;
+  width: 10vw;
+  border-radius: 0.3rem;
+  background-color: #E8E1F0;
+}
+
+.ProgressDone{
+    border-radius: 0.3rem;
+    height: 100%;
+    background-color: var(--color-green);
+}
+
+
+.SliderHandleContainer {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-37%);
+    cursor: grab;
+  }
+  
+  .SliderHandleContainer:active {
+    cursor: grabbing;
+  }
+  
+  .slider-handle {
+    width: 24px;
+    height: 24px;
+  }

@@ -1,0 +1,39 @@
+.NewGoalCard {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.2rem 2rem;
+    margin-bottom: 0.75rem;
+    cursor: pointer;
+    border: 2px solid var(--color-accent-secondary);
+}
+
+.NewGoalCard:hover {
+    background: var(--color-primary);
+}
+
+.LogoPlus {
+    height: 2rem;
+    width: 2rem;
+}
+
+.NewGoalCard:hover .GoalAddButton {
+    background: var(--color-accent-primary);
+}
+
+.NewGoalCard:hover .GoalAddButton svg path {
+    stroke: var(--color-accent-secondary);
+}
+
+.NewGoalText {
+    padding: 0;
+    margin-left: 2rem;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-text-secondary);
+    transition: all 0.2s linear;
+}
+
+.NewGoalCard:hover .NewGoalText {
+    color: var(--color-text-primary);
+}

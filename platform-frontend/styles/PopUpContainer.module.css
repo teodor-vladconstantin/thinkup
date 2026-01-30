@@ -1,0 +1,13 @@
+.PopUpContainer{
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    padding: 4rem;
+    width: 70vw;
+    min-height: 40vh;
+    z-index:10;
+}
+.PopUpContainer:hover{
+    background-color: var(--color-primary);
+}

@@ -1,0 +1,85 @@
+.NewGoalDescription {
+    margin-bottom: 2rem;
+}
+.inputDivGoal {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+.PercentageInput {
+    padding: 0.75rem;
+    border-radius: 7px;
+    border: 2px solid transparent;
+    background: var(--color-secondary);
+    color: var(--color-text-primary);
+    font-size: 16px;
+    -webkit-appearance: none;
+}
+.DatePickerDeadline {
+    padding: 0.75rem;
+    border-radius: 7px;
+    border: 2px solid transparent;
+    background: var(--color-secondary);
+    color: var(--color-text-primary);
+    font-size: 16px;
+}
+.DatePickerDeadline:focus,
+.DatePickerDeadline:active,
+.PercentageInput:focus,
+.PercentageInput:active {
+    border: 2px solid var(--color-accent-primary);
+    outline: none;
+}
+
+.NewGoalButtonDiv {
+    width: 100%;
+    -webkit-box-pack: end;
+    -webkit-justify-content: flex-end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 30px;
+}
+
+.NewGoalPopUpTopBar {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+}
+
+.NewGoalCircleLogo {
+    margin-right: 2rem;
+}
+
+.NewGoalDate {
+    margin: 0;
+    padding: 0;
+    color: var(--color-text-secondary);
+}
+
+.PercentageInput {
+    width: 160px;
+}

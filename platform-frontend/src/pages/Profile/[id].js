@@ -1,0 +1,303 @@
+import react, { useEffect, useState } from "react";
+import styles from "../../../styles/MyProfile.module.css";
+import CircleProfile from "../../components/Circle/CircleProfile";
+import DescriptionCard from "../../components/Cards/DescriptionCard";
+import AwardsCard from "../../components/Cards/AwardsCard";
+import ObjectivesCard from "../../components/Cards/ObjectivesCard";
+import ActivityCard from "../../components/Cards/ActivityCard";
+import { useRouter } from "next/router";
+import useMyUser from "../../hooks/useMyUser";
+import { useMyUserContext, useMyUserUpdate } from "../../contexts/UserContext";
+import ScrollContainer from "../../components/Containers/ScrollContainer";
+import axios from "axios";
+import Loading from "../../components/Loading/Loading";
+import { replaceBasePath } from "next/dist/server/router";
+
+const Profile = () => {
+    const [UserData, setUserData] = useState();
+    const [ProfilePicture, setProfilePicture] = useState();
+    const [CoverPicture, setCoverPicture] = useState();
+    const router = useRouter();
+    const User = useMyUserContext();
+
+    const { id } = router.query;
+
+    const hasFacebook = true,
+        hasInstagram = true,
+        hasLinkedIn = true,
+        hasTwitter = true,
+        hasGitHub = true;
+
+    const getUserData = async (userID) => {
+        const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_URL}/users/${userID}`
+        );
+        setUserData(response.data);
+        setProfilePicture(
+            `${process.env.NEXT_PUBLIC_API_URL}/storage/thinkup-profile-picture/${response.data.profile_picture}${response.data.profile_picture_extension}`
+        );
+        setCoverPicture(
+            `${process.env.NEXT_PUBLIC_API_URL}/storage/thinkup-user-cover-images/${response.data.cover_picture}${response.data.cover_picture_extension}`
+        );
+    };
+
+    useEffect(() => {
+        //if (User == undefined) return;
+        console.log("id", id);
+        console.log(CoverPicture);
+        console.log(User);
+        if (User != undefined && id == User.id) {
+            setUserData(User);
+            setProfilePicture(User.picture);
+            setCoverPicture(User.cover_picture);
+        } else getUserData(id);
+    }, [User]);
+
+    if (id == null)
+        return (
+            <ScrollContainer className={styles.noUser}>
+                <h1>No user logged in.</h1>
+                <p>Please register or log in to see your account&apos;s details.</p>
+            </ScrollContainer>
+        );
+
+    if (UserData == undefined || UserData.social_connections==undefined) return <Loading />;
+
+    return (
+        <ScrollContainer className={styles.MyProfile}>
+            <div className={styles.ProfileCoverContainer}>
+                <img
+                    src={CoverPicture}
+                    className={styles.ProfileCoverImage}
+                    alt="cover photo"
+                />
+                <div className={styles.SocialLinks}>
+                    {UserData.social_connections.facebook !=undefined ? (
+                        <svg
+                            width="40"
+                            height="45"
+                            viewBox="0 0 31 35"
+                            fill="none"
+                            onClick={() => {
+                                window.open(UserData.social_connections.facebook);
+                            }}
+                            rel="noopener noreferrer"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <g clipPath="url(#clip0_45_538)">
+                                <path
+                                    d="M27.1739 2.1875H3.26087C2.39603 2.1875 1.56662 2.5332 0.955087 3.14856C0.343555 3.76391 0 4.59851 0 5.46875L0 29.5312C0 30.4015 0.343555 31.2361 0.955087 31.8514C1.56662 32.4668 2.39603 32.8125 3.26087 32.8125H12.5849V22.4007H8.30503V17.5H12.5849V13.7648C12.5849 9.51631 15.0985 7.16953 18.9484 7.16953C20.7921 7.16953 22.7201 7.50039 22.7201 7.50039V11.6703H20.5958C18.5027 11.6703 17.8499 12.9773 17.8499 14.3179V17.5H22.5224L21.7751 22.4007H17.8499V32.8125H27.1739C28.0387 32.8125 28.8682 32.4668 29.4797 31.8514C30.0912 31.2361 30.4348 30.4015 30.4348 29.5312V5.46875C30.4348 4.59851 30.0912 3.76391 29.4797 3.14856C28.8682 2.5332 28.0387 2.1875 27.1739 2.1875Z"
+                                    fill="#FFFBFB"
+                                />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_45_538">
+                                    <rect
+                                        width="30.4348"
+                                        height="35"
+                                        fill="white"
+                                    />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    ) : null}
+                    {UserData.social_connections.instagram !=undefined ? (
+                        <svg
+                            width="40"
+                            height="45"
+                            viewBox="0 0 31 35"
+                            fill="none"
+                            onClick={() => {
+                                window.open(UserData.social_connections.instagram);
+                            }}
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <g clipPath="url(#clip0_45_540)">
+                                <path
+                                    d="M15.2244 9.63867C10.9037 9.63867 7.41869 13.1455 7.41869 17.4932C7.41869 21.8408 10.9037 25.3476 15.2244 25.3476C19.545 25.3476 23.0301 21.8408 23.0301 17.4932C23.0301 13.1455 19.545 9.63867 15.2244 9.63867ZM15.2244 22.5996C12.4323 22.5996 10.1497 20.3096 10.1497 17.4932C10.1497 14.6768 12.4255 12.3867 15.2244 12.3867C18.0233 12.3867 20.2991 14.6768 20.2991 17.4932C20.2991 20.3096 18.0165 22.5996 15.2244 22.5996ZM25.17 9.31738C25.17 10.3359 24.3548 11.1494 23.3494 11.1494C22.3372 11.1494 21.5287 10.3291 21.5287 9.31738C21.5287 8.30566 22.344 7.48535 23.3494 7.48535C24.3548 7.48535 25.17 8.30566 25.17 9.31738ZM30.3399 11.1768C30.2244 8.72265 29.6673 6.54883 27.8806 4.75781C26.1007 2.9668 23.9404 2.40625 21.5016 2.2832C18.988 2.13965 11.454 2.13965 8.94042 2.2832C6.50836 2.39941 4.34804 2.95996 2.56135 4.75098C0.774669 6.54199 0.224397 8.71582 0.102114 11.1699C-0.0405486 13.6992 -0.0405486 21.2803 0.102114 23.8096C0.217603 26.2637 0.774669 28.4375 2.56135 30.2285C4.34804 32.0195 6.50157 32.5801 8.94042 32.7031C11.454 32.8467 18.988 32.8467 21.5016 32.7031C23.9404 32.5869 26.1007 32.0264 27.8806 30.2285C29.6605 28.4375 30.2176 26.2637 30.3399 23.8096C30.4825 21.2803 30.4825 13.7061 30.3399 11.1768ZM27.0926 26.5234C26.5627 27.8633 25.5369 28.8955 24.1986 29.4355C22.1945 30.2353 17.4391 30.0508 15.2244 30.0508C13.0097 30.0508 8.24749 30.2285 6.25021 29.4355C4.91869 28.9023 3.89287 27.8701 3.35619 26.5234C2.56135 24.5068 2.74478 19.7217 2.74478 17.4932C2.74478 15.2646 2.56815 10.4727 3.35619 8.46289C3.88608 7.12305 4.91189 6.09082 6.25021 5.55078C8.25428 4.75098 13.0097 4.93555 15.2244 4.93555C17.4391 4.93555 22.2013 4.75781 24.1986 5.55078C25.5301 6.08398 26.5559 7.11621 27.0926 8.46289C27.8874 10.4795 27.704 15.2646 27.704 17.4932C27.704 19.7217 27.8874 24.5137 27.0926 26.5234Z"
+                                    fill="white"
+                                />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_45_540">
+                                    <rect
+                                        width="30.4348"
+                                        height="35"
+                                        fill="white"
+                                    />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    ) : null}
+
+                    {UserData.social_connections.linkedin !=undefined == true ? (
+                        <svg
+                            width="40"
+                            height="45"
+                            viewBox="0 0 31 35"
+                            fill="none"
+                            onClick={() => {
+                                window.open(UserData.social_connections.linkedin);
+                            }}
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <g clipPath="url(#clip0_45_542)">
+                                <path
+                                    d="M28.2609 2.1875H2.16712C0.971467 2.1875 0 3.17871 0 4.39551V30.6045C0 31.8213 0.971467 32.8125 2.16712 32.8125H28.2609C29.4565 32.8125 30.4348 31.8213 30.4348 30.6045V4.39551C30.4348 3.17871 29.4565 2.1875 28.2609 2.1875ZM9.19837 28.4375H4.6875V13.8223H9.20516V28.4375H9.19837ZM6.94293 11.8262C5.49592 11.8262 4.32745 10.6436 4.32745 9.19434C4.32745 7.74512 5.49592 6.5625 6.94293 6.5625C8.38315 6.5625 9.55842 7.74512 9.55842 9.19434C9.55842 10.6504 8.38995 11.8262 6.94293 11.8262ZM26.1073 28.4375H21.5965V21.3281C21.5965 19.6328 21.5625 17.4521 19.2527 17.4521C16.9022 17.4521 16.5421 19.2979 16.5421 21.2051V28.4375H12.0312V13.8223H16.3587V15.8184H16.4198C17.0245 14.6699 18.4986 13.46 20.6929 13.46C25.2582 13.46 26.1073 16.4883 26.1073 20.4258V28.4375Z"
+                                    fill="white"
+                                />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_45_542">
+                                    <rect
+                                        width="30.4348"
+                                        height="35"
+                                        fill="white"
+                                    />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    ) : null}
+
+                    {UserData.social_connections.twitter !=undefined ? (
+                        <svg
+                            width="40"
+                            height="45"
+                            viewBox="0 0 21 24"
+                            fill="none"
+                            onClick={() => {
+                                window.open(UserData.social_connections.twitter);
+                            }}
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M18.75 1.5H2.25C1.00781 1.5 0 2.50781 0 3.75V20.25C0 21.4922 1.00781 22.5 2.25 22.5H18.75C19.9922 22.5 21 21.4922 21 20.25V3.75C21 2.50781 19.9922 1.5 18.75 1.5ZM16.4578 8.94375C16.4672 9.075 16.4672 9.21094 16.4672 9.34219C16.4672 13.4062 13.3734 18.0891 7.72031 18.0891C5.97656 18.0891 4.35938 17.5828 3 16.7109C3.24844 16.7391 3.4875 16.7484 3.74063 16.7484C5.17969 16.7484 6.50156 16.2609 7.55625 15.4359C6.20625 15.4078 5.07188 14.5219 4.68281 13.3031C5.15625 13.3734 5.58281 13.3734 6.07031 13.2469C4.66406 12.9609 3.60938 11.7234 3.60938 10.2281V10.1906C4.01719 10.4203 4.49531 10.5609 4.99687 10.5797C4.5752 10.2992 4.22952 9.91869 3.99069 9.4721C3.75186 9.02552 3.6273 8.52675 3.62813 8.02031C3.62813 7.44844 3.77813 6.92344 4.04531 6.46875C5.55938 8.33437 7.83281 9.55313 10.3828 9.68438C9.94687 7.59844 11.5078 5.90625 13.3828 5.90625C14.2687 5.90625 15.0656 6.27656 15.6281 6.87656C16.3219 6.74531 16.9875 6.4875 17.5781 6.13594C17.3484 6.84844 16.8656 7.44844 16.2281 7.82812C16.8469 7.7625 17.4469 7.58906 18 7.35C17.5828 7.96406 17.0578 8.50781 16.4578 8.94375Z"
+                                fill="black"
+                            />
+                        </svg>
+                    ) : null}
+
+                    {UserData.social_connections.gitHub !=undefined  ? (
+                        <svg
+                            width="45"
+                            height="45"
+                            viewBox="0 0 35 35"
+                            fill="none"
+                            onClick={() => {
+                                window.open(UserData.social_connections.gitHub);
+                            }}
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M17.5 0C7.83125 0 0 7.83125 0 17.5C0 25.2438 5.00938 31.7844 11.9656 34.1031C12.8406 34.2563 13.1687 33.7313 13.1687 33.2719C13.1687 32.8563 13.1469 31.4781 13.1469 30.0125C8.75 30.8219 7.6125 28.9406 7.2625 27.9563C7.06563 27.4531 6.2125 25.9 5.46875 25.4844C4.85625 25.1563 3.98125 24.3469 5.44687 24.325C6.825 24.3031 7.80938 25.5938 8.1375 26.1188C9.7125 28.7656 12.2281 28.0219 13.2344 27.5625C13.3875 26.425 13.8469 25.6594 14.35 25.2219C10.4563 24.7844 6.3875 23.275 6.3875 16.5813C6.3875 14.6781 7.06563 13.1031 8.18125 11.8781C8.00625 11.4406 7.39375 9.64688 8.35625 7.24063C8.35625 7.24063 9.82187 6.78125 13.1687 9.03438C14.5687 8.64063 16.0563 8.44375 17.5438 8.44375C19.0313 8.44375 20.5188 8.64063 21.9188 9.03438C25.2656 6.75938 26.7313 7.24063 26.7313 7.24063C27.6938 9.64688 27.0813 11.4406 26.9063 11.8781C28.0219 13.1031 28.7 14.6563 28.7 16.5813C28.7 23.2969 24.6094 24.7844 20.7156 25.2219C21.35 25.7688 21.8969 26.8187 21.8969 28.4594C21.8969 30.8 21.875 32.6813 21.875 33.2719C21.875 33.7313 22.2031 34.2781 23.0781 34.1031C26.5521 32.9302 29.5709 30.6975 31.7095 27.7191C33.8481 24.7407 34.999 21.1667 35 17.5C35 7.83125 27.1688 0 17.5 0Z"
+                                fill="white"
+                            />
+                        </svg>
+                    ) : null}
+                </div>
+            </div>
+            <div className={styles.TopProfileBar}>
+                <div className={styles.TopProfileLeft}>
+                    <CircleProfile
+                        image={ProfilePicture}
+                        size="15rem"
+                        id="profilePicture2"
+                        onClick={() => {}}
+                    ></CircleProfile>
+                    <div className={styles.ProfileNameContainer}>
+                        <p className={styles.ProfileName}>{UserData.name}</p>
+                        <p className={styles.ProfileRole}>student</p>
+                    </div>
+                </div>
+
+                {User!=undefined && id == User.id ? (
+                    <div className={styles.ProfileSettingsContainer}>
+                        <svg
+                            width="45"
+                            height="45"
+                            viewBox="0 0 35 35"
+                            fill="none"
+                            onClick={() => router.push("/EditAccount")}
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M27.542 2.93417L31.7966 7.30917L28.5531 10.6458L24.2985 6.27083L27.542 2.93417ZM11.9585 23.3333H16.2132L26.5478 12.7065L22.2931 8.33146L11.9585 18.9583V23.3333Z"
+                                fill="none"
+                            />
+                            <path
+                                d="M27.559 27.7083H12.1826C12.1458 27.7083 12.1075 27.7229 12.0706 27.7229C12.0238 27.7229 11.977 27.7098 11.9288 27.7083H7.70388V7.29167H17.4145L20.2509 4.375H7.70388C6.13958 4.375 4.86743 5.68167 4.86743 7.29167V27.7083C4.86743 29.3183 6.13958 30.625 7.70388 30.625H27.559C28.3113 30.625 29.0328 30.3177 29.5647 29.7707C30.0966 29.2237 30.3955 28.4819 30.3955 27.7083V15.0675L27.559 17.9842V27.7083Z"
+                                fill="none"
+                            />
+                        </svg>
+
+                        <svg
+                            width="40"
+                            height="40"
+                            viewBox="0 0 35 35"
+                            fill="none"
+                            onClick={() => router.push("/Settings")}
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M21.1744 35H14.7894C14.3894 35.0001 14.0013 34.8637 13.6896 34.6135C13.3779 34.3633 13.1613 34.0144 13.0757 33.6245L12.3617 30.3275C11.4094 29.9112 10.5063 29.3906 9.66918 28.7753L6.44689 29.799C6.06549 29.9203 5.65395 29.9079 5.28062 29.7637C4.9073 29.6195 4.59465 29.3522 4.39459 29.0063L1.1951 23.492C0.997143 23.1457 0.922835 22.7427 0.984333 22.3488C1.04583 21.9549 1.2395 21.5935 1.53364 21.3238L4.03324 19.0487C3.91957 18.0182 3.91957 16.9783 4.03324 15.9478L1.53364 13.678C1.23908 13.4081 1.04515 13.0464 0.983643 12.6521C0.922134 12.2579 0.996694 11.8544 1.1951 11.508L4.38757 5.99025C4.58763 5.6443 4.90028 5.37703 5.27361 5.23283C5.64693 5.08862 6.05847 5.07616 6.43988 5.1975L9.66217 6.22125C10.0902 5.90625 10.5357 5.61225 10.9953 5.34625C11.4391 5.09775 11.8951 4.872 12.3617 4.67075L13.0774 1.37725C13.1626 0.987346 13.3788 0.638204 13.6902 0.38771C14.0016 0.137217 14.3894 0.00041994 14.7894 0H21.1744C21.5744 0.00041994 21.9622 0.137217 22.2736 0.38771C22.585 0.638204 22.8012 0.987346 22.8864 1.37725L23.6091 4.6725C24.1002 4.8895 24.5808 5.13275 25.0457 5.404C25.4789 5.65425 25.8982 5.929 26.3016 6.22475L29.5257 5.201C29.9068 5.0801 30.318 5.0928 30.6909 5.23698C31.0639 5.38116 31.3762 5.64818 31.5762 5.99375L34.7687 11.5115C35.1756 12.2238 35.0353 13.125 34.4301 13.6798L31.9305 15.9547C32.0442 16.9853 32.0442 18.0252 31.9305 19.0557L34.4301 21.3307C35.0353 21.8872 35.1756 22.7868 34.7687 23.499L31.5762 29.0167C31.3761 29.3627 31.0635 29.63 30.6902 29.7742C30.3168 29.9184 29.9053 29.9308 29.5239 29.8095L26.3016 28.7857C25.4651 29.4006 24.5626 29.9206 23.6108 30.3362L22.8864 33.6245C22.8008 34.0141 22.5845 34.3628 22.2731 34.613C21.9618 34.8631 21.5741 34.9997 21.1744 35ZM17.9749 10.5C16.114 10.5 14.3293 11.2375 13.0135 12.5503C11.6977 13.863 10.9584 15.6435 10.9584 17.5C10.9584 19.3565 11.6977 21.137 13.0135 22.4497C14.3293 23.7625 16.114 24.5 17.9749 24.5C19.8357 24.5 21.6204 23.7625 22.9362 22.4497C24.2521 21.137 24.9913 19.3565 24.9913 17.5C24.9913 15.6435 24.2521 13.863 22.9362 12.5503C21.6204 11.2375 19.8357 10.5 17.9749 10.5Z"
+                                fill="none"
+                            />
+                        </svg>
+                    </div>
+                ) : (
+                    <div></div>
+                )}
+            </div>
+            <style jsx global>{`
+                .DescriptionCardClass {
+                    margin-bottom: 2rem;
+                }
+                .flexCards {
+                    display: flex;
+                    gap: 2rem;
+                    margin-bottom: 2rem;
+                }
+                @media (max-width: 900px) {
+                    .flexCards {
+                        flex-direction: column;
+                    }
+                    .awardsContainer, .objectivesContainer {
+                        width: 100% !important;
+                    }
+                }
+            `}</style>
+            <DescriptionCard className="DescriptionCardClass">
+                {UserData.description}
+            </DescriptionCard>
+            <div className="flexCards">
+                <AwardsCard
+                    width="30%"
+                    award1="true"
+                    award2="true"
+                    award3="true"
+                    award4="false"
+                    src1="/placeholder-award.svg"
+                    descr1="1 days working streak"
+                    src2="/placeholder-award.svg"
+                    descr2="2 days working streak"
+                    src3="/placeholder-award.svg"
+                    descr3="3 days working streak"
+                    src4="/placeholder-award.svg"
+                    descr4="4 days working streak"
+                ></AwardsCard>
+                <ObjectivesCard
+                    width="calc(70% - 2rem)"
+                    access="true"
+                    objective1="Look outside the window, the sun is shining and the cats are fighting."
+                    objective2="Try to be your best version!"
+                    objective3="While there is war in the world, there are some peaceful places no one knows about."
+                ></ObjectivesCard>
+            </div>
+            <ActivityCard user_id={(User!=undefined && User.id == id) ? User.id : id}></ActivityCard>
+        </ScrollContainer>
+    );
+};
+
+export default Profile;

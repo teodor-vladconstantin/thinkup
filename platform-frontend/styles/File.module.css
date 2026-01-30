@@ -1,0 +1,148 @@
+.Container {
+    border-radius: 15px;
+    border: 2px solid var(--color-accent-secondary);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+            align-items: center;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    margin: 0;
+    padding: 0;
+}
+
+.ExtensionDiv {
+    padding: 1rem;
+    width: 6.69rem;
+    text-align: center;
+    border-top-left-radius: 13px;
+    border-bottom-left-radius: 13px;
+    font-size: 1.75rem;
+    font-family: "Playfair Display", serif;
+    font-weight: 700;
+    background-color: #68bce0;
+    color: #3d4fab;
+}
+
+.ExtensionDiv p {
+    margin: 0;
+    margin-top: -3px;
+    padding: 0;
+}
+
+.PDF {
+    background-color: #e0b768;
+    color: #ab863d;
+}
+
+.DOC,.DOCX {
+    background-color: #68cae0;
+    color: #3d83ab;
+}
+
+.MP4,
+.MP3,
+.MOV,
+.WAV {
+    background-color: #dee068;
+    color: #aba03d;
+}
+
+.PNG,
+.JPG,
+.JPEG {
+    background-color: #9de068;
+    color: #3dab55;
+}
+
+.TXT {
+    background-color: #e068c6;
+    color: #7a3dab;
+}
+
+.InfoDiv {
+    padding-inline: 1.5rem;
+    height: 3rem;
+    width: 16rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+            align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    -webkit-justify-content: space-between;
+            justify-content: space-between;
+    position: relative;
+}
+
+.Info {
+    height: 100%;
+    margin-top: -6px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    -webkit-justify-content: space-between;
+            justify-content: space-between;
+    position: relative;
+}
+
+.Info h5,
+.Info h6 {
+    position: relative;
+    margin: 0;
+    color: var(--color-text-secondary);
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+.Info h5 {
+    font-weight: 400;
+    font-size: 1.15rem;
+}
+
+.Info h6 {
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+.Action path {
+    -webkit-transition: all 0.2s ease-in;
+    -o-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+}
+
+.Action:hover {
+    cursor: pointer;
+}
+
+.Container svg:hover path {
+    fill: var(--color-accent-primary);
+}
+.heartIcon {
+    margin-right: 5px;
+    width: 30px;
+    height: 30px;
+}

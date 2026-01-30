@@ -1,0 +1,36 @@
+.Settings{
+    width: 100%;
+    margin: 0 9rem; 
+    padding: 0 1rem 3rem 1rem;  
+    max-height: 75vh;
+}
+.Settings p{
+    font-size:1.3rem;
+}
+.SettingsTitle{
+    color: var(--color-text-primary);
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 50px;
+}
+
+
+.ReviewsContainer{
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap:2rem;
+    margin-bottom: 1.5rem;
+}
+.ReviewsContainer p{
+    margin: 0;
+}
+
+
+.SettingsButtonDiv{
+    margin-top: 3rem;
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap:2rem;
+}

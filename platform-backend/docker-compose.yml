@@ -1,0 +1,79 @@
+version: '3.8'
+
+services:
+  # ScyllaDB Alternator (The Database)
+  scylladb:
+    image: scylladb/scylla:5.4
+    container_name: thinkup-db
+    restart: always
+    # Optimized for lower resource usage in dev/small VPS
+    command: --smp 1 --memory 2G --overprovisioned 1 --alternator-port=8000 --alternator-write-isolation=always
+    volumes:
+      - scylla-data:/var/lib/scylla
+    ports:
+      - "8000:8000"
+    networks:
+      - thinkup-net
+
+  # Flask Backend Application
+  backend:
+    build: .
+    container_name: thinkup-app
+    restart: always
+    depends_on:
+      - scylladb
+    environment:
+      # Connect to ScyllaDB container
+      - DYNAMODB_ENDPOINT_URL=http://scylladb:8000
+      - AWS_ACCESS_KEY_ID=local
+      - AWS_SECRET_ACCESS_KEY=local
+      - AWS_REGION=eu-central-1
+      - FLASK_ENV=production
+    volumes:
+      # Mount local_storage so uploads persist on your actual disk
+      - ./local_storage:/app/local_storage
+    networks:
+      - thinkup-net
+
+  # Next.js Frontend
+  frontend:
+    build:
+      context: ../platform-frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost
+    container_name: thinkup-frontend
+    restart: always
+    # Load environment variables from the frontend .env.local file
+    env_file:
+      - ../platform-frontend/.env.local
+    environment:
+      # Revert to standard port 3000 used in Auth0 console
+      - AUTH0_BASE_URL=http://localhost:3000
+    # Expose port 3000 directly to host so you can bypass Nginx
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - thinkup-net
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: thinkup-proxy
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - backend
+    networks:
+      - thinkup-net
+
+volumes:
+  scylla-data:
+
+networks:
+  thinkup-net:
+    driver: bridge

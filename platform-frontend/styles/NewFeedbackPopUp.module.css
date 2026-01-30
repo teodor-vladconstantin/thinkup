@@ -1,0 +1,10 @@
+.NewFeedbackButtonDiv{
+    width: 100%;
+    justify-content: flex-end;
+    display: flex;
+    gap:30px;
+}
+.NewFeedbackTextArea{
+    margin-top: 0;
+    margin-bottom: 1rem;
+}

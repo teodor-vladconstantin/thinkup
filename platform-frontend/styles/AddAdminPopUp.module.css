@@ -1,0 +1,65 @@
+.AddAdminPopUp{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.UsersList{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 40vh;
+    width: 100%;
+    gap: 1rem;
+    overflow-x: hidden;
+    margin: 2rem 0;
+    padding-right: 1rem;
+}
+
+.SelectedAdminCard{
+    background: var(--color-accent-primary)!important;
+}
+
+
+.AddAdminCard{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid var(--color-accent-secondary);
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    transition: 0.3s ease-in;
+    cursor: pointer;
+}
+
+.AddAdminCard:hover{
+    background: var(--color-accent-secondary);
+}
+
+.AdminUserData{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.AddAdminCard p{
+    margin: 0;
+    padding: 0;
+}
+
+.AdminUserImage{
+    height: 3rem;
+    width: 3rem;
+    -o-object-fit: cover;
+       object-fit: cover;
+    border-radius: 10rem;
+}
+
+.NewAdminButtonDiv{
+    width: 100%;
+    justify-content: flex-end;
+    display: flex;
+    gap: 30px;
+}

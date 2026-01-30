@@ -1,0 +1,17 @@
+.UserCard{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.UserCardImage{
+    border-radius: 10rem;
+    height: 5rem;
+    width: 5rem;
+    -o-object-fit: cover;
+       object-fit: cover;
+    border: 2px solid var(--color-accent-primary);
+}

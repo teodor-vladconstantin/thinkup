@@ -1,0 +1,62 @@
+.TopBar{
+    padding: 2rem 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.TopBar_Logo{
+    height: 4rem;
+}
+
+.TopBar_LeftSection{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    cursor: pointer;
+}
+
+.TopBar_ThemeButton{
+    margin-right: 2rem;
+}
+
+.TopBar_UserInfo{
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    margin-right: 1rem;
+}
+
+.TopBar_UserName{
+    padding:0;
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--color-text-primary);
+}
+
+.TopBar_UserAccount{
+    margin: 0;
+    padding:0;
+    color: var(--color-text-secondary);
+}

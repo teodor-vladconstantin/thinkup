@@ -1,0 +1,49 @@
+.FileUploadInputContainer{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2rem;
+}
+
+.FileUploadInput::-webkit-file-upload-button {
+    visibility: hidden;
+}
+    
+.FileUploadInput::before {
+    content: 'Add files';
+    display: inline-block;
+    background-color: var(--color-secondary);
+    border: 2px solid var(--color-accent-primary);
+    color: var(--color-text-primary);
+    border-radius: 0.5rem;
+    padding: 0.5rem 2.5rem;
+    outline: none;
+    white-space: nowrap;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 10pt;
+}
+
+.titleDiv {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: end;
+    -webkit-align-items: flex-end;
+    -ms-flex-align: end;
+    align-items: flex-end;
+    margin-bottom: 15px;
+}
+.titleDiv svg path{
+    fill: var(--color-text-primary);
+}
+
+.titleDiv > * {
+    margin: 0;
+    padding: 0;
+}
+
+.titleDiv h3 {
+    margin-left: 10px;
+    font-weight: normal;
+}

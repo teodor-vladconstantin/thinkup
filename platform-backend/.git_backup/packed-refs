@@ -1,0 +1,12 @@
+# pack-refs with: peeled fully-peeled sorted 
+720672bd0728ad5079270f38e23c41098f821941 refs/remotes/origin/Darius
+9d8df6d181792291b39246f00fea915968794312 refs/remotes/origin/Delete-review
+a8da7dd236288f4a9eae1149db21f530ede214d9 refs/remotes/origin/alex
+4ac1a0b06f11c768439c0224de742886f5a35ff0 refs/remotes/origin/favorite_files
+63a0dfb796f6a2b2625e056d606a08ea226e513d refs/remotes/origin/hotfix
+6dcd54b25b7c85c70ff41c0dc6940893008b78e6 refs/remotes/origin/main
+a91bce872cbfac73a4fbc4a17f119aa262cdf705 refs/remotes/origin/openschool-mostpop
+c0df42d2205727e93cb7fd7b60a018465c0b75d8 refs/remotes/origin/production
+6a6107352b385e11e8853676a3262de20c2c4beb refs/remotes/origin/trbf
+400a488111f5a93a698a673566e3a324ce730352 refs/tags/v1.0
+26fe85cd99f0b509020fd48665562b729e54537a refs/tags/v2.0

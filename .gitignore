@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+*.pyc
+
+# Environment Variables (Secrets)
+.env
+.env.local
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+
+# Storage (User Uploads)
+local_storage/
+
+# Logs
+*.log
+npm-debug.log*
+
+# System
+.DS_Store
+Thumbs.db

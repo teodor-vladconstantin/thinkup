@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap");
+
+:root {
+    --color-primary: #eaeaff;
+    --color-secondary: #d8d7ff;
+    --color-accent-primary: #a19ef9;
+    --color-accent-secondary: #d8d7ff;
+    --color-background: #ffffff;
+    --color-text-primary: #222222;
+    --color-text-secondary: #888888;
+    --color-cancel-primary: #db3a3a;
+    --color-cancel-secondary: #eb7d7d;
+    --color-green: #89e292;
+}
+
+[data-theme="dark"] {
+    --color-primary: #2e2934;
+    --color-secondary: #383240;
+    --color-accent-primary: #d2c7df;
+    --color-accent-secondary: #383240;
+    --color-background: #2b2731;
+    --color-text-primary: #c6bbd4;
+    --color-text-secondary: #9286a1;
+    --color-cancel-primary: #db3a3a;
+    --color-cancel-secondary: #eb7d7d;
+    --color-green: #89e292;
+}
+
+html,
+body {
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+        Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    /* font-family: "Open Sans", sans-serif; */
+    background: var(--color-background);
+    color: var(--primary-text-color);
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+::-moz-selection {
+    background: #d4d3f3;
+    color: black;
+}
+
+::selection {
+    background: #d4d3f3;
+    color: black;
+}

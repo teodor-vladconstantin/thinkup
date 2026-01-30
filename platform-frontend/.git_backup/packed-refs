@@ -1,0 +1,22 @@
+# pack-refs with: peeled fully-peeled sorted 
+d8fe66ce3956fdfd089784c4e2f86899b7465c5c refs/remotes/origin/Alexandra
+6bf4d3fbec13e6c544207564668d56e1d524a489 refs/remotes/origin/Andrei
+5df6f56210f7f0b3707ca60707166b02c0685f5c refs/remotes/origin/Andrei-Mecea
+582e4c147039bfdc353ca1aa5ed0cd7e88a88643 refs/remotes/origin/Catalin
+da938b9d38018996222beb4d4077eed15ad6a582 refs/remotes/origin/Darius
+e0b40246cbf7fd8172bc4a332a72631d1ca9db81 refs/remotes/origin/Maria
+07abb7e9fa55dbc45af0d9181ea582edc5da2708 refs/remotes/origin/Petra
+c8d1a4d99f6efc33968b1ee5b97ab0a24bbd0517 refs/remotes/origin/Serena
+8de37e8c55ced75c61cd4a94e74d623032706bb1 refs/remotes/origin/Tudor
+c930e2453de3d63220bc5ef63f8a3b94971aab9f refs/remotes/origin/bogdan's
+955213d1f73008992dcc0181892517ce785d9000 refs/remotes/origin/dependabot/npm_and_yarn/cacheable-request-and-auth0/nextjs-auth0--removed
+731571c183d8d79576620489677f1fd2942cbe52 refs/remotes/origin/dependabot/npm_and_yarn/got-11.8.5
+06124ece2caacc3bcaf54e9ca19c76721db8c908 refs/remotes/origin/dependabot/npm_and_yarn/http-cache-semantics-4.1.1
+0549f674d783ec68fdbb6284f5f98bffe1825826 refs/remotes/origin/dependabot/npm_and_yarn/jose-2.0.6
+b5b99ab3f30a95142966edc0cd0c60b898ee7221 refs/remotes/origin/dependabot/npm_and_yarn/json5-1.0.2
+2ab381c2b5be0b556d68d64e08c7543ebb716ca9 refs/remotes/origin/dependabot/npm_and_yarn/minimatch-3.1.2
+a20d04a27206f9ffbb6b17464f2dc1bd2d52781b refs/remotes/origin/dependabot/npm_and_yarn/minimist-1.2.8
+9643e2ad1df65469d0d176087d0c5248b5ce6b4b refs/remotes/origin/dependabot/npm_and_yarn/next-12.1.0
+d86b76b6513b820ad5ab55d8276aaa35d8d8a2a7 refs/remotes/origin/dependabot/npm_and_yarn/sideway/formula-3.0.1
+e14f779182c3f654bbe2570103c210bac12adf81 refs/remotes/origin/main
+7f5748ffe61341991ce52d972706cff549767a08 refs/remotes/origin/marc's

@@ -1,0 +1,40 @@
+.Loading{
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dot{
+    height: 1rem;
+    width: 1rem ;
+    border: 3px solid var(--color-accent-primary);
+    content: '';
+    top: 10%;
+    margin: 0.5rem;
+    border-radius: 100%;
+    animation: ball 2s infinite linear;
+    
+  }
+
+.dot:nth-child(2n) {
+animation-delay: 0.2s;
+}
+.dot:nth-child(3n) {
+animation-delay: 0.4s;
+}
+
+@keyframes ball {
+    0%   { 
+    transform: scale(0.5);
+    background: white;
+    }
+    50%   { 
+        transform: scale(1);
+        background: transparent;
+    }
+    100% { 
+        transform: scale(0.5);
+        background: white;
+    }
+}

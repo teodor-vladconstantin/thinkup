@@ -1,0 +1,42 @@
+.EditUser {
+    width: 100%;
+    margin: 0 9rem;
+    padding: 0 1rem 3rem 1rem;
+    max-height: 75vh;
+}
+
+.EditUserTitle {
+    color: var(--color-text-primary);
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 50px;
+}
+
+.EditUserNameDiv {
+    margin: 50px 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 30px;
+    padding: 0;
+    margin: 0;
+}
+
+.EditUserDescription {
+    margin-top: 0 !important;
+    padding: 0;
+}
+
+.EditUserButtonDiv {
+    margin: 50px 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 30px;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+        -ms-flex-align: center;
+            align-items: center;
+}
