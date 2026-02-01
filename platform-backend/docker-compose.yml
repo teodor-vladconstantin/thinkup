@@ -40,7 +40,9 @@ services:
     build:
       context: ../platform-frontend
       args:
-        NEXT_PUBLIC_API_URL: http://localhost
+        # IMPORTANT: Set API URL to empty string so requests use relative paths (e.g., /projects)
+        # This makes the app work on localhost, VPS, or Cloudflare Tunnel without rebuilding
+        NEXT_PUBLIC_API_URL: ""
     container_name: thinkup-frontend
     restart: always
     # Load environment variables from the frontend .env.local file
