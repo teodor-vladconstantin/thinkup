@@ -143,12 +143,27 @@ cloudflared service install <token-ul-tau-din-dashboard-cloudflare>
 
 ---
 
+## 🔑 6. Configurare Auth0 (Obligatoriu)
+
+Chiar dacă ai setat `.env` pe server, login-ul nu va merge dacă nu autorizezi noul domeniu în Auth0.
+
+1.  Intră pe [manage.auth0.com](https://manage.auth0.com).
+2.  Mergi la **Applications** -> **Applications** -> Selectează aplicația ta (ThinkUp).
+3.  În tab-ul **Settings**, caută secțiunile de URL-uri și adaugă domeniul tău (separat prin virgulă de localhost):
+    *   **Allowed Callback URLs:** `https://domeniul-tau.ro/api/auth/callback`
+    *   **Allowed Logout URLs:** `https://domeniul-tau.ro`
+    *   **Allowed Web Origins:** `https://domeniul-tau.ro`
+4.  Apasă **Save Changes** (jos de tot).
+
+---
+
 ## ✅ Rezumat
-1.  Ai luat VPS.
-2.  Ai instalat Docker.
-3.  Ai clonat codul.
-4.  `docker compose up -d`
-5.  Ai importat datele: `scripts/load_db_from_json.py`
-6.  Ai pornit Tunnel-ul Cloudflare.
+1.  Ai luat VPS și Domeniu.
+2.  Ai instalat Docker + codul.
+3.  Ai configurat `.env` cu `AUTH0_BASE_URL=https://...`
+4.  Ai importat datele (JSON).
+5.  Ai pornit Tunnel-ul Cloudflare.
+6.  Ai adăugat domeniul în dashboard-ul Auth0.
 
 Gata! Site-ul e live.
+
