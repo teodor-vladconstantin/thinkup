@@ -5,8 +5,8 @@ __pycache__/
 *.pyc
 
 # Environment Variables (Secrets)
-.env
-.env.local
+# .env
+# .env.local
 
 # IDEs
 .idea/
@@ -14,7 +14,9 @@ __pycache__/
 *.swp
 
 # Storage (User Uploads)
-local_storage/
+# local_storage/
+# Block large video files from GitHub
+platform-backend/local_storage/**/*.mp4
 
 # Logs
 *.log

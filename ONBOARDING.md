@@ -70,7 +70,21 @@ După ce comanda s-a terminat și containerele rulează:
 
 ---
 
-## 🌳 5. Cum lucrăm cu Git? (Reguli)
+## 💾 5. Importarea Datelor (Populare Bază de Date)
+
+Când pornești aplicația prima dată, baza de date este goală. Pentru a avea utilizatorii și proiectele demo:
+
+1.  Asigură-te că aplicația rulează (ai făcut pasul 4).
+2.  Deschide un terminal nou și rulează:
+
+```bash
+docker exec -it thinkup-app python scripts/load_db_from_json.py
+```
+*Dacă primești eroare că nu găsește fișierul, asigură-te că ai rulat `docker-compose up --build` pentru a include noile fișiere.*
+
+---
+
+## 🌳 6. Cum lucrăm cu Git? (Reguli)
 
 Pentru a nu ne șterge munca unii altora, respectăm următorul flux:
 
@@ -94,7 +108,7 @@ Pentru a nu ne șterge munca unii altora, respectăm următorul flux:
 
 ---
 
-## ❓ 6. FAQ (Probleme Comune)
+## ❓ 7. FAQ (Probleme Comune)
 
 **Q: Îmi merge foarte greu PC-ul când pornesc Docker.**
 A: Docker consumă mult RAM. Intră în setările Docker Desktop -> Resources și limitează memoria la 4GB.
@@ -103,4 +117,4 @@ A: Docker consumă mult RAM. Intră în setările Docker Desktop -> Resources ș
 A: Probabil ai altceva deschis pe portul 3000 sau 8000. Închide alte servere (ex: Skype, alte proiecte Node) sau dă restart la PC.
 
 **Q: Nu văd datele (Proiecte, Useri).**
-A: Baza de date locală începe goală. Fișierele (poze) sunt descărcate automat din Git, dar userii/proiectele trebuie recreate sau importate manual dacă e nevoie.
+A: Rulează comanda de la pasul **5. Importarea Datelor**. Dacă tot nu apar, verifică log-urile cu `docker-compose logs -f`.
