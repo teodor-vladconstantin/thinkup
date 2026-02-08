@@ -1,0 +1,44 @@
+I. Write Requests
+a) User:
+	1. Create Account
+	2. Changed Settings
+	3. Changed Name
+	4. Changed Profile Picture
+	5. Changed Description
+	6. Changed Projects
+
+b) Project:
+	1. Create Project
+	2. Changed Name
+	3. Changed Description
+	4. Changed Thumbnail
+	5. Changed Area Of Implementation
+	6. Add Goal
+	7. Update Goal
+	8. Delete Goal
+	9. Add Material
+	10. Update Material
+	11. Delete Material
+
+
+
+II. Read Requests
+a) User:
+	1. Navigate to Profile
+	2. See Projects x2
+	3. Web Refresh
+
+b) Project:
+	1. Changed Name
+	2. Changed Description
+	3. Changed Thumbnail
+	5. Changed Area Of Implementation
+	6. Add Goal
+	7. Update Goal
+	8. Delete Goal
+	9. Add Material
+	10. Update Material
+	11. Delete Material
+
+1 Acc
+	 
