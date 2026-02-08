@@ -89,7 +89,13 @@ docker exec -it thinkup-app python scripts/load_db_from_json.py
 
 ## 🔒 5. Conectarea la Domeniu (Cloudflare Tunnel)
 
-Cea mai sigură și simplă metodă de a scoate site-ul pe internet (cu HTTPS/lăcățel verde) fără să te complici cu certificate SSL manuale este **Cloudflare Tunnel**.
+Pentru a avea **HTTPS (lăcățelul verde)** automat și protecție anti-DDoS, recomandăm folosirea **Cloudflare**.
+
+### 5.0 Prerechizite (Important)
+1.  Domeniul tău (ex: `thinkup.ro`) cumpărat de la Hostico/RoTLD.
+2.  Cont gratuit pe [Cloudflare](https://www.cloudflare.com/).
+3.  **Schimbă Nameserverele:** Intră în panoul Hostico -> Domenii -> Nameservers și pune-le pe cele primite de la Cloudflare (ex: `adi.ns.cloudflare.com` si `bob.ns.cloudflare.com`).
+4.  Așteaptă propagarea (1-2 ore).
 
 ### 5.1 Instalează Cloudflared pe VPS
 ```bash
