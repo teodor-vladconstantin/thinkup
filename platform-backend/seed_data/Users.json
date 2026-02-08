@@ -1,0 +1,1740 @@
+[
+  {
+    "id": "106057537346289674264",
+    "activity": {
+      "2024-03-06": {
+        "create_account": "1",
+        "create_project": "2",
+        "add_review": "2"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "123",
+    "email": "andrei.mecea@mentor.think-up.academy",
+    "fav_files": [],
+    "name": "Andrei Mecea",
+    "perms": {
+      "canViewDescription": true,
+      "canCreateProject": true,
+      "canViewMaterials": true,
+      "canCreateFeedback": true,
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canViewFeedback": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "secondPiece",
+        "firstPiece",
+        "thirdPiece"
+      ],
+      "missing_pieces_ids": [
+        "3",
+        "1",
+        "6",
+        "7",
+        "2",
+        "4",
+        "5",
+        "8",
+        "9"
+      ]
+    },
+    "role": "Mentor",
+    "search_term": "andrei mecea",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "108725634211690813513",
+    "activity": {
+      "2026-01-24": {
+        "create_account": "1"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "",
+    "email": "teodor.c@think-up.academy",
+    "fav_files": [],
+    "name": "TEODOR-VLAD CONSTANTIN",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "thirdPiece",
+        "firstPiece",
+        "secondPiece"
+      ],
+      "missing_pieces_ids": [
+        "2",
+        "7",
+        "3",
+        "6",
+        "4",
+        "1",
+        "8",
+        "9",
+        "5"
+      ]
+    },
+    "role": "Mentor",
+    "search_term": "teodor vlad constantin",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "115096586253168436879",
+    "activity": {
+      "2023-06-22": {
+        "makeProjets": "2",
+        "userUpdates": "10"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "Here to have a good time.",
+    "email": "david.matei.md@gmail.com",
+    "fav_files": [
+      "adobe"
+    ],
+    "name": "David Matei",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": "NA",
+    "profile_picture": "lhda4cxxix5sms6j0r",
+    "profile_picture_extension": ".jpg",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "thirdPiece",
+        "firstPiece",
+        "secondPiece"
+      ],
+      "missing_pieces_ids": [
+        "7",
+        "1",
+        "5",
+        "4",
+        "3",
+        "6",
+        "9",
+        "2",
+        "8"
+      ]
+    },
+    "role": "Student",
+    "search_term": "david matei",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "114518463417701533815",
+    "activity": {
+      "2022-10-20": "1"
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "",
+    "email": "sebastian.stoenoiu@think-up.academy",
+    "fav_files": [],
+    "name": "Sebastian Stoenoiu",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "secondPiece",
+        "firstPiece",
+        "thirdPiece"
+      ],
+      "missing_pieces_ids": [
+        "2",
+        "8",
+        "4",
+        "5",
+        "7",
+        "1",
+        "6",
+        "3",
+        "9"
+      ]
+    },
+    "role": "Student",
+    "search_term": "sebastian stoenoiu",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "111053587805301896490",
+    "activity": {
+      "2023-01-14": "1"
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "tech admin",
+    "email": "marcaureliusvana@gmail.com",
+    "fav_files": [
+      "file-sample"
+    ],
+    "mentor_feedback": [],
+    "name": "Marc-Aurelius Vana",
+    "perms": {
+      "canEditProject": true,
+      "canViewDescription": true,
+      "canCreateProject": true,
+      "canDeleteProject": false,
+      "canViewGoals": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "thirdPiece",
+        "firstPiece",
+        "secondPiece"
+      ],
+      "missing_pieces_ids": [
+        "1",
+        "8",
+        "7",
+        "9",
+        "3",
+        "4",
+        "5",
+        "2",
+        "6"
+      ]
+    },
+    "role": "Student",
+    "search_term": "marc-aurelius vana",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {
+      "linkedin": "https://linkedin.com/in/marcvana"
+    }
+  },
+  {
+    "id": "104823378491212151568",
+    "activity": {
+      "2023-11-15": {
+        "mark_favorite_file": "1"
+      },
+      "2023-10-26": "2",
+      "2023-11-06": {
+        "edit_account": "3"
+      },
+      "2023-10-28": "2",
+      "2023-10-29": "1"
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "salut eu sunt tudor ",
+    "email": "stefan.pop@mentor.think-up.academy",
+    "fav_files": [
+      "104823378491212151568",
+      "100",
+      "100"
+    ],
+    "name": "Pop Tudor-\u0218tefan",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": "NA",
+    "profile_picture": "lobgu212pk506njy83",
+    "profile_picture_extension": ".jpg",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "thirdPiece",
+        "secondPiece",
+        "firstPiece"
+      ],
+      "missing_pieces_ids": [
+        "1",
+        "9",
+        "2",
+        "3",
+        "7",
+        "8",
+        "4",
+        "6",
+        "5"
+      ]
+    },
+    "role": "Mentor",
+    "search_term": "pop tudor-\u0219tefan",
+    "settings": {
+      "language": "en",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "777",
+    "activity": {
+      "2024-04-20": {
+        "create_account": "1"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "imi place sa mananc orice",
+    "email": "alexandru.marinescu7777@gmail.com",
+    "fav_files": [],
+    "name": "alex",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "firstPiece",
+        "thirdPiece",
+        "secondPiece"
+      ],
+      "missing_pieces_ids": [
+        "8",
+        "1",
+        "6",
+        "4",
+        "5",
+        "9",
+        "7",
+        "2",
+        "3"
+      ]
+    },
+    "role": "Student",
+    "search_term": "alex",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "114348740253445875433",
+    "activity": {
+      "2025-11-05": {
+        "mark_favorite_file": "1"
+      },
+      "2023-11-22": {
+        "create_account": "1"
+      },
+      "2024-02-01": {
+        "mark_favorite_file": "3"
+      },
+      "2024-01-10": {
+        "mark_favorite_file": "3"
+      },
+      "2024-07-25": {
+        "add_material": "6"
+      },
+      "2024-04-17": {
+        "mark_favorite_file": "2",
+        "add_material": "4"
+      },
+      "2024-05-18": {
+        "mark_favorite_file": "3"
+      },
+      "2024-03-06": {
+        "create_project": "2"
+      },
+      "2024-05-16": {
+        "mark_favorite_file": "1"
+      },
+      "2024-02-15": {
+        "mark_favorite_file": "1"
+      },
+      "2024-07-18": {
+        "edit_account": "1"
+      },
+      "2024-11-19": {
+        "mark_favorite_file": "1"
+      },
+      "2025-05-08": {
+        "mark_favorite_file": "1"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "lkjhgwgaevfsvfsef wfw ef sdf",
+    "email": "alexandra.rus@mentor.think-up.academy",
+    "fav_files": [
+      "yukon",
+      "bookmarks",
+      "adobe",
+      "bookmarks",
+      "bookmarks",
+      "bookmarks",
+      "bookmarks",
+      "bookmarks",
+      "bookmarks",
+      "sample",
+      "bookmarks",
+      "bookmarks",
+      "bookmarks",
+      "yukon",
+      "adobe",
+      "dummy",
+      "bookmarks",
+      "bookmarks",
+      "bookmarks",
+      "file-sample",
+      "SampleVideo_720x480_20mb",
+      "bookmarks"
+    ],
+    "name": "Alexandra Rus",
+    "perms": {
+      "canViewDescription": true,
+      "canCreateProject": true,
+      "canViewMaterials": true,
+      "canCreateFeedback": true,
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canViewFeedback": true
+    },
+    "personal_objectives": "NA",
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "thirdPiece",
+        "secondPiece",
+        "firstPiece"
+      ],
+      "missing_pieces_ids": [
+        "3",
+        "6",
+        "9",
+        "2",
+        "8",
+        "4",
+        "1",
+        "7",
+        "5"
+      ]
+    },
+    "role": "Mentor",
+    "search_term": "alexandra rus",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "102347567658100744269",
+    "activity": {
+      "2023-06-03": "4"
+    },
+    "cover_picture": "ligecqdqld3pgqmoy38",
+    "cover_picture_extension": ".png",
+    "description": "ceva",
+    "email": "gosabogdan05@gmail.com",
+    "fav_files": [],
+    "name": "Gosa Bogdan",
+    "perms": {
+      "canViewDescription": true,
+      "canCreateProject": true,
+      "canDeleteProject": false,
+      "canCreateFeedback": true,
+      "canViewGoals": true
+    },
+    "personal_objectives": "NA",
+    "profile_picture": "ligecqdq75otml1yufv",
+    "profile_picture_extension": ".jpg",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "thirdPiece",
+        "firstPiece",
+        "secondPiece"
+      ],
+      "missing_pieces_ids": [
+        "6",
+        "4",
+        "5",
+        "7",
+        "8",
+        "9",
+        "3",
+        "2",
+        "1"
+      ]
+    },
+    "role": "Student",
+    "search_term": "gosa bogdan",
+    "settings": {
+      "language": "en",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "113528018155821801130",
+    "activity": {
+      "2025-05-28": {
+        "mark_favorite_file": "1"
+      },
+      "2025-10-10": {
+        "mark_favorite_file": "3"
+      },
+      "2025-05-08": {
+        "create_account": "1",
+        "mark_favorite_file": "1"
+      },
+      "2026-01-18": {
+        "create_project": "2",
+        "mark_favorite_file": "3"
+      },
+      "2025-06-04": {
+        "mark_favorite_file": "2"
+      },
+      "2025-10-19": {
+        "mark_favorite_file": "3"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "",
+    "email": "duku.constantin@gmail.com",
+    "fav_files": [
+      "dummy",
+      "dummy",
+      "dummy"
+    ],
+    "name": "Duku Constantin",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "thirdPiece",
+        "firstPiece",
+        "secondPiece"
+      ],
+      "missing_pieces_ids": [
+        "7",
+        "8",
+        "4",
+        "5",
+        "1",
+        "9",
+        "2",
+        "6",
+        "3"
+      ]
+    },
+    "role": "Student",
+    "search_term": "duku constantin",
+    "settings": {
+      "language": "en",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "117087544690349346644",
+    "activity": {
+      "2024-02-01": {
+        "create_account": "1"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "alt test :p",
+    "email": "demianilie07@gmail.com",
+    "fav_files": [],
+    "name": "ilie demian",
+    "perms": {
+      "canEditProject": true,
+      "canViewDescription": true,
+      "canCreateProject": true,
+      "canDeleteProject": false,
+      "canViewGoals": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "thirdPiece",
+        "firstPiece",
+        "secondPiece"
+      ],
+      "missing_pieces_ids": [
+        "9",
+        "4",
+        "6",
+        "8",
+        "2",
+        "3",
+        "5",
+        "1",
+        "7"
+      ]
+    },
+    "role": "Student",
+    "search_term": "ilie demian",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "test_id_ilie",
+    "activity": {
+      "2023-12-03": {
+        "mark_favorite_file": "3"
+      },
+      "2023-11-01": {
+        "non-spamable": "1",
+        "type2": "50"
+      },
+      "2024-03-31": {
+        "mark_favorite_file": "2"
+      },
+      "2023-11-15": {
+        "mark_favorite_file": "2"
+      },
+      "2023-11-11": {
+        "add_material": "6"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "am facut un cont cu post ig lmao",
+    "email": "un_email pt test@lmao",
+    "fav_files": [
+      "200",
+      "400",
+      "123",
+      "123",
+      "1234",
+      "test_id_ilie"
+    ],
+    "name": "ilie test post manual",
+    "perms": {
+      "canEditProject": true,
+      "canViewDescription": true,
+      "canCreateProject": true,
+      "canDeleteProject": false,
+      "canViewGoals": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "firstPiece",
+        "secondPiece",
+        "thirdPiece"
+      ],
+      "missing_pieces_ids": [
+        "4",
+        "8",
+        "6",
+        "9",
+        "3",
+        "2",
+        "5",
+        "1",
+        "7"
+      ]
+    },
+    "role": "Student",
+    "search_term": "ilie test post manual",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "113632197836241455714",
+    "activity": {
+      "2024-08-07": {
+        "create_project": "2"
+      },
+      "2024-02-07": {
+        "create_account": "1",
+        "create_project": "2",
+        "add_review": "2"
+      },
+      "2024-07-25": {
+        "add_material": "4"
+      },
+      "2024-11-19": {
+        "mark_favorite_file": "1"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "Darius ",
+    "email": "dariusandreicoman@gmail.com",
+    "fav_files": [],
+    "name": "Darius Coman",
+    "perms": {
+      "canViewDescription": true,
+      "canCreateProject": true,
+      "canDeleteProject": false,
+      "canCreateFeedback": true,
+      "canViewGoals": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "firstPiece",
+        "secondPiece",
+        "thirdPiece"
+      ],
+      "missing_pieces_ids": [
+        "7",
+        "4",
+        "3",
+        "5",
+        "8",
+        "2",
+        "9",
+        "6",
+        "1"
+      ]
+    },
+    "role": "Student",
+    "search_term": "darius coman",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "121",
+    "activity": {
+      "2025-02-25": {
+        "create_account": "1"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "Alex care e mentor",
+    "email": "alexandru@mentor.think-up.academy.com",
+    "fav_files": [],
+    "name": "Alex mentor",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "secondPiece",
+        "thirdPiece",
+        "firstPiece"
+      ],
+      "missing_pieces_ids": [
+        "3",
+        "2",
+        "7",
+        "8",
+        "1",
+        "9",
+        "6",
+        "5",
+        "4"
+      ]
+    },
+    "role": "Mentor",
+    "search_term": "alex mentor",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "101880086377404718006",
+    "activity": {
+      "2023-10-22": "1",
+      "2023-12-03": {
+        "mark_favorite_file": "3"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "ilie test",
+    "email": "iliedemian07@gmail.com",
+    "fav_files": [
+      "123",
+      "123",
+      "123",
+      "123",
+      "123",
+      "123",
+      "123",
+      "123",
+      "123",
+      "123",
+      "sample",
+      "file-sample",
+      "file-sample",
+      "sample",
+      "sample",
+      "bookmarks",
+      "yukon",
+      "adobe",
+      "yukon",
+      "bookmarks",
+      "bookmarks",
+      "sample",
+      "bookmarks",
+      "sample"
+    ],
+    "name": "ilie demian",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "secondPiece",
+        "firstPiece",
+        "thirdPiece"
+      ],
+      "missing_pieces_ids": [
+        "3",
+        "8",
+        "7",
+        "4",
+        "5",
+        "9",
+        "1",
+        "6",
+        "2"
+      ]
+    },
+    "role": "Student",
+    "search_term": "ilie demian",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "123456789",
+    "activity": {
+      "2025-01-25": {
+        "create_account": "1"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "Sunt un mentor!!",
+    "email": "alexandru.marinescu@mentor.think-up.academy",
+    "fav_files": [],
+    "name": "Alex Marinescu",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "thirdPiece",
+        "firstPiece",
+        "secondPiece"
+      ],
+      "missing_pieces_ids": [
+        "2",
+        "3",
+        "6",
+        "1",
+        "4",
+        "5",
+        "8",
+        "7",
+        "9"
+      ]
+    },
+    "role": "Mentor",
+    "search_term": "alex marinescu",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "101446673356858249308",
+    "activity": {
+      "2023-04-02": "2"
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "",
+    "email": "mariachis08032006@gmail.com",
+    "fav_files": [],
+    "name": "Maria Chis",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": "NA",
+    "profile_picture": "lfz90nbzmwpccd94xj",
+    "profile_picture_extension": ".jpg",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "secondPiece",
+        "firstPiece",
+        "thirdPiece"
+      ],
+      "missing_pieces_ids": [
+        "4",
+        "3",
+        "7",
+        "5",
+        "9",
+        "2",
+        "8",
+        "1",
+        "6"
+      ]
+    },
+    "role": "Student",
+    "search_term": "maria chis",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "106863809771378515645",
+    "activity": {
+      "2023-06-03": "2",
+      "2022-10-31": "3",
+      "2024-08-07": {
+        "create_project": "2"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "Contul personal cu emailul personal",
+    "email": "bogdan.gosa@gmail.com",
+    "fav_files": [],
+    "name": "Bogdan Gosa",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": "NA",
+    "profile_picture": "l9wlho7chpff57sct2a",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "thirdPiece",
+        "secondPiece",
+        "firstPiece"
+      ],
+      "missing_pieces_ids": [
+        "9",
+        "5",
+        "4",
+        "1",
+        "7",
+        "8",
+        "6",
+        "2",
+        "3"
+      ]
+    },
+    "role": "Student",
+    "search_term": "bogdan gosa",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "12",
+    "activity": {
+      "2025-02-25": {
+        "create_account": "1"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "Alex care nu e mentor",
+    "email": "alexandru@gmail.com",
+    "fav_files": [],
+    "name": "Alex student",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "secondPiece",
+        "thirdPiece",
+        "firstPiece"
+      ],
+      "missing_pieces_ids": [
+        "3",
+        "2",
+        "7",
+        "8",
+        "1",
+        "9",
+        "6",
+        "5",
+        "4"
+      ]
+    },
+    "role": "Student",
+    "search_term": "alex student",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "107667286728003261779",
+    "activity": {
+      "2022-11-04": "1"
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "proiect cont thinkup",
+    "email": "bogdan.gosa@mentor.think-up.academy",
+    "fav_files": [],
+    "name": "Bogdan Go\u015fa",
+    "perms": {
+      "canViewDescription": true,
+      "canCreateProject": true,
+      "canViewMaterials": true,
+      "canCreateFeedback": true,
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canViewFeedback": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "firstPiece",
+        "secondPiece",
+        "thirdPiece"
+      ],
+      "missing_pieces_ids": [
+        "4",
+        "7",
+        "3",
+        "1",
+        "6",
+        "9",
+        "5",
+        "8",
+        "2"
+      ]
+    },
+    "role": "Mentor",
+    "search_term": "bogdan go\u015fa",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "113523233929677847671",
+    "activity": {
+      "2023-05-07": "1"
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "",
+    "email": "srrr85287@gmail.com",
+    "fav_files": [],
+    "name": "Serena Rusu",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "thirdPiece",
+        "firstPiece",
+        "secondPiece"
+      ],
+      "missing_pieces_ids": [
+        "3",
+        "2",
+        "7",
+        "6",
+        "5",
+        "8",
+        "9",
+        "1",
+        "4"
+      ]
+    },
+    "role": "Student",
+    "search_term": "serena rusu",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "102193382735252667116",
+    "activity": {
+      "2023-05-07": "1"
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "",
+    "email": "cherechesandrei2006@gmail.com",
+    "fav_files": [],
+    "name": "Andrei",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "firstPiece",
+        "secondPiece",
+        "thirdPiece"
+      ],
+      "missing_pieces_ids": [
+        "3",
+        "2",
+        "5",
+        "4",
+        "7",
+        "8",
+        "1",
+        "9",
+        "6"
+      ]
+    },
+    "role": "Student",
+    "search_term": "andrei",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "iduser123",
+    "activity": {
+      "2023-10-25": "1"
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "OK",
+    "email": "123@yahoo.com",
+    "fav_files": [],
+    "name": "alex",
+    "perms": {
+      "canEditProject": true,
+      "canViewDescription": true,
+      "canCreateProject": true,
+      "canDeleteProject": false,
+      "canViewGoals": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "thirdPiece",
+        "firstPiece",
+        "secondPiece"
+      ],
+      "missing_pieces_ids": [
+        "3",
+        "5",
+        "9",
+        "2",
+        "8",
+        "4",
+        "1",
+        "6",
+        "7"
+      ]
+    },
+    "role": "Student",
+    "search_term": "alex",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "102316365007530590935",
+    "activity": {
+      "2023-12-10": {
+        "mark_favorite_file": "3"
+      },
+      "2023-11-22": {
+        "mark_favorite_file": "3"
+      },
+      "2024-03-31": {
+        "mark_favorite_file": "3"
+      },
+      "2024-06-16": {
+        "mark_favorite_file": "2"
+      },
+      "2024-04-03": {
+        "mark_favorite_file": "3"
+      },
+      "2024-05-26": {
+        "remove_material": "1"
+      },
+      "2024-05-23": {
+        "remove_material": "5",
+        "add_material": "4"
+      },
+      "2024-01-10": {
+        "mark_favorite_file": "3"
+      },
+      "2024-02-11": {
+        "add_review": "2"
+      },
+      "2024-07-25": {
+        "add_material": "2"
+      },
+      "2024-03-27": {
+        "mark_favorite_file": "3"
+      },
+      "2024-04-17": {
+        "add_material": "4"
+      },
+      "2024-04-28": {
+        "mark_favorite_file": "1",
+        "add_material": "2"
+      },
+      "2024-03-25": {
+        "create_project": "2",
+        "edit_project": "1"
+      },
+      "2024-04-04": {
+        "mark_favorite_file": "2"
+      },
+      "2024-01-14": {
+        "edit_account": "1",
+        "mark_favorite_file": "2",
+        "edit_project": "1",
+        "add_material": "2",
+        "create_project": "2",
+        "add_review": "2"
+      },
+      "2024-01-17": {
+        "mark_favorite_file": "2"
+      },
+      "2024-01-16": {
+        "mark_favorite_file": "3"
+      },
+      "2024-04-08": {
+        "mark_favorite_file": "1"
+      },
+      "2023-10-22": "1",
+      "2023-11-15": {
+        "mark_favorite_file": "3"
+      },
+      "2023-11-19": {
+        "mark_favorite_file": "3"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "abakbksajhbkjs",
+    "email": "petra.hedesiu@mentor.think-up.academy",
+    "fav_files": [
+      "SampleVideo_720x480_10mb",
+      "sample",
+      "SampleVideo_360x240_20mb",
+      "bookmarks",
+      "sample",
+      "sample",
+      "sample",
+      "sample",
+      "sample",
+      "sample",
+      "sample",
+      "sample",
+      "sample",
+      "yukon",
+      "yukon",
+      "yukon",
+      "yukon",
+      "yukon",
+      "bookmarks",
+      "bookmarks",
+      "sample",
+      "yukon",
+      "dummy",
+      "dummy",
+      "dummy",
+      "dummy",
+      "dummy",
+      "dummy",
+      "sample",
+      "yukon",
+      "yukon",
+      "sample",
+      "dummy",
+      "sample",
+      "yukon",
+      "sample",
+      "yukon",
+      "sample",
+      "dummy",
+      "sample",
+      "bookmarks",
+      "yukon",
+      "sample",
+      "dummy",
+      "dummy",
+      "dummy",
+      "yukon",
+      "yukon",
+      "sample",
+      "sample",
+      "sample",
+      "yukon",
+      "yukon",
+      "bookmarks",
+      "sample",
+      "bookmarks",
+      "adobe",
+      "sample",
+      "bookmarks",
+      "adobe",
+      "sample",
+      "sample",
+      "yukon",
+      "yukon",
+      "bookmarks",
+      "adobe",
+      "bookmarks",
+      "adobe",
+      "bookmarks",
+      "adobe",
+      "bookmarks",
+      "adobe",
+      "bookmarks",
+      "bookmarks",
+      "sample",
+      "yukon",
+      "bookmarks",
+      "yukon",
+      "bookmarks",
+      "bookmarks",
+      "yukon",
+      "bookmarks",
+      "yukon",
+      "yukon",
+      "adobe",
+      "bookmarks",
+      "yukon",
+      "bookmarks",
+      "102316365007530590935",
+      "102316365007530590935",
+      "102316365007530590935",
+      "bookmarks",
+      "yukon",
+      "bookmarks",
+      "yukon",
+      "bookmarks",
+      "bookmarks",
+      "adobe",
+      "adobe",
+      "yukon",
+      "bookmarks",
+      "adobe",
+      "yukon",
+      "yukon",
+      "yukon",
+      "yukon",
+      "yukon",
+      "yukon",
+      "yukon",
+      "yukon",
+      "yukon",
+      "yukon",
+      "yukon",
+      "sample",
+      "dummy",
+      "yukon",
+      "sample",
+      "sample",
+      "yukon",
+      "yukon",
+      "yukon",
+      "sample",
+      "yukon",
+      "sample",
+      "yukon",
+      "sample",
+      "bookmarks",
+      "adobe",
+      "yukon",
+      "sample",
+      "sample",
+      "sample",
+      "sample",
+      "dummy",
+      "yukon",
+      "SampleVideo_1280x720_1mb",
+      "setup",
+      "yukon",
+      "sample",
+      "yukon",
+      "adobe",
+      "bookmarks",
+      "sample",
+      "dummy",
+      "yukon",
+      "bookmarks",
+      "yukon",
+      "bookmarks",
+      "yukon",
+      "sample",
+      "yukon",
+      "adobe",
+      "yukon",
+      "adobe",
+      "sample",
+      "sample",
+      "sample",
+      "yukon",
+      "bookmarks",
+      "bookmarks",
+      "yukon",
+      "bookmarks",
+      "bookmarks",
+      "yukon",
+      "bookmarks",
+      "bookmarks",
+      "sample",
+      "adobe",
+      "bookmarks",
+      "yukon",
+      "adobe",
+      "file-sample",
+      "SampleVideo_360x240_30mb"
+    ],
+    "name": "Petra Hedesiu",
+    "perms": {
+      "canViewDescription": true,
+      "canCreateProject": true,
+      "canViewMaterials": true,
+      "canCreateFeedback": true,
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canViewFeedback": true
+    },
+    "personal_objectives": "NA",
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "firstPiece",
+        "thirdPiece",
+        "secondPiece"
+      ],
+      "missing_pieces_ids": [
+        "3",
+        "9",
+        "6",
+        "5",
+        "4",
+        "8",
+        "7",
+        "1",
+        "2"
+      ]
+    },
+    "role": "Mentor",
+    "search_term": "petra hedesiu",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {
+      "linkedin": "https://www.linkedin.com/in/petra-hedesiu"
+    }
+  },
+  {
+    "id": "111013523520296259873",
+    "activity": {
+      "2023-12-10": {
+        "create_account": "1",
+        "mark_favorite_file": "3"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "",
+    "email": "hedesiupetra@gmail.com",
+    "fav_files": [
+      "bookmarks",
+      "sample",
+      "yukon",
+      "sample",
+      "adobe",
+      "yukon",
+      "bookmarks",
+      "dummy",
+      "sample",
+      "bookmarks",
+      "sample",
+      "file-sample",
+      "file-sample",
+      "file-sample",
+      "bookmarks",
+      "adobe",
+      "file-sample",
+      "sample",
+      "dummy"
+    ],
+    "name": "Petra Hedesiu",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "thirdPiece",
+        "secondPiece",
+        "firstPiece"
+      ],
+      "missing_pieces_ids": [
+        "6",
+        "9",
+        "7",
+        "2",
+        "8",
+        "4",
+        "5",
+        "3",
+        "1"
+      ]
+    },
+    "role": "Student",
+    "search_term": "petra hedesiu",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  },
+  {
+    "id": "113024275026088069908",
+    "activity": {
+      "2024-04-20": {
+        "create_account": "1"
+      }
+    },
+    "cover_picture": "default",
+    "cover_picture_extension": ".png",
+    "description": "Salut.",
+    "email": "marinescualexandru2007@gmail.com",
+    "fav_files": [],
+    "name": "Alexandru Marinescu",
+    "perms": {
+      "canEditProject": true,
+      "canDeleteProject": false,
+      "canCreateProject": true
+    },
+    "personal_objectives": [],
+    "profile_picture": "default",
+    "profile_picture_extension": ".png",
+    "puzzle": {
+      "id": "puzzleID1",
+      "acquired_pieces_ids": [],
+      "total_pieces_ids": [
+        "firstPiece",
+        "thirdPiece",
+        "secondPiece"
+      ],
+      "missing_pieces_ids": [
+        "8",
+        "1",
+        "6",
+        "4",
+        "5",
+        "9",
+        "7",
+        "2",
+        "3"
+      ]
+    },
+    "role": "Student",
+    "search_term": "alexandru marinescu",
+    "settings": {
+      "language": "ro",
+      "notifications": true,
+      "theme": false
+    },
+    "social_connections": {}
+  }
+]
