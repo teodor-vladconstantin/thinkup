@@ -49,8 +49,10 @@ services:
     env_file:
       - ../platform-frontend/.env.local
     environment:
-      # Revert to standard port 3000 used in Auth0 console
-      - AUTH0_BASE_URL=http://localhost:3000
+      # Ensure this is set in your .env.local file!
+      # Local: http://localhost:3000
+      # Production: https://your-domain.com
+      - AUTH0_BASE_URL=${AUTH0_BASE_URL:-http://localhost:3000}
     # Expose port 3000 directly to host so you can bypass Nginx
     ports:
       - "3000:3000"

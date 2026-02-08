@@ -57,7 +57,16 @@ cd ../platform-frontend
 # Creează fișierul .env.local
 nano .env.local
 ```
+
 Lipește conținutul fișierului tău local `.env.local` (Auth0 Secret, Client ID, etc.).
+
+⚠️ **IMPORTANT PENTRU PRODUCȚIE:**
+Caută linia `AUTH0_BASE_URL` și schimb-o din `http://localhost:3000` în adresa site-ului tău real:
+```properties
+AUTH0_BASE_URL=https://domeniul-tau.ro
+```
+*Dacă o lași pe localhost, login-ul nu va merge!*
+
 *   Apasă `Ctrl+O` apoi `Enter` pentru a salva.
 *   Apasă `Ctrl+X` pentru a ieși.
 
