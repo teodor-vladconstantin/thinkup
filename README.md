@@ -8,7 +8,12 @@ Acesta este repository-ul central pentru platforma **ThinkUp**. Proiectul este o
 - **`platform-backend/`**: API-ul construit cu **Python Flask** și scripturile de bază de date.
 - **`platform-backend/docker-compose.yml`**: Configurația principală pentru a rula toată infrastructura local.
 
-## 🚀 Cum să rulezi proiectul (Docker)
+## � Documentație
+
+*   **[ONBOARDING.md](ONBOARDING.md)**: Ghid pentru programatori noi (cum să instalezi și să rulezi local).
+*   **[DEPLOY_VPS.md](DEPLOY_VPS.md)**: Ghid pentru migrarea pe server de producție (VPS Hostico/AWS/etc).
+
+## �🚀 Cum să rulezi proiectul (Docker)
 
 Cea mai simplă metodă de a porni aplicația este folosind Docker Compose.
 

@@ -1,0 +1,139 @@
+# 🌐 Ghid de Migrare pe VPS (Hostico, DigitalOcean, AWS, etc.)
+
+Acest ghid explică pas cu pas cum să muți aplicația ThinkUp de pe dezvoltare locală pe un server de producție (VPS).
+
+---
+
+## 🏗️ 1. Pregătirea Serverului (VPS)
+
+Presupunem că ai cumpărat un VPS de la Hostico (sau alt furnizor) și ai primit datele de acces (IP și Root Password). Sistemul de operare recomandat este **Ubuntu 22.04 LTS** sau **20.04 LTS**.
+
+### 1.1 Conectează-te la VPS
+Deschide un terminal (PowerShell sau CMD pe Windows) și rulează:
+```bash
+ssh root@<ip-ul-tau-vps>
+# Exemplu: ssh root@89.123.45.67
+```
+*Introdu parola când ți se cere (nu se va vedea pe ecran când tastezi).*
+
+### 1.2 Instalează Docker și Git
+Odată conectat pe server, rulează aceste comenzi pentru a instala tot ce e necesar:
+
+```bash
+# Actualizează sistemul
+apt update && apt upgrade -y
+
+# Instalează Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+
+# Instalează Docker Compose (dacă nu s-a instalat automat)
+apt install docker-compose-plugin -y
+```
+
+---
+
+## 📥 2. Instalarea Aplicației
+
+### 2.1 Clonează Repository-ul
+Deoarece repository-ul este privat, vei avea nevoie de un **Personal Access Token (PAT)** GitHub sau să folosești SSH Keys. Varianta cu HTTPS + Token e cea mai simplă pe moment.
+
+```bash
+# Clonează proiectul
+git clone https://github.com/teodor-vladconstantin/thinkup.git
+
+# Intră în folder
+cd thinkup/platform-backend
+```
+*Când îți cere parola de GitHub, introdu Token-ul, nu parola contului tău.*
+
+### 2.2 Configurează Secretele (.env)
+Trebuie să creezi fișierul cu variabilele secrete pentru frontend (Auth0).
+
+```bash
+# Mergi la frontend
+cd ../platform-frontend
+
+# Creează fișierul .env.local
+nano .env.local
+```
+Lipește conținutul fișierului tău local `.env.local` (Auth0 Secret, Client ID, etc.).
+*   Apasă `Ctrl+O` apoi `Enter` pentru a salva.
+*   Apasă `Ctrl+X` pentru a ieși.
+
+---
+
+## 🚀 3. Pornirea Aplicației
+
+Înapoi în folderul de backend:
+```bash
+cd ../platform-backend
+
+# Pornește serverele (în background)
+docker compose up --build -d
+```
+Acum aplicația rulează pe portul 80 pe server!
+
+---
+
+## 💾 4. Restaurarea Datelor
+
+Pe serverul nou, baza de date este goală. Vom folosi sistemul de seeding creat anterior pentru a importa datele.
+
+```bash
+docker exec -it thinkup-app python scripts/load_db_from_json.py
+```
+*Acesta va lua JSON-urile din folderul `seed_data` (care au venit prin Git) și le va băga în baza de date locală a VPS-ului.*
+
+---
+
+## 🔒 5. Conectarea la Domeniu (Cloudflare Tunnel)
+
+Cea mai sigură și simplă metodă de a scoate site-ul pe internet (cu HTTPS/lăcățel verde) fără să te complici cu certificate SSL manuale este **Cloudflare Tunnel**.
+
+### 5.1 Instalează Cloudflared pe VPS
+```bash
+# Descarcă pachetul
+wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
+
+# Instalează
+dpkg -i cloudflared-linux-amd64.deb
+```
+
+### 5.2 Creează Tunelul
+1.  Loghează-te (vei primi un link în terminal, copiază-l în browser-ul tău de acasă):
+    ```bash
+    cloudflared tunnel login
+    ```
+2.  Creează tunelul:
+    ```bash
+    cloudflared tunnel create thinkup-production
+    ```
+3.  Leagă tunelul de domeniul tău (ex: app.thinkup.ro):
+    ```bash
+    # Înlocuiește cu numele tunelului și domeniul tău
+    cloudflared tunnel route dns thinkup-production app.thinkup.ro
+    ```
+4.  Pornește tunelul:
+    ```bash
+    # Rutează traficul către Nginx (port 80)
+    cloudflared tunnel run --url http://localhost:80 thinkup-production
+    ```
+
+💡 **Sfat Pro:** Pentru ca tunelul să rămână pornit și după ce închizi terminalul, instalează-l ca serviciu:
+```bash
+cloudflared service install <token-ul-tau-din-dashboard-cloudflare>
+```
+*(Token-ul îl iei din dashboard-ul Cloudflare Zero Trust -> Access -> Tunnels dacă vrei să faci asta din interfață, sau urmezi ghidul de CLI pentru servicii).*
+
+---
+
+## ✅ Rezumat
+1.  Ai luat VPS.
+2.  Ai instalat Docker.
+3.  Ai clonat codul.
+4.  `docker compose up -d`
+5.  Ai importat datele: `scripts/load_db_from_json.py`
+6.  Ai pornit Tunnel-ul Cloudflare.
+
+Gata! Site-ul e live.
