@@ -7,7 +7,7 @@ services:
     container_name: thinkup-db
     restart: always
     # Optimized for lower resource usage in dev/small VPS
-    command: --smp 1 --memory 2G --overprovisioned 1 --alternator-port=8000 --alternator-write-isolation=always
+    command: --smp 1 --memory 1G --overprovisioned 1 --alternator-port=8000 --alternator-write-isolation=always
     volumes:
       - scylla-data:/var/lib/scylla
     ports:
@@ -28,6 +28,7 @@ services:
       - AWS_ACCESS_KEY_ID=local
       - AWS_SECRET_ACCESS_KEY=local
       - AWS_REGION=eu-central-1
+      - AWS_DEFAULT_REGION=eu-central-1
       - FLASK_ENV=production
     volumes:
       # Mount local_storage so uploads persist on your actual disk
