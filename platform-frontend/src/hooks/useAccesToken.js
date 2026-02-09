@@ -7,43 +7,25 @@ const useAccesToken = () => {
   const { user, error, isLoading } = useUser();
 
   const getToken = async () => {
-    let response = await axios.post("https://dev-v37jjjci.us.auth0.com/oauth/token", {
-      client_id: "MWmWygbllntrOPhq45d6K0BbF8HoTmhU",
-      client_secret: "G0MndWebolbolF7pCp6eRH27CtwRUVMheC5pSJWw_2yCC9hbtgezrmBLiuBZpTFi",
-      audience: "https://test-api/api",
-      grant_type: "client_credentials"
-    });
+    let response = await axios.get("/api/token");
     return response.data.access_token;
   }
 
-  useEffect(async () => {
-    if (user != undefined) {
-      let temp_tok = await getToken();
-      setAccesToken(temp_tok);
-      //axios.defaults.headers.common['authorization'] = 'Bearer ' + temp_tok
-        /* response = await axios.post("https://dev-v37jjjci.us.auth0.com/oauth/token",{
-            "client_id":"MWmWygbllntrOPhq45d6K0BbF8HoTmhU",
-            "client_secret":"G0MndWebolbolF7pCp6eRH27CtwRUVMheC5pSJWw_2yCC9hbtgezrmBLiuBZpTFi",
-            "audience":"https://test-api/api",
-            "grant_type":"client_credentials"
-            });
-
-        /*const response = await axios.post("https://dev-v37jjjci.us.auth0.com/oauth/token",{
-            "client_id":"MWmWygbllntrOPhq45d6K0BbF8HoTmhU",
-            "client_secret":"G0MndWebolbolF7pCp6eRH27CtwRUVMheC5pSJWw_2yCC9hbtgezrmBLiuBZpTFi",
-            "audience":"https://test-api/api",
-            "grant_type":"authorization_code",
-            "redirect_uri":"http://localhost:3000/api/auth/callback"
-            });*/
-
-
-        // console.log("token response", response);
-        return("response.data.access_token")
-    }
-    else {
-      setAccesToken("");
-      //axios.defaults.headers.common['authorization'] = ''
-    }
+  useEffect(() => {
+    const fetchToken = async () => {
+      if (user != undefined) {
+        try {
+          const temp_tok = await getToken();
+          setAccesToken(temp_tok);
+        } catch (e) {
+          console.error("Error fetching token:", e);
+        }
+      }
+      else {
+        setAccesToken("");
+      }
+    };
+    fetchToken();
   }, [user]);
 
   return AccesToken;

@@ -15,6 +15,22 @@ services:
     networks:
       - thinkup-net
 
+  # GUI for Viewing Database (DynamoDB Admin)
+  db-viewer:
+    image: aaronshaf/dynamodb-admin
+    container_name: thinkup-db-viewer
+    ports:
+      - "8001:8001"
+    environment:
+      DYNAMO_ENDPOINT: "http://scylladb:8000"
+      AWS_REGION: "eu-central-1"
+      AWS_ACCESS_KEY_ID: "local"
+      AWS_SECRET_ACCESS_KEY: "local"
+    depends_on:
+      - scylladb
+    networks:
+      - thinkup-net
+
   # Flask Backend Application
   backend:
     build: .
@@ -29,6 +45,7 @@ services:
       - AWS_SECRET_ACCESS_KEY=local
       - AWS_REGION=eu-central-1
       - AWS_DEFAULT_REGION=eu-central-1
+      - STORAGE_MODE=local
       - FLASK_ENV=production
     volumes:
       # Mount local_storage so uploads persist on your actual disk
