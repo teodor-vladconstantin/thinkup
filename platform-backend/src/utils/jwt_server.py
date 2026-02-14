@@ -3,7 +3,7 @@ from insertoknameAuthlibFork.integrations.flask_oauth2 import ResourceProtector
 
 require_auth = ResourceProtector()
 validator = Auth0JWTBearerTokenValidator(
-    "dev-v37jjjci.us.auth0.com",
-    "https://test-api/api"
+    "dev-2ex6kfwedwudpdul.eu.auth0.com",
+    "https://thinkup-api"
 )
 require_auth.register_token_validator(validator)

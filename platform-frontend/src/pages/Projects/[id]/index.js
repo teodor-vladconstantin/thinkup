@@ -250,7 +250,7 @@ const Project = () => {
                 </div>
 
                 <img
-                    src={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/thumbnails/${ProjectData.thumbnail}`}
+                    src={`${process.env.NEXT_PUBLIC_API_URL || ''}/thumbnails/${ProjectData.thumbnail}`}
                     className={styles.ProjectImage}
                 />
             </div>

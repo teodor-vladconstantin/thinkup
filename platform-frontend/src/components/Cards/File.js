@@ -120,7 +120,7 @@ const File = (props) => {
     const showDownloadIcon = () => {
         if (props.action == "download") {
             return (
-                <a href={`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000'}/open-school/download/${props.id}?extension=${props.extension.toLowerCase()}`} download>
+                <a href={`${process.env.NEXT_PUBLIC_API_URL || ''}/open-school/download/${props.id}?extension=${props.extension.toLowerCase()}`} download>
                     <svg
                         width="30"
                         height="30"

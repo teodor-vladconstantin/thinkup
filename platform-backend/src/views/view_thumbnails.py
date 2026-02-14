@@ -8,13 +8,13 @@ urlThumbnails = Blueprint('views', __name__)
 apiThumbnails = API_CRUD_THUMBNAILS()
 
 @urlThumbnails.route('/thumbnails/<string:id>', methods=['GET'])
-def getThumbnail(idOfThumbnail: str):
+def getThumbnail(id: str):
   """Get a thumbnail from database
 
   Args:
-      idOfThumbnail (str): id of the thumbnail
+      id (str): id of the thumbnail
 
   Returns:
       dict: dicitonary of the thumbnail
   """
-  return apiThumbnails.getThumbnail(idOfThumbnail)
+  return apiThumbnails.getThumbnail(id)
