@@ -1,6 +1,7 @@
 import flask
 from flask_cors import CORS
 
+from utils.logger import setup_logger
 from model.entity.open_school.open_school import OPEN_SCHOOL
 from views.view_files import urlFiles
 from views.view_gmail_contact import urlContact
@@ -15,8 +16,8 @@ from views.view_thumbnails import urlThumbnails
 from views.view_users import urlUser
 from views.views import urlBP
 
-print("**********************************************")
-print("Reloading Backend...")
+logger = setup_logger(__name__)
+logger.info("Reloading Backend...")
 app = flask.Flask(__name__)
 # Enable CORS for all domains and routes
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
