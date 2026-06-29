@@ -7,11 +7,11 @@ services:
     container_name: thinkup-db
     restart: always
     # Optimized for lower resource usage in dev/small VPS
-    command: --smp 1 --memory 1G --overprovisioned 1 --alternator-port=8000 --alternator-write-isolation=always
+    command: --smp 1 --memory 400M --overprovisioned 1 --reactor-backend epoll --unsafe-bypass-fsync 1 --alternator-port=8000 --alternator-write-isolation=always
     volumes:
       - scylla-data:/var/lib/scylla
-    ports:
-      - "8000:8000"
+    expose:
+      - "8000"
     networks:
       - thinkup-net
 
@@ -19,8 +19,8 @@ services:
   db-viewer:
     image: aaronshaf/dynamodb-admin
     container_name: thinkup-db-viewer
-    ports:
-      - "8001:8001"
+    expose:
+      - "8001"
     environment:
       DYNAMO_ENDPOINT: "http://scylladb:8000"
       AWS_REGION: "eu-central-1"
@@ -86,8 +86,10 @@ services:
     restart: always
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
+      - /etc/letsencrypt:/etc/letsencrypt:ro
     depends_on:
       - backend
     networks:
