@@ -14,6 +14,7 @@ const NewAccount = () =>{
     const [FullName,setFullName] = useState("");
     const [Email,setEmail] = useState("");
     const [Description,setDescription] = useState("");
+    const [Error,setError] = useState("");
     const router = useRouter();
     const User = useMyUserContext();
     const updateUser = useMyUserUpdate();
@@ -25,13 +26,22 @@ const NewAccount = () =>{
         }
     },[User])
 
-    const addUser =() =>{
+    const addUser = () => {
+        if (!FullName || FullName.trim().length === 0) {
+            setError("Numele complet este obligatoriu.");
+            return;
+        }
+        if (FullName.trim().length > 50) {
+            setError("Numele complet este prea lung (maxim 50 de caractere).");
+            return;
+        }
+        setError("");
         updateUser({
             'case':'POST',
             'data':{
-                'name':FullName,
-                'email':Email,
-                'description':Description
+                'name': FullName,
+                'email': Email,
+                'description': Description
             }
         })
     }
@@ -51,6 +61,7 @@ const NewAccount = () =>{
                 value={Description} onChange={(e)=>setDescription(e.target.value)}
                 width="675"
             />
+            {Error && <p style={{color: "red", fontSize: "14px", margin: "8px 0"}}>{Error}</p>}
             <div className={styles.NewAccountButtonDiv}>
                 <AccentButton text="Create" onClick={()=>addUser()}>
                     <svg width="21"height="22"viewBox="0 0 21 22"fill="none"xmlns="http://www.w3.org/2000/svg">

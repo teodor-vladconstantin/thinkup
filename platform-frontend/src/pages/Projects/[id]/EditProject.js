@@ -19,6 +19,7 @@ const EditProject = () => {
     const [ProjectDescription, setProjectDescription] = useState("");
     const [File, setFile] = useState(null);
     const [AreaOfImplementation, setAreaOfImplementation] = useState("Select");
+    const [Error, setError] = useState("");
 
     const getProjectData = async () => {
         const response = await axios.get(
@@ -60,11 +61,22 @@ const EditProject = () => {
     };
 
     const EditProject = async () => {
+        if (ProjectTitle && ProjectTitle.length > 50) {
+            setError("Titlul proiectului este prea lung (maxim 50 de caractere).");
+            return;
+        }
+        if (ProjectDescription && ProjectDescription.length > 200) {
+            setError(
+                "Descrierea proiectului este prea lungă (maxim 200 de caractere)."
+            );
+            return;
+        }
         if (
-            !verifyText(ProjectTitle, 20) ||
+            !verifyText(ProjectTitle, 50) ||
             !verifyText(ProjectDescription, 200)
         )
             return;
+        setError("");
 
         const formdata = new FormData();
 
@@ -128,6 +140,7 @@ const EditProject = () => {
                     onChange={(e) => setProjectDescription(e.target.value)}
                     width="675"
                 />
+                {Error && <p style={{color: "red", fontSize: "14px", margin: "8px 0"}}>{Error}</p>}
                 <div className={styles.EditProjectButtonDiv}>
                     <AccentButton text="Save" onClick={() => EditProject()}>
                         <svg

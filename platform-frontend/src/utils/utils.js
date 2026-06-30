@@ -9,10 +9,11 @@ export const getCurentDate = ()=>{
     return date.getDate() +'/'+date.getMonth()+'/'+date.getFullYear();
 }
 
-export const verifyText = (text,maxLength) =>{
-    console.log(text);
-    console.log(text.length);
-    if(text.length>maxLength)
-        return false;
+export const verifyText = (text, maxLength, required = false) => {
+    if (text == undefined || text == null) {
+        return !required;
+    }
+    if (required && text.trim().length === 0) return false;
+    if (text.length > maxLength) return false;
     return true;
 }

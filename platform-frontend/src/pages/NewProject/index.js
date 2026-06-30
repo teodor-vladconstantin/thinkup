@@ -27,9 +27,27 @@ const NewProject = () => {
         "STEM"
     );
 
+    const showProjectError = (message) => {
+        const errorDiv = document.querySelector(".errorProject");
+        errorDiv.textContent = message;
+        errorDiv.style.display = "block";
+    };
+
     const CreateProject = async () => {
         const id = createUniqueId();
         const date = getCurentDate();
+        if (ProjectName.length > 50) {
+            showProjectError(
+                "Numele proiectului este prea lung (maxim 50 de caractere)."
+            );
+            return;
+        }
+        if (Description.length > 700) {
+            showProjectError(
+                "Descrierea este prea lungă (maxim 700 de caractere)."
+            );
+            return;
+        }
         if (
             !verifyText(ProjectName, 50) ||
             !verifyText(Description, 700) ||
@@ -55,7 +73,7 @@ const NewProject = () => {
             }
         } catch (err) {
             console.log(err);
-            document.querySelector(".errorProject").style.display = "block";
+            showProjectError("Invalid token! Please ask your mentor for a valid token.");
         }
     };
 
@@ -67,9 +85,7 @@ const NewProject = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <h1>Create a new project</h1>
-            <div className={styles.error + " errorProject"}>
-                Invalid token! Please ask your mentor for a valid token.
-            </div>
+            <div className={styles.error + " errorProject"}></div>
             <InputField
                 InputTitle="Token"
                 width="675"

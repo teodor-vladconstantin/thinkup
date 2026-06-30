@@ -54,11 +54,11 @@ const useMyUser = () => {
                 picture: `${process.env.NEXT_PUBLIC_API_URL}/storage/thinkup-profile-picture/${response.data.profile_picture}${response.data.profile_picture_extension}`,
                 cover_picture:`${process.env.NEXT_PUBLIC_API_URL}/storage/thinkup-user-cover-images/${response.data.cover_picture}${response.data.cover_picture_extension}`,
                 social_connections:{
-                    gitHub:response.data.social_connections.gitHub,
-                    twitter:response.data.social_connections.twitter,
-                    linkedin:response.data.social_connections.linkedin,
-                    instagram:response.data.social_connections.instagram,
-                    facebook:response.data.social_connections.facebook,
+                    gitHub:response.data.social_connections?.gitHub,
+                    twitter:response.data.social_connections?.twitter,
+                    linkedin:response.data.social_connections?.linkedin,
+                    instagram:response.data.social_connections?.instagram,
+                    facebook:response.data.social_connections?.facebook,
                 },
                 id: User.id,
                 settings: response.data.settings,
@@ -98,7 +98,7 @@ const useMyUser = () => {
     const deleteUser = async (data) => {};
 
     const editUser = async (data) => {
-        if (!verifyText(data.name, 20) || !verifyText(data.description, 200))
+        if (!verifyText(data.name, 50, true) || !verifyText(data.description, 200))
             return;
 
         const formdata = new FormData();
@@ -134,7 +134,7 @@ const useMyUser = () => {
 
     const addUser = async (data) => {
         //console.log(data);
-        if (!verifyText(data.name, 20) || !verifyText(data.description, 200))
+        if (!verifyText(data.name, 50, true) || !verifyText(data.description, 200))
             return;
         const response = await axios.post(
             `${process.env.NEXT_PUBLIC_API_URL}/users/${User.id}`,

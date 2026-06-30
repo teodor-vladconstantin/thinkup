@@ -18,6 +18,7 @@ const EditUser = () => {
     const [Description, setDescription] = useState("");
     const [File, setFile] = useState(null);
     const [CoverFile, setCoverFile] = useState(null);
+    const [Error, setError] = useState("");
 
     const User = useMyUserContext();
     const updateUser = useMyUserUpdate();
@@ -32,6 +33,19 @@ const EditUser = () => {
     }, [User]);
 
     const EditUser = () => {
+        if (!FullName || FullName.trim().length === 0) {
+            setError("Numele complet este obligatoriu.");
+            return;
+        }
+        if (FullName.trim().length > 50) {
+            setError("Numele complet este prea lung (maxim 50 de caractere).");
+            return;
+        }
+        if (Description && Description.length > 200) {
+            setError("Descrierea este prea lungă (maxim 200 de caractere).");
+            return;
+        }
+        setError("");
         updateUser({
             case: "PUT",
             data: {
@@ -93,6 +107,7 @@ const EditUser = () => {
                     onChange={(e) => setDescription(e.target.value)}
                     width="675"
                 />
+                {Error && <p style={{color: "red", fontSize: "14px", margin: "8px 0"}}>{Error}</p>}
                 <div className={styles.EditUserButtonDiv}>
                     <AccentButton text="Save" onClick={() => EditUser()}>
                         <svg
