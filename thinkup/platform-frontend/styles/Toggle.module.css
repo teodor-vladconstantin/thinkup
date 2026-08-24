@@ -1,0 +1,37 @@
+.Check{
+    position:relative;
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+}
+
+.Slider{
+    position:absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor:pointer;
+    background-color: var(--color-primary);
+    border-radius: 2rem;
+    transition: 0.4s;
+}
+.Slider:before{
+    position: absolute;
+    content: "";
+    width: 22px;
+    height: 22px;
+    border-radius: 2rem;
+    left: 4px;
+    top: 4px;
+    background-color: var(--color-accent-primary);
+    transition: 0.4s;
+}
+
+input:checked + .Slider{
+    background-color: var(--color-secondary);
+}
+
+input:checked + .Slider:before{
+    transform: translateX(30px);
+}

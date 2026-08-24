@@ -1,0 +1,47 @@
+.ScrollContainer {
+    max-height: 60vh;
+    margin-block: 3rem;
+}
+
+
+.NewMaterialCircleLogo{
+    margin-right: 2rem;
+}
+
+.NewMaterialTitleInput{
+    outline: none;
+    background: var(--color-primary);
+    color: var(--color-text-primary);
+    border: none;
+    font-size: 2rem;
+    margin-bottom:0.3rem;
+    padding: 0;
+}
+.NewMaterialDate{
+    margin: 0;
+    padding: 0;
+    color: var(--color-text-secondary);
+}
+
+.NewMaterialPopUpTopBar{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.NewMaterialDescription{
+    margin-bottom: 4rem;
+}
+
+.NewMaterialButtonDiv{
+    width: 100%;
+    justify-content: flex-end;
+    display: flex;
+    gap:30px;
+}
+
+.FilesContainer{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding-bottom: 2rem;
+}

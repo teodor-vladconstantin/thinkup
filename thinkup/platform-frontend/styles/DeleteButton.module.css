@@ -1,0 +1,10 @@
+.Container {
+    background: var(--color-cancel-primary);
+    color: var(--color-background);
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    cursor: pointer;
+}

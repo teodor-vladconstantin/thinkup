@@ -1,0 +1,9 @@
+.DefaultContainer2{
+    border: 2px solid var(--color-accent-primary);
+    border-radius: 1rem;
+    transition: 0.5s;
+}
+
+.DefaultContainer2:hover{
+    background-color: var(--color-accent-primary);
+}

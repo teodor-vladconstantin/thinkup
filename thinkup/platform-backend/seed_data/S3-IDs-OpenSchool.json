@@ -1,0 +1,142 @@
+[
+  {
+    "id": "dummy",
+    "extension": ".pdf",
+    "public": true,
+    "search_term": "dummy",
+    "total_views": "0"
+  },
+  {
+    "id": "SampleVideo_720x480_20mb",
+    "extension": ".mp4",
+    "public": false,
+    "search_term": "samplevideo_720x480_20mb",
+    "total_views": "0"
+  },
+  {
+    "id": "SampleVideo_720x480_10mb",
+    "extension": ".mp4",
+    "public": false,
+    "search_term": "samplevideo_720x480_10mb",
+    "total_views": "0"
+  },
+  {
+    "id": "SampleVideo_360x240_30mb",
+    "extension": ".mp4",
+    "public": true,
+    "search_term": "samplevideo_360x240_30mb",
+    "total_views": "10"
+  },
+  {
+    "id": "SampleVideo_1280x720_1mb",
+    "extension": ".mp4",
+    "public": true,
+    "search_term": "samplevideo_1280x720_1mb",
+    "total_views": "8"
+  },
+  {
+    "id": "Expenses",
+    "extension": ".xlsx",
+    "public": false,
+    "search_term": "expenses",
+    "total_views": "0"
+  },
+  {
+    "id": "SampleVideo_1280x720_2mb",
+    "extension": ".mp4",
+    "public": false,
+    "search_term": "samplevideo_1280x720_2mb",
+    "total_views": "0"
+  },
+  {
+    "id": "sample",
+    "extension": ".pdf",
+    "public": true,
+    "search_term": "sample",
+    "total_views": "0"
+  },
+  {
+    "id": "Program Bootcamp 2022",
+    "extension": ".pdf",
+    "public": false,
+    "search_term": "program bootcamp 2022",
+    "total_views": "0"
+  },
+  {
+    "id": "dynamorq",
+    "extension": ".txt",
+    "public": true,
+    "search_term": "dynamorq",
+    "total_views": "0"
+  },
+  {
+    "id": "file-sample",
+    "extension": ".pdf",
+    "public": true,
+    "search_term": "file-sample",
+    "total_views": "0"
+  },
+  {
+    "id": "imp",
+    "extension": ".txt",
+    "public": false,
+    "search_term": "imp",
+    "total_views": "0"
+  },
+  {
+    "id": "DynamoRequests",
+    "extension": ".docx",
+    "public": false,
+    "search_term": "dynamorequests",
+    "total_views": "0"
+  },
+  {
+    "id": "bookmarks",
+    "extension": ".pdf",
+    "public": false,
+    "search_term": "bookmarks",
+    "total_views": "3"
+  },
+  {
+    "id": "cheats",
+    "extension": ".txt",
+    "public": true,
+    "search_term": "cheats",
+    "total_views": "0"
+  },
+  {
+    "id": "SampleVideo_360x240_20mb",
+    "extension": ".mp4",
+    "public": false,
+    "search_term": "samplevideo_360x240_20mb",
+    "total_views": "0"
+  },
+  {
+    "id": "yukon",
+    "extension": ".pdf",
+    "public": false,
+    "search_term": "yukon",
+    "total_views": "0"
+  },
+  {
+    "id": "setup",
+    "extension": ".py",
+    "public": false,
+    "search_term": "setup",
+    "total_views": "6"
+  },
+  {
+    "id": "adobe",
+    "extension": ".pdf",
+    "public": false,
+    "search_term": "adobe",
+    "total_views": "0"
+  },
+  {
+    "id": "main",
+    "extension": ".exe",
+    "public": false,
+    "search_term": "main",
+    "total_views": "0"
+  }
+]

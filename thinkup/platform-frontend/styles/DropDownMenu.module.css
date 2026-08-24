@@ -1,0 +1,21 @@
+.DropDownMenu{
+    position: relative;
+}
+.DropDownMenuOptions{
+    position:absolute;
+    top:100%;
+    left:-100%;
+    background-color: var(--color-background);
+    padding: 0.5rem 0;
+    z-index: 1;
+    border-radius: 0.5rem;
+}
+.DropDownMenuLinks{
+    margin: 0;
+    padding: 0.5rem 1.5rem;
+    width: 100%;
+    transition: 1s;
+}
+.DropDownMenuLinks:hover{
+    background: var(--color-primary);
+}

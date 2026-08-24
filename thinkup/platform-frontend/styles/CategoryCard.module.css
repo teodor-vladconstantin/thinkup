@@ -1,0 +1,25 @@
+.CategoryCard {
+    padding: 0.5rem 1.5rem;
+    background: var(--color-green);
+    color: var(--color-background);
+    border-radius: 0.5rem;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    text-transform: uppercase;
+    font-size: 0.865rem;
+    letter-spacing: 5px;
+    background: #c98cde;
+}
+
+.Ecological,
+.ECOLOGICAL,
+.ecological {
+    background: #7eda98;
+}
+
+.Stem,
+.STEM,
+.stem {
+    background: #85acf8;
+}

@@ -1,0 +1,66 @@
+.SearchBar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.5rem;
+    padding: 0.3rem 1rem;
+    transition: 1s;
+    background: var(--color-primary);
+}
+.SearchBarInput{
+    outline: none;
+    border: none;
+    margin-right: 1rem;
+    padding: 0.6rem 1rem;
+    width: 25vw;
+    transition: 1s;
+    font-size: 1rem;
+    font-weight: 400;
+    background: var(--color-primary);
+    color: var(--color-text-primary);
+}
+
+.SearchBarInput::-webkit-input-placeholder {
+    color: var(--color-text-secondary);
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.SearchBarInput::-moz-placeholder {
+    color: var(--color-text-secondary);
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.SearchBarInput:-ms-input-placeholder {
+    color: var(--color-text-secondary);
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.SearchBarInput::-ms-input-placeholder {
+    color: var(--color-text-secondary);
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.SearchBarInput::placeholder {
+    color: var(--color-text-secondary);
+    font-weight: 400;
+    font-size: 1rem;
+}
+
+.SearchBarBtn{
+    height: 1.5rem;
+    width: 1.5rem;
+    cursor: pointer;
+}
+
+.SearchTypeBtn{
+    height: 1.5rem;
+    width: 2.5rem;
+    cursor: pointer;
+    padding-right: 0.5rem;
+    border-right: 2px solid var(--color-accent-secondary);
+}
+

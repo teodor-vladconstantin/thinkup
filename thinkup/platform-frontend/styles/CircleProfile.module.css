@@ -1,0 +1,13 @@
+.CircleProfile {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.CircleImage {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+}

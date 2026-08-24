@@ -1,0 +1,9 @@
+Flask>=3.0.0
+boto3
+python-dotenv
+Authlib
+python-jose
+insertoknameAuthlibFork
+flask-cors
+Werkzeug>=3.0.0
+six

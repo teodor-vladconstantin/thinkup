@@ -1,0 +1,52 @@
+.Contact {
+    padding: 0 5rem 0 8rem;
+    max-height: 75vh;
+    width: auto;
+}
+
+.Contact h1 {
+    color: var(--color-text-primary);
+    font-weight: normal;
+    margin-top: 0;
+    margin-bottom: 5rem;
+}
+
+.Contact h4 {
+    margin-top: -10px;
+    margin-bottom: 12.5px;
+    font-weight: normal;
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 50px;
+}
+
+.Contact .formLine {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 75px;
+}
+
+.Contact .btnDiv {
+    margin: 50px 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: flex;
+    gap: 30px;
+}
+
+.error {
+    padding: 0.5rem 2rem;
+    background: var(--color-cancel-primary);
+    text-align: center;
+    color: var(--color-primary);
+    border-radius: 5px;
+    margin-top: -2rem;
+    display: none;
+}

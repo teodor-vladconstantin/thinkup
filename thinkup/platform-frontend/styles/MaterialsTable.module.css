@@ -1,0 +1,21 @@
+.MaterialsTableContainer{
+    padding: 2rem 3rem;
+    width: 100%;
+}
+.MaterialsTableTitle{
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+}
+.MaterialsTableContainer:hover{
+    background-color: var(--color-primary);
+}
+.NoMaterialText{
+    width: 100%;
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: 1.2rem;
+    padding: 0.5rem 0;
+}

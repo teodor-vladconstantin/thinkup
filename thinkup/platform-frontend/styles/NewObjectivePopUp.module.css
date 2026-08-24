@@ -1,0 +1,9 @@
+.NewObjectiveTextArea{
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.NewObjectiveButtonDiv {
+    display: flex;
+    justify-content: flex-start;
+}

@@ -1,0 +1,60 @@
+.Container {
+    background: var(--color-accent-secondary);
+    border-radius: 12px;
+    border: 2px solid var(--color-accent-primary);
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.Container a {
+    padding: 0.5rem 5rem;
+    margin: 0 !important;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    color: var(--color-text-secondary);
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+
+.Container a:hover,
+.Container a:focus {
+    color: var(--color-text-primary);
+    cursor: pointer;
+}
+
+.Container a span svg path {
+    -webkit-transition: 0.2s linear;
+    -o-transition: 0.2s linear;
+    transition: 0.2s linear;
+}
+
+.Container a:hover span svg path,
+.Container a:focus span svg path {
+    fill: var(--color-text-primary);
+}
+
+.Container a:active {
+    background: var(--color-accent-primary);
+    border-radius: 9px;
+}
+
+.Container span {
+    margin-top: 5px;
+    margin-left: 10px;
+}

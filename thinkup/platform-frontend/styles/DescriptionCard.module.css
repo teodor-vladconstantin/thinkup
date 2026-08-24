@@ -1,0 +1,20 @@
+.DescriptionCard {
+    padding: 2rem 3rem;
+    width: 100%;
+    color: var(--color-text-secondary);
+}
+.DescriptionTitle {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+}
+.DescriptionText {
+    padding: 0;
+    margin: 0;
+    color: var(--color-text-secondary);
+}
+.DescriptionCard:hover {
+    background-color: var(--color-primary);
+}

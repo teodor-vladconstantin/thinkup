@@ -1,0 +1,103 @@
+version: '3.8'
+
+services:
+  # ScyllaDB Alternator (The Database)
+  scylladb:
+    image: scylladb/scylla:5.4
+    container_name: thinkup-db
+    restart: always
+    # Optimized for lower resource usage in dev/small VPS
+    command: --smp 1 --memory 400M --overprovisioned 1 --reactor-backend epoll --unsafe-bypass-fsync 1 --alternator-port=8000 --alternator-write-isolation=always
+    volumes:
+      - scylla-data:/var/lib/scylla
+    expose:
+      - "8000"
+    networks:
+      - thinkup-net
+
+  # GUI for Viewing Database (DynamoDB Admin)
+  db-viewer:
+    image: aaronshaf/dynamodb-admin
+    container_name: thinkup-db-viewer
+    ports:
+      - "127.0.0.1:8001:8001"
+    environment:
+      DYNAMO_ENDPOINT: "http://scylladb:8000"
+      AWS_REGION: "eu-central-1"
+      AWS_ACCESS_KEY_ID: "local"
+      AWS_SECRET_ACCESS_KEY: "local"
+    depends_on:
+      - scylladb
+    networks:
+      - thinkup-net
+
+  # Flask Backend Application
+  backend:
+    build: .
+    container_name: thinkup-app
+    restart: always
+    depends_on:
+      - scylladb
+    environment:
+      # Connect to ScyllaDB container
+      - DYNAMODB_ENDPOINT_URL=http://scylladb:8000
+      - AWS_ACCESS_KEY_ID=local
+      - AWS_SECRET_ACCESS_KEY=local
+      - AWS_REGION=eu-central-1
+      - AWS_DEFAULT_REGION=eu-central-1
+      - STORAGE_MODE=local
+      - FLASK_ENV=production
+    volumes:
+      # Mount local_storage so uploads persist on your actual disk
+      - ./local_storage:/app/local_storage
+    networks:
+      - thinkup-net
+
+  # Next.js Frontend
+  frontend:
+    build:
+      context: ../platform-frontend
+      args:
+        # IMPORTANT: Set API URL to empty string so requests use relative paths (e.g., /projects)
+        # This makes the app work on localhost, VPS, or Cloudflare Tunnel without rebuilding
+        NEXT_PUBLIC_API_URL: ""
+    container_name: thinkup-frontend
+    restart: always
+    # Load environment variables from the frontend .env.local file
+    env_file:
+      - ../platform-frontend/.env.local
+    environment:
+      # Ensure this is set in your .env.local file!
+      # Local: http://localhost:3000
+      # Production: https://your-domain.com
+      - AUTH0_BASE_URL=${AUTH0_BASE_URL:-http://localhost:3000}
+    # Expose port 3000 directly to host so you can bypass Nginx
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - thinkup-net
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: thinkup-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+    depends_on:
+      - backend
+    networks:
+      - thinkup-net
+
+volumes:
+  scylla-data:
+
+networks:
+  thinkup-net:
+    driver: bridge

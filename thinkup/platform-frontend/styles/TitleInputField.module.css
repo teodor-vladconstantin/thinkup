@@ -1,0 +1,9 @@
+.TitleInputField{
+    outline: none;
+    background: var(--color-primary);
+    color: var(--color-text-primary);
+    border: none;
+    font-size: 2rem;
+    margin-bottom:0.3rem;
+    padding: 0;
+}

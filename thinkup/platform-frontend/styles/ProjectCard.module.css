@@ -1,0 +1,124 @@
+.ProjectCard {
+    padding: 1.5rem 2rem;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    cursor: pointer;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    position: relative;
+}
+
+.ProjectTitle {
+    position: relative;
+    font-family: "Playfair Display", serif;
+    font-weight: 400;
+    margin: 0;
+    font-size: 1.4rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    max-width: 18rem;
+}
+
+.ProjectCategory {
+    position: relative;
+    top: 10px;
+    width: -webkit-fit-content;
+    width: -moz-fit-content;
+    width: fit-content;
+    text-transform: uppercase;
+    color: white;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    padding: 0.2rem 0.7rem;
+    border-radius: 6px;
+    margin-bottom: 0px;
+    margin-bottom: 10px;
+    -webkit-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+    background: #c98cde;
+}
+
+.Ecological,
+.ECOLOGICAL,
+.ecological {
+    background: #7eda98;
+}
+
+.Stem,
+.STEM,
+.stem {
+    background: #85acf8;
+}
+
+.ProjectDescription {
+    position: relative;
+    color: var(--color-text-secondary);
+    height: 4rem;
+    margin-bottom: 2rem;
+    margin-top: 0;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    opacity: 0;
+    z-index: 1;
+}
+
+.ProjectThumbnail {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: 1rem;
+    opacity: 30%;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.ProjectCard:hover .ProjectDescription {
+    opacity: 1;
+}
+
+.ProjectCard:hover .ProjectCategory {
+    top: -5px;
+}
+
+.ProjectLinkIcon path {
+    fill: var(--color-text-secondary);
+    -webkit-transition: 0.5s;
+    -o-transition: 0.5s;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.ProjectCard:hover {
+    background-color: var(--color-accent-secondary);
+}
+
+.ProjectCard:hover .ProjectThumbnail {
+    opacity: 15%;
+}
+
+.ProjectCard:hover .ProjectDescription {
+    color: var(--color-text-primary);
+}
+
+.ProjectCard:hover .ProjectLinkIcon path {
+    fill: var(--color-text-primary);
+}
