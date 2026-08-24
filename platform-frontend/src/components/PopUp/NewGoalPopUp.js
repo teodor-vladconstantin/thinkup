@@ -78,7 +78,9 @@ const NewGoalPopUp = ({ className, close, addedgoal, projectId }) => {
         setDate(getCurentDate());
     }, []);
 
-    useEffect(() => createGoal());
+    useEffect(() => {
+        createGoal();
+    });
 
     return (
         <PopUpContainer className={styles.NewGoalPopUp + " " + className}>
