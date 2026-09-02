@@ -1,3 +1,5 @@
+import os
+
 import flask
 from flask_cors import CORS
 
@@ -19,8 +21,21 @@ from views.views import urlBP
 logger = setup_logger(__name__)
 logger.info("Reloading Backend...")
 app = flask.Flask(__name__)
-# Enable CORS for all domains and routes
-CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+
+allowed_origins = [
+    origin.strip()
+    for origin in os.getenv(
+        "ALLOWED_ORIGINS",
+        "http://localhost:3000,http://127.0.0.1:3000,https://thinkupacademy.ro",
+    ).split(",")
+    if origin.strip()
+]
+
+CORS(
+    app,
+    resources={r"/*": {"origins": allowed_origins}},
+    supports_credentials=True,
+)
 
 
 openSchool = OPEN_SCHOOL('thinkup-open-school')

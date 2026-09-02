@@ -1,4 +1,5 @@
 import os
+import re
 import shutil
 
 import boto3
@@ -14,6 +15,20 @@ region=os.getenv('REGION_NAME')
 STORAGE_MODE = os.getenv('STORAGE_MODE', 's3') # 's3' or 'local'
 LOCAL_STORAGE_PATH = os.path.join(os.getcwd(), 'local_storage')
 
+
+def secure_filename(filename):
+    if filename is None:
+        raise ValueError("Filename is required")
+
+    safe_name = os.path.basename(filename)
+    safe_name = safe_name.replace('\\', '/').split('/')[-1]
+    safe_name = re.sub(r'[^A-Za-z0-9._-]', '_', safe_name)
+    safe_name = safe_name.strip('._')
+    if not safe_name or safe_name in {'.', '..'}:
+        raise ValueError("Invalid filename")
+    return safe_name
+
+
 class S3_OPERATIONS:
   def __init__(self, Bucket):
     self.__bucket = Bucket
@@ -25,10 +40,10 @@ class S3_OPERATIONS:
   def Upload(self, fileObj, fileItself, isOpenSchool):
     if STORAGE_MODE == 'local':
         try:
-            file_path = os.path.join(self.__storage_path, fileItself.filename)
+            safe_name = secure_filename(fileItself.filename)
+            file_path = os.path.join(self.__storage_path, safe_name)
             fileItself.save(file_path)
-            # Reset cursor for consistency if needed, though 'save' usually consumes it
-            fileItself.seek(0) 
+            fileItself.seek(0)
             return "OK"
         except Exception as err:
             print(f"Local Upload Error: {err}")
