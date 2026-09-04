@@ -100,4 +100,4 @@ def updateGoal(id: str):
   if not _is_project_owner(project, goalJson.get('created_by')):
     abort(403, description="You are not authorized to update this goal")
 
-  apiGoals.updateGoal(goalJson)
+  return apiGoals.updateGoal(goalJson)
