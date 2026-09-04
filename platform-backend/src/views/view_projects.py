@@ -91,7 +91,7 @@ def deleteProject(id: str):
 
 @require_auth(None)
 @urlProject.route('/projects/<string:id>', methods=['POST'])
-@Utils.check_project_token
+# @Utils.check_project_token  # disabled: project creation no longer requires a token
 def addProject(id: str):
     """Add a project
 

@@ -120,7 +120,8 @@ class API_CRUD_PROJECTS:
     Returns:
         _type_: response
     """
-    self.__deleteProjectToken(project_token)
+    if project_token:
+      self.__deleteProjectToken(project_token)
     return self.__dbCrudProjects.addProject(ProjectEncoder.toJSON(project_object))
 
   def updateProject (self, projectToUpdate: dict, projectJson: dict, thumbnail):
