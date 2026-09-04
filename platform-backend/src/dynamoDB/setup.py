@@ -3,6 +3,7 @@ import os
 import boto3
 from dotenv import load_dotenv
 
+from dynamoDB.db_crud_challenges import DB_CRUD_CHALLENGES
 from dynamoDB.db_crud_goals import DB_CRUD_GOALS
 from dynamoDB.db_crud_material import DB_CRUD_MATERIAL
 from dynamoDB.db_crud_mentor_feedback import DB_CRUD_MENTOR_FEEDBACK
@@ -13,6 +14,7 @@ from dynamoDB.db_crud_projects import DB_CRUD_PROJECTS
 from dynamoDB.db_crud_reviews import DB_CRUD_REVIEWS
 from dynamoDB.db_crud_s3IDs import DB_CRUD_S3IDS
 from dynamoDB.db_crud_s3IDsOpenSchool import DB_CRUD_S3IDS_OPENSCHOOL
+from dynamoDB.db_crud_submissions import DB_CRUD_SUBMISSIONS
 from dynamoDB.db_crud_users import DB_CRUD_USERS
 
 load_dotenv()
@@ -60,6 +62,10 @@ def startSetup(whichTable: str):
         return DB_CRUD_REVIEWS(table)
     elif whichTable == "Mentor-Feedback":
         return DB_CRUD_MENTOR_FEEDBACK(table)
+    elif whichTable == "Challenges":
+        return DB_CRUD_CHALLENGES(table)
+    elif whichTable == "Submissions":
+        return DB_CRUD_SUBMISSIONS(table)
     return DB_CRUD_PROJECTS(table)
 
    

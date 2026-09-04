@@ -3,6 +3,7 @@ from flask_cors import CORS
 
 from utils.logger import setup_logger
 from model.entity.open_school.open_school import OPEN_SCHOOL
+from views.view_challenges import urlChallenges
 from views.view_files import urlFiles
 from views.view_gmail_contact import urlContact
 from views.view_goals import urlGoals
@@ -12,6 +13,7 @@ from views.view_openSchool import urlOpenSchool
 from views.view_personal_objectives import urlPersonalObjectives
 from views.view_projects import urlProject
 from views.view_reviews import urlReviews
+from views.view_submissions import urlSubmissions
 from views.view_thumbnails import urlThumbnails
 from views.view_users import urlUser
 from views.views import urlBP
@@ -37,6 +39,8 @@ app.register_blueprint(urlPersonalObjectives, name='PersObj')
 app.register_blueprint(urlReviews, name='Rev')
 app.register_blueprint(urlBP, name='testURL')
 app.register_blueprint(urlFeedback, name="Feedb")
+app.register_blueprint(urlChallenges, name="Chall")
+app.register_blueprint(urlSubmissions, name="Subm")
 
 
 if __name__ == "__main__":
