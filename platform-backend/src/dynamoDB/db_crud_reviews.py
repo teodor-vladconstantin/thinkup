@@ -39,8 +39,8 @@ class DB_CRUD_REVIEWS:
             Key={
                 'id': reviewObjJson['id']
             },
-            UpdateExpression = "set #uid=:#u #rvd=:#d #rvr=:#r",
-            ExpressionAttributes = {
+            UpdateExpression = "set #uid = :u, #rvd = :d, #rvr = :r",
+            ExpressionAttributeValues = {
                 ':u': reviewObjJson['userID'],
                 ':d': reviewObjJson['review_description'],
                 ':r': reviewObjJson['review_rating']
@@ -50,7 +50,7 @@ class DB_CRUD_REVIEWS:
                 "#rvd": "review_description",
                 "#rvr": "review_rating"
             },
-            ReturnValue="UPDATED_NEW"
+            ReturnValues="UPDATED_NEW"
         )
         return response
 

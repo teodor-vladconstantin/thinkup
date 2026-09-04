@@ -109,7 +109,7 @@ class API_CRUD_FILES:
       materialJson = self.__dbCrudMaterial.getMaterial(fileJson['materialId'])
       materialJson['files'].remove(idOfTheFile)
 
-      return self.__dbCrudMaterial.updateMaterial(idOfTheFile, materialJson)
+      return self.__dbCrudMaterial.updateMaterial(fileJson['materialId'], materialJson)
     return "ok"
 
   def getDetails(self, id: str):
