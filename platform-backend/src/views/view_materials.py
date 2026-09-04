@@ -4,7 +4,7 @@ from api.api_crud_files import API_CRUD_FILES
 from api.api_crud_materials import API_CRUD_MATERIALS
 from api.api_crud_projects import API_CRUD_PROJECTS
 from api.api_track_activity import updateActivity
-from flask import Blueprint, request
+from flask import Blueprint, request, abort
 from utils.jwt_server import require_auth
 
 urlMaterial = Blueprint('views', __name__)
@@ -14,6 +14,17 @@ apiFiles = API_CRUD_FILES()
 apiProjects = API_CRUD_PROJECTS()
 
 apiMaterial = API_CRUD_MATERIALS(apiProjects, apiFiles)
+
+
+def _is_project_owner(project, user_id):
+  """Check if user_id is the creator or an admin of the given project dict.
+
+  Note: user_id is a value the client supplies (see PUT /projects/<id> for
+  why - the JWT is a service-to-service M2M token, not per-user).
+  """
+  if not project or "ErrorMessage" in project or not user_id:
+    return False
+  return project.get('createdBy') == user_id or user_id in project.get('adminList', [])
 
 
 @urlMaterial.route('/materials/<string:id>', methods=['POST'])
@@ -30,6 +41,11 @@ def addMaterial(id: str):
   materialJson = request.form.get('json')
   materialJson = json.loads(materialJson)
   materialFiles = request.files.getlist('files')
+
+  project = apiProjects.getProject(materialJson.get('projectId'))
+  if not _is_project_owner(project, materialJson.get('createdBy')):
+    abort(403, description="You are not authorized to add materials to this project")
+
   userID = materialJson['createdBy']
   updateActivity(userID,'add_material',2)
   return apiMaterial.add_material(id, materialJson, materialFiles)
@@ -48,9 +64,17 @@ def updateMaterial(id: str):
   materialJson = request.form.get('json')
   materialJson = json.loads(materialJson)
 
+  existingMaterial = apiMaterial.get_material(id)
+  if not existingMaterial or "ErrorMessage" in existingMaterial:
+    abort(404, description="Material not found")
+
+  project = apiProjects.getProject(existingMaterial.get('projectId'))
+  if not _is_project_owner(project, materialJson.get('updatedBy')):
+    abort(403, description="You are not authorized to update this material")
+
   userID = materialJson['updatedBy']
   updateActivity(userID,'update_material',1)
-  
+
   return apiMaterial.update_material(id,materialJson)
   
 @urlMaterial.route('/materials/<string:id>', methods=['GET'])
@@ -78,7 +102,14 @@ def deleteMaterial(id: str):
       _type_: response
   """
   materialJson = apiMaterial.get_material(id)
-  materialJson = json.loads(materialJson)
+  if not materialJson or "ErrorMessage" in materialJson:
+    abort(404, description="Material not found")
+
+  deleteJson = request.get_json(silent=True) or {}
+  project = apiProjects.getProject(materialJson.get('projectId'))
+  if not _is_project_owner(project, deleteJson.get('created_by')):
+    abort(403, description="You are not authorized to delete this material")
+
   userID = materialJson['createdBy']
   updateActivity(userID,'remove_material')
   return apiMaterial.delete_material(id)

@@ -1,7 +1,6 @@
 import json
 
 from flask import Blueprint, request, jsonify, abort
-from insertoknameAuthlibFork.integrations.flask_oauth2 import current_token
 from utils.jwt_server import require_auth
 from utils.logger import setup_logger
 from api.api_crud_projects import API_CRUD_PROJECTS
@@ -62,8 +61,13 @@ def deleteProject(id: str):
         if not project:
              logger.warning(f"Project {id} not found for deletion")
              abort(404, description="Project not found")
-        
-        user_id = current_token.sub
+
+        # Authorization check: the JWT is a service-to-service (M2M) token, it does
+        # not identify the calling user, so current_token.sub never identifies the
+        # actual caller. We trust the user id the client supplies instead (same
+        # precedent as PUT /projects/<id>).
+        deleteJson = request.get_json(silent=True) or {}
+        user_id = deleteJson.get('created_by')
         logger.info(f"User {user_id} requesting deletion of project {id}")
         
         is_owner = project.get('createdBy') == user_id

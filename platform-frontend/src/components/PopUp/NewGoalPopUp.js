@@ -13,6 +13,7 @@ import apiClient from "../../utils/apiClient";
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { useMyUserContext } from "../../contexts/UserContext";
 
 toast.configure({
     autoClose: 5000,
@@ -30,6 +31,7 @@ const NewGoalPopUp = ({ className, close, addedgoal, projectId }) => {
     const [Date, setDate] = useState("");
     const [Deadline, setDeadline] = useState("");
     const [Percentage, setPercentage] = useState("");
+    const user = useMyUserContext();
 
     const infoCompleted = () =>{
         
@@ -61,6 +63,7 @@ const NewGoalPopUp = ({ className, close, addedgoal, projectId }) => {
                 description: Description,
                 statePercentage: percentage_value,
                 projectId: projectId,
+                created_by: user?.id,
             });
             if (response.status == 200) {
                 console.log("MERGE");

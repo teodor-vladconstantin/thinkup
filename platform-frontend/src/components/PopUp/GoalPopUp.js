@@ -7,6 +7,7 @@ import CircleLogo from "../Circle/CircleLogo";
 import AccentButton from "../Buttons/AccentButton";
 import apiClient from "../../utils/apiClient";
 import TextArea from "../FormElems/TextArea";
+import { useMyUserContext } from "../../contexts/UserContext";
 
 
 const GoalPopUp = ({
@@ -21,6 +22,7 @@ const GoalPopUp = ({
     refresh
 }) => {
     const [newPercentage, setNewPercentage] = useState(percentage);
+    const user = useMyUserContext();
 
 
     const handlePercentageChange = (newPercent) => {
@@ -37,6 +39,7 @@ const GoalPopUp = ({
                 description: description,
                 deadline: deadline,
                 state: newPercentage,
+                created_by: user?.id,
             });
             console.log(response);
         } catch (error) {

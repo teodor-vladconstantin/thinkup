@@ -4,9 +4,11 @@ import CircleLogo from "../Circle/CircleLogo";
 import DefaultContainer2 from "../Containers/DefaultContainer2";
 import DropDownMenu from "../DropdownMenu/DropdownMenu";
 import apiClient from "../../utils/apiClient";
+import { useMyUserContext } from "../../contexts/UserContext";
 
 const MaterialCard = (props) => {
     const [MenuOptions, setMenuOptions] = useState();
+    const user = useMyUserContext();
 
     const setMenuState = (newstate) => {
         if (newstate) props.openMenu();
@@ -26,7 +28,8 @@ const MaterialCard = (props) => {
     const deleteMaterial = async () => {
         //console.log(props);
         const response = await apiClient.delete(
-            `${process.env.NEXT_PUBLIC_API_URL}/materials/${props.id}`
+            `${process.env.NEXT_PUBLIC_API_URL}/materials/${props.id}`,
+            { data: { created_by: user?.id } }
         );
         if (response.status == 200) {
             console.log("DELETED");
