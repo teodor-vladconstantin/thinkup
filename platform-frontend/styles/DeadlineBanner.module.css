@@ -1,0 +1,21 @@
+.DeadlineBannerList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.DeadlineBanner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-cancel-secondary);
+    color: var(--color-text-primary);
+}
+
+.BannerText {
+    font-weight: bold;
+}

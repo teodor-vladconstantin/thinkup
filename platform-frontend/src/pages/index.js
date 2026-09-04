@@ -14,6 +14,7 @@ import FilterComponent from "../components/FormElems/FilterComponent.js";
 import Loading from "../components/Loading/Loading";
 import { useAccesTokenContext } from "../contexts/AccesTokenContext";
 import UsersTable from "../components/Tables/UsersTable";
+import DeadlineBanner from "../components/Cards/DeadlineBanner";
 
 const Home = () => {
     const router = useRouter();
@@ -122,6 +123,7 @@ const Home = () => {
                 <meta name="description" content="Platfoma ThinkUp" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
+            <DeadlineBanner user_id={User != undefined ? User.id : undefined} />
             <div className={styles.HomeTopBar}>
                 <FilterComponent
                     value={FilterValue}
