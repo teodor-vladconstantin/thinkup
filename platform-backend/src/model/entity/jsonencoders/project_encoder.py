@@ -24,6 +24,7 @@ class ProjectEncoder():
           'reviews': o.get_projectReviews().get_reviews()
         },
         'mentor_feedback': o.get_mentor_feedback(),
+        'photos': o.get_photos(),
       }
       return Item
     return None

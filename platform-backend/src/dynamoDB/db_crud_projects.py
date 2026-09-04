@@ -139,7 +139,7 @@ class DB_CRUD_PROJECTS:
       Key={
         'id': projectObjJSON["id"]
       },
-      UpdateExpression="set #nm=:n, #dscp=:d, #crtby=:c, #adml=:ad, #thm=:t, #thme=:te, #are=:a, #gls=:g, #mts=:m, #stgs=:st, #srch=:sterm, #rvs=:re, #mntfb=:mfb", 
+      UpdateExpression="set #nm=:n, #dscp=:d, #crtby=:c, #adml=:ad, #thm=:t, #thme=:te, #are=:a, #gls=:g, #mts=:m, #stgs=:st, #srch=:sterm, #rvs=:re, #mntfb=:mfb, #pht=:p",
       ExpressionAttributeValues={
         ':n': projectObjJSON["name"],
         ':d': projectObjJSON["description"],
@@ -154,6 +154,7 @@ class DB_CRUD_PROJECTS:
         ':sterm': projectObjJSON["searchTerm"],
         ':re': projectObjJSON["projectReviews"],
         ':mfb': projectObjJSON["mentor_feedback"],
+        ':p': projectObjJSON.get("photos", []),
       },
       ExpressionAttributeNames={
         "#nm": "name",
@@ -168,7 +169,8 @@ class DB_CRUD_PROJECTS:
         "#stgs":"settings",
         "#srch":"searchTerm",
         "#mntfb": "mentor_feedback",
-        "#rvs":"projectReviews"
+        "#rvs":"projectReviews",
+        "#pht": "photos"
       },
       ReturnValues="UPDATED_NEW"
     )

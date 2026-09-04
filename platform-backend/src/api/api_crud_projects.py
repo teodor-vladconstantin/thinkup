@@ -145,6 +145,11 @@ class API_CRUD_PROJECTS:
       pass
 
     try:
+      projectToUpdate['photos'] = projectJson['photos']
+    except KeyError:
+      pass
+
+    try:
       projectToUpdate['name'] = projectJson['name']
     except KeyError:
       pass

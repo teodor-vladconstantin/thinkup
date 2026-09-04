@@ -106,7 +106,7 @@ def addProject(id: str):
     goal = Goals([])
     projectJson = request.json
     projectReviews = ProjectReviews(projectJson['id'], 0, 0, [])
-    projectObj = Project(projectJson['id'], projectJson['name'], str(projectJson['name']).lower(), projectJson['description'], "defaultThumbnailCIVIC1", ".png", projectJson['created_by'], [projectJson['created_by']], projectJson['creation_date'], projectJson['area_of_implementation'], goal, materials_obj, "pitchId#999", {"accept_reviews": True}, projectReviews, mentor_feedback)
+    projectObj = Project(projectJson['id'], projectJson['name'], str(projectJson['name']).lower(), projectJson['description'], "defaultThumbnailCIVIC1", ".png", projectJson['created_by'], [projectJson['created_by']], projectJson['creation_date'], projectJson['area_of_implementation'], goal, materials_obj, "pitchId#999", {"accept_reviews": True}, projectReviews, mentor_feedback, [])
 
     creatorID = projectJson['created_by']
     updateActivity(creatorID, "create_project", 2)
@@ -135,8 +135,12 @@ def updateProject(id: str):
     if not projectUpdated:
          abort(404, description="Project not found")
 
-    # Authorization check
-    user_id = current_token.sub
+    # Authorization check. Requests reach Flask with a service-to-service (M2M)
+    # token, not a per-user one, so current_token.sub never identifies the
+    # actual caller - it's the same constant for everybody. We trust the user
+    # id the client supplies instead (same precedent as the Submissions grading
+    # endpoint's mentorId check).
+    user_id = projectJson.get('created_by')
     is_owner = projectUpdated.get('createdBy') == user_id
     is_admin = user_id in projectUpdated.get('adminList', [])
 

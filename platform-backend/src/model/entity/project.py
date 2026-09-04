@@ -9,7 +9,8 @@ from model.entity.reviews.project_reviews import ProjectReviews
 class Project:
     def __init__(self, id: str, name: str, searchTerm: str, description: str, thumbnail, thumbnail_extension,
                  createdBy: str, adminList: list, creationDate, areaOfImplementation: str, goals: Goals,
-                 materials: Materials, pitchId: str, settings: dict, projectReviews: ProjectReviews, mentor_feedback: list):
+                 materials: Materials, pitchId: str, settings: dict, projectReviews: ProjectReviews, mentor_feedback: list,
+                 photos: list = None):
         self.__id = id
         self.__name = name
         self.__searchTerm = searchTerm
@@ -26,6 +27,7 @@ class Project:
         self.__settings = settings
         self.__projectReviews = projectReviews
         self.__mentor_feedback = mentor_feedback
+        self.__photos = photos if photos is not None else []
 
     def get_id(self):
         return self.__id
@@ -101,3 +103,9 @@ class Project:
 
     def set_projectReviews(self, mentor_feedback):
         self.__mentor_feedback = mentor_feedback
+
+    def get_photos(self):
+        return self.__photos
+
+    def set_photos(self, photos: list):
+        self.__photos = photos
