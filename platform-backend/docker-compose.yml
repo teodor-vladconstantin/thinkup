@@ -61,6 +61,11 @@ services:
         # IMPORTANT: Set API URL to empty string so requests use relative paths (e.g., /projects)
         # This makes the app work on localhost, VPS, or Cloudflare Tunnel without rebuilding
         NEXT_PUBLIC_API_URL: ""
+        # NEXT_PUBLIC_* vars are baked into the client bundle at build time, so they
+        # must be passed as build args (sourced from the .env file next to this
+        # compose file), not just as runtime container env vars.
+        NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:-}
+        NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET: ${NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET:-}
     container_name: thinkup-frontend
     restart: always
     # Load environment variables from the frontend .env.local file
