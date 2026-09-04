@@ -4,7 +4,6 @@ from api.api_crud_projects import API_CRUD_PROJECTS
 from api.api_track_activity import updateActivity
 from dynamoDB import setup
 from flask import Blueprint, request, send_from_directory, abort
-import json
 import os
 from s3.s3_crud import S3_OPERATIONS
 from utils.jwt_server import require_auth
@@ -29,17 +28,9 @@ def _is_project_owner(project, user_id):
 
 def _is_material_owner(materialId, user_id):
     """A file belongs to a material, which belongs to a project - check
-    ownership through that chain.
-
-    apiMaterial.get_material returns a JSON *string* on success, or a dict
-    {"ErrorMessage": ...} if the material doesn't exist.
-    """
-    raw = apiMaterial.get_material(materialId)
-    if isinstance(raw, dict):
-        return False
-    try:
-        material = json.loads(raw)
-    except (TypeError, ValueError):
+    ownership through that chain."""
+    material = apiMaterial.get_material(materialId)
+    if not material or "ErrorMessage" in material:
         return False
     project = apiProjects.getProject(material.get('projectId'))
     return _is_project_owner(project, user_id)

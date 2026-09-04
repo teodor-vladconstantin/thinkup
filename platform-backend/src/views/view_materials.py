@@ -28,16 +28,11 @@ def _is_project_owner(project, user_id):
 
 
 def _get_material_dict(id):
-  """apiMaterial.get_material returns a JSON *string* on success, or a dict
-  {"ErrorMessage": ...} if the material doesn't exist. Normalize to a dict,
-  or None if not found."""
-  raw = apiMaterial.get_material(id)
-  if isinstance(raw, dict):
+  """Fetch a material, or None if it doesn't exist."""
+  material = apiMaterial.get_material(id)
+  if not material or "ErrorMessage" in material:
     return None
-  try:
-    return json.loads(raw)
-  except (TypeError, ValueError):
-    return None
+  return material
 
 
 @urlMaterial.route('/materials/<string:id>', methods=['POST'])

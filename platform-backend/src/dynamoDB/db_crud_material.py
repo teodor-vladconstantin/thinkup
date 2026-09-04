@@ -1,6 +1,3 @@
-import json
-
-
 class DB_CRUD_MATERIAL:
     def __init__(self, materialTable):
         """Initialize the DB_CRUD_MATERIAL class
@@ -62,8 +59,7 @@ class DB_CRUD_MATERIAL:
         )
 
         try:
-            # print(json.dumps(response["Item"]), type(json.dumps(response["Item"])))
-            return json.dumps(response["Item"])
+            return response["Item"]
         except KeyError:
             return {"ErrorMessage": "Material does not exist!"}
 

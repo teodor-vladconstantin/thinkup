@@ -1,4 +1,3 @@
-import json
 from dynamoDB import setup
 from dynamoDB.db_crud_material import DB_CRUD_MATERIAL
 from model.entity.jsonencoders.material_encoder import MaterialEncoder
@@ -80,8 +79,6 @@ class API_CRUD_MATERIALS:
         _type_: response
     """
     materialJson = self.get_material(idOfTheMaterial)
-    if isinstance(materialJson, str):
-      materialJson = json.loads(materialJson)
     try:
       for fileId in materialJson['files']:
         self.__apiCrudFiles.delete_file(fileId, False)
