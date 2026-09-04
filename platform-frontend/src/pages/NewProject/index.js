@@ -14,7 +14,6 @@ import ScrollContainer from "../../components/Containers/ScrollContainer";
 
 const NewProject = () => {
     const [ProjectName, setProjectName] = useState("");
-    const [token, setToken] = useState("");
     const [Description, setDescription] = useState("");
     const [AreaOfImplementation, setAreaOfImplementation] = useState("Select");
     const [value, setFilterValue] = useState("Select");
@@ -56,7 +55,7 @@ const NewProject = () => {
             return;
         try {
             const response = await axios.post(
-                `${process.env.NEXT_PUBLIC_API_URL}/projects/${id}?project_token=${token}`,
+                `${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`,
                 {
                     id: id,
                     name: ProjectName,
@@ -73,7 +72,9 @@ const NewProject = () => {
             }
         } catch (err) {
             console.log(err);
-            showProjectError("Invalid token! Please ask your mentor for a valid token.");
+            showProjectError(
+                err.response?.data?.error || "A apărut o eroare la crearea proiectului."
+            );
         }
     };
 
@@ -86,12 +87,6 @@ const NewProject = () => {
             </Head>
             <h1>Create a new project</h1>
             <div className={styles.error + " errorProject"}></div>
-            <InputField
-                InputTitle="Token"
-                width="675"
-                value={token}
-                onChange={(e) => setToken(e.target.value)}
-            />
             <InputField
                 InputTitle="Project Name"
                 width="675"
