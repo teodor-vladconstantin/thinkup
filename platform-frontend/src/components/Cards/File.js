@@ -1,5 +1,6 @@
 import styles from "../../../styles/File.module.css";
 import axios from "axios";
+import apiClient from "../../utils/apiClient";
 import react, { useEffect, useState } from "react";
 
 const File = (props) => {
@@ -57,11 +58,11 @@ const File = (props) => {
 
             // Make the server request based on the PREVIOUS state
             if (wasNotFavorite) {
-                await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/favFiles/${encodedFileId}`, formdata);
+                await apiClient.post(`${process.env.NEXT_PUBLIC_API_URL}/users/favFiles/${encodedFileId}`, formdata);
                 console.log(`Added file ${props.id} to favorites`);
             }
             else {
-                await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/users/favFiles/${encodedFileId}`, {data: formdata});
+                await apiClient.delete(`${process.env.NEXT_PUBLIC_API_URL}/users/favFiles/${encodedFileId}`, {data: formdata});
                 console.log(`Removed file ${props.id} from favorites`);
             }
             

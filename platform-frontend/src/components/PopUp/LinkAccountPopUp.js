@@ -6,6 +6,7 @@ import ProgressBar from "../ProgressBar/ProgressBar";
 import InputField from "../FormElems/InputField";
 import CancelButton from "../Buttons/CancelButton";
 import axios from "axios";
+import apiClient from "../../utils/apiClient";
 import { useMyUserContext, useMyUserUpdate } from "../../contexts/UserContext";
 
 const LinkAccountPopUp = ({ className, close, account_type }) => {
@@ -23,7 +24,7 @@ const LinkAccountPopUp = ({ className, close, account_type }) => {
 
 
     const AddLink = async() => {
-        const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/users/${User.id}/social/${account_type}?link=${Link}`);
+        const response = await apiClient.put(`${process.env.NEXT_PUBLIC_API_URL}/users/${User.id}/social/${account_type}?link=${Link}`);
         console.log(response);
         updateUser({
             case: "GET",
@@ -33,7 +34,7 @@ const LinkAccountPopUp = ({ className, close, account_type }) => {
     };
 
     const removeLink = async () =>{
-        const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/users/${User.id}/social/${account_type}`);
+        const response = await apiClient.delete(`${process.env.NEXT_PUBLIC_API_URL}/users/${User.id}/social/${account_type}`);
         console.log(response);
         updateUser({
             case: "GET",

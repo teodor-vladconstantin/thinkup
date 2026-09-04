@@ -1,6 +1,7 @@
 import react, { useState, useEffect } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
 import axios from "axios";
+import apiClient from "../utils/apiClient";
 import { getCustomRoute } from "next/dist/server/server-route-utils";
 import { useRouter } from "next/router";
 import { verifyText, createUniqueId } from "../utils/utils";
@@ -120,7 +121,7 @@ const useMyUser = () => {
         formdata.append("file", data.image);
         formdata.append("file2", data.cover_picture);
 
-        const response = await axios.put(
+        const response = await apiClient.put(
             `${process.env.NEXT_PUBLIC_API_URL}/users/${User.id}`,
             formdata
         );
@@ -136,7 +137,7 @@ const useMyUser = () => {
         //console.log(data);
         if (!verifyText(data.name, 50, true) || !verifyText(data.description, 200))
             return;
-        const response = await axios.post(
+        const response = await apiClient.post(
             `${process.env.NEXT_PUBLIC_API_URL}/users/${User.id}`,
             {
                 id: User.id,

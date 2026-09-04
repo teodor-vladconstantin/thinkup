@@ -4,6 +4,7 @@ import styles from "../../../styles/Settings.module.css";
 import { useMyUserContext, useMyUserUpdate } from "../../contexts/UserContext";
 import DeleteButton from "../../components/Buttons/DeleteButton";
 import axios from "axios";
+import apiClient from "../../utils/apiClient";
 import LinkAccountPopUp from "../../components/PopUp/LinkAccountPopUp";
 import { AnimatePresence } from "framer-motion";
 import ConfirmationPopUp from "../../components/PopUp/ConfirmationPopUp";
@@ -32,7 +33,7 @@ const Settings = () => {
     }, [User]);
 
     const saveChanges = async () => {
-        const response = await axios.put(
+        const response = await apiClient.put(
             `${process.env.NEXT_PUBLIC_API_URL}/users/${User.id}/changeLanguage/${
                 Language ? "ro" : "en"
             }`

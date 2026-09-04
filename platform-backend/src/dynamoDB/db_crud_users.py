@@ -72,7 +72,7 @@ class DB_CRUD_USERS:
         except KeyError:
             return {"ErrorMessage": "User Does not Exist"}
 
-    def addUser(self, userObjJSON):  # + Check existance
+    def addUser(self, userObjJSON):
         """Add an user to the database
 
         Args:
@@ -81,9 +81,14 @@ class DB_CRUD_USERS:
         Returns:
             _type_: response
         """
-        response = self.__userTable.put_item(
-            Item=userObjJSON
-        )
+        if not self.__exists(userObjJSON['id']):
+            response = self.__userTable.put_item(
+                Item=userObjJSON
+            )
+        else:
+            response = {
+                "ErrorMessage": "User already exists"
+            }
         return response
 
     def updateUser(self, userJSONobj):

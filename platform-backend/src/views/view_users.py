@@ -5,7 +5,8 @@ from api.api_crud_mentor_feedback import API_CRUD_MENTOR_FEEDBACK
 from api.api_crud_users import API_CRUD_USERS
 from api.api_track_activity import updateActivity
 from dynamoDB import setup
-from flask import Blueprint, request
+from flask import Blueprint, request, abort
+from utils.jwt_server import require_auth
 from model.entity.goals.goals import Goals
 from model.entity.goals.personal_objective import PersonalObjective
 from model.entity.users.mentor import Mentor
@@ -44,6 +45,7 @@ fav_files = []
 
 
 @urlUser.route('/users/<string:id>', methods=['POST'])
+@require_auth()
 def postUser(id: str):
     """Post a user to database
 
@@ -57,9 +59,14 @@ def postUser(id: str):
     search_term = userJson["name"]
     search_term.replace("-", " ")
 
+    try:
+        domain = userJson['email'][userJson['email'].index('@') + 1:]
+    except ValueError:
+        abort(400, description="Invalid email format")
+
     userObj = None
 
-    if userJson['email'][userJson['email'].index('@') + 1 :] == "mentor.think-up.academy":
+    if domain == "mentor.think-up.academy":
         userObj = Mentor(userJson['id'], userJson['name'], search_term.lower(), "default", ".png", "default", ".png",
                       userJson['email'], userJson['description'],
                       settings, permissions, activity, puzzle, personal_objectives, {}, awards, fav_files)
@@ -68,7 +75,10 @@ def postUser(id: str):
                       userJson['email'], userJson['description'],
                       settings, permissions, activity, puzzle, personal_objectives, {}, awards, fav_files)
 
-    temp_return =apiUsers.addUser(userObj)
+    temp_return = apiUsers.addUser(userObj)
+    if isinstance(temp_return, dict) and "ErrorMessage" in temp_return:
+        abort(409, description=temp_return["ErrorMessage"])
+
     updateActivity(userJson['id'], "create_account")
     return temp_return
 
@@ -87,6 +97,7 @@ def getUser(id: str):
 
 
 @urlUser.route('/users/<string:id>', methods=['DELETE'])
+@require_auth()
 def deleteUser(id: str):
     """Delete a user from database
 
@@ -100,6 +111,7 @@ def deleteUser(id: str):
 
 
 @urlUser.route('/users/<string:id>', methods=['PUT'])
+@require_auth()
 def updateUser(id: str):
     """Update a user from database
 
@@ -141,6 +153,7 @@ def searchUsers():
 
 
 @urlUser.route('/users/<string:id>/givePuzzlePiece', methods=['POST'])
+@require_auth()
 def givePieceToUser(id):
     """Give a puzzle piece to a user
 
@@ -160,6 +173,7 @@ def givePieceToUser(id):
 
 
 @urlUser.route('/users/<string:id>/changeLanguage/<string:lang>', methods=['PUT'])
+@require_auth()
 def changeLanguage(id: str, lang: str):
     """Change the language of a user's interface
     Args:
@@ -181,6 +195,7 @@ def changeLanguage(id: str, lang: str):
 
 
 @urlUser.route('/users/<string:id>/social/<string:social_platform>', methods=['PUT'])
+@require_auth()
 def addSocial(id: str, social_platform: str):
     """Add a social platform to a user's profile
     Args:
@@ -203,6 +218,7 @@ def addSocial(id: str, social_platform: str):
 
 
 @urlUser.route('/users/<string:id>/social/<string:social_platform>', methods=['DELETE'])
+@require_auth()
 def deleteSocial(id: str, social_platform: str):
     """Add a social platform to a user's profile
     Args:
@@ -253,6 +269,7 @@ def GetUserActivityLast(id):
     return newUserActivity
 
 @urlUser.route('/users/favFiles/<string:id>', methods=['POST'])
+@require_auth()
 def updateFavFiles(id):
     """Adds a file to users favorites
     Args    
@@ -268,6 +285,7 @@ def updateFavFiles(id):
     return apiUsers.addFavFile(userId, id)
 
 @urlUser.route('/users/favFiles/<string:id>', methods=['DELETE'])
+@require_auth()
 def removeFavFiles(id):
     """removes a file from users favorites
     Args    
