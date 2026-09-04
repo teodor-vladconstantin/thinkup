@@ -56,8 +56,7 @@ class OPEN_SCHOOL:
     
     # Local FS override
     import os
-    from config import STORAGE_MODE
-    
+
     if os.environ.get('STORAGE_MODE') == 'local':
         local_dir = os.path.join(os.getcwd(), 'local_storage', 'thinkup-open-school')
         all_objects = []
