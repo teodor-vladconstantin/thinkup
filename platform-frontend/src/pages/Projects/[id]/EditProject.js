@@ -12,6 +12,7 @@ import { verifyText, createUniqueId } from "../../../utils/utils";
 import axios from "axios";
 import apiClient from "../../../utils/apiClient";
 import FormData from "form-data";
+import { useMyUserContext } from "../../../contexts/UserContext";
 
 const EditProject = () => {
     const router = useRouter();
@@ -21,6 +22,7 @@ const EditProject = () => {
     const [File, setFile] = useState(null);
     const [AreaOfImplementation, setAreaOfImplementation] = useState("Select");
     const [Error, setError] = useState("");
+    const user = useMyUserContext();
 
     const getProjectData = async () => {
         const response = await axios.get(
@@ -89,7 +91,7 @@ const EditProject = () => {
                 name: ProjectTitle,
                 description: ProjectDescription,
                 thumbnail: imageId,
-                created_by: "106863809771378515645",
+                created_by: user.id,
                 areaOfImplementation: AreaOfImplementation,
             })
         );
