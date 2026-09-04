@@ -8,7 +8,7 @@ import AccentButton from "../../components/Buttons/AccentButton";
 import CancelButton from "../../components/Buttons/CancelButton";
 import { useRouter } from "next/router";
 import ScrollContainer from "../../components/Containers/ScrollContainer";
-import axios from "axios";
+import apiClient from "../../utils/apiClient";
 import { useMyUserContext } from "../../contexts/UserContext";
 import FilterComponent from "../../components/FormElems/FilterComponent.js";
 
@@ -44,7 +44,7 @@ const Contact = () => {
     };
 
     const sendEmail = async () => {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
+        const response = await apiClient.post(`${process.env.NEXT_PUBLIC_API_URL}/contact`, {
             fullname: FullName,
             email: Email,
             message: Message,

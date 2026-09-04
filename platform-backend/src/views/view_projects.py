@@ -45,8 +45,8 @@ def getProject(id: str):
         logger.error(f"getProject EXCEPTION: {e}", exc_info=True)
         return jsonify({"error": str(e)}), 500
 
-@require_auth(None)
 @urlProject.route('/projects/<string:id>', methods=['DELETE'])
+@require_auth(None)
 def deleteProject(id: str):
     """Delete a project
 
@@ -89,8 +89,8 @@ def deleteProject(id: str):
         logger.error(f"Error deleting project {id}: {e}", exc_info=True)
         return jsonify({"error": str(e)}), 500
 
-@require_auth(None)
 @urlProject.route('/projects/<string:id>', methods=['POST'])
+@require_auth(None)
 # @Utils.check_project_token  # disabled: project creation no longer requires a token
 def addProject(id: str):
     """Add a project
@@ -112,8 +112,8 @@ def addProject(id: str):
     updateActivity(creatorID, "create_project", 2)
 
     return apiProjects.addProject(project_token, projectObj)
-@require_auth(None)
 @urlProject.route('/projects/<string:id>', methods=['PUT'])
+@require_auth(None)
 def updateProject(id: str):
     """Update a project
 

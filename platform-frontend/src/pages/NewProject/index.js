@@ -9,7 +9,7 @@ import CancelButton from "../../components/Buttons/CancelButton";
 import { useRouter } from "next/router";
 import { useMyUserContext, useMyUserUpdate } from "../../contexts/UserContext";
 import { getCurentDate, createUniqueId, verifyText } from "../../utils/utils";
-import axios from "axios";
+import apiClient from "../../utils/apiClient";
 import ScrollContainer from "../../components/Containers/ScrollContainer";
 
 const NewProject = () => {
@@ -54,7 +54,7 @@ const NewProject = () => {
         )
             return;
         try {
-            const response = await axios.post(
+            const response = await apiClient.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`,
                 {
                     id: id,

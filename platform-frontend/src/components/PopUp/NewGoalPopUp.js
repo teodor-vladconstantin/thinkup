@@ -9,7 +9,7 @@ import CancelButton from "../Buttons/CancelButton";
 import TextArea from "../FormElems/TextArea";
 import { createUniqueId, getCurentDate } from "../../utils/utils";
 import DatePicker from "react-datepicker";
-import axios from "axios";
+import apiClient from "../../utils/apiClient";
 import "react-datepicker/dist/react-datepicker.css";
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
@@ -54,7 +54,7 @@ const NewGoalPopUp = ({ className, close, addedgoal, projectId }) => {
             //console.log(deadline);
 
         
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/goals/${id}`, {
+            const response = await apiClient.post(`${process.env.NEXT_PUBLIC_API_URL}/goals/${id}`, {
                 id: id,
                 name: Title,
                 deadline: deadline,

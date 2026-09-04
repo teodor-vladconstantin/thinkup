@@ -3,7 +3,7 @@ import styles from "../../../styles/MaterialCard.module.css";
 import CircleLogo from "../Circle/CircleLogo";
 import DefaultContainer2 from "../Containers/DefaultContainer2";
 import DropDownMenu from "../DropdownMenu/DropdownMenu";
-import axios from "axios";
+import apiClient from "../../utils/apiClient";
 
 const MaterialCard = (props) => {
     const [MenuOptions, setMenuOptions] = useState();
@@ -25,7 +25,7 @@ const MaterialCard = (props) => {
 
     const deleteMaterial = async () => {
         //console.log(props);
-        const response = await axios.delete(
+        const response = await apiClient.delete(
             `${process.env.NEXT_PUBLIC_API_URL}/materials/${props.id}`
         );
         if (response.status == 200) {
@@ -37,7 +37,7 @@ const MaterialCard = (props) => {
     };
 
     const moveUP = async () => {
-        const response = await axios.get(
+        const response = await apiClient.get(
             `${process.env.NEXT_PUBLIC_API_URL}/materials/move/up/${props.id}`
         );
         if (response.status == 200) {
@@ -49,7 +49,7 @@ const MaterialCard = (props) => {
     };
 
     const moveDOWN = async () => {
-        const response = await axios.get(
+        const response = await apiClient.get(
             `${process.env.NEXT_PUBLIC_API_URL}/materials/move/down/${props.id}`
         );
         if (response.status == 200) {

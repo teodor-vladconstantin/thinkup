@@ -5,7 +5,7 @@ import CancelButton from "../Buttons/CancelButton";
 import ProgressBar from "../ProgressBar/ProgressBar";
 import CircleLogo from "../Circle/CircleLogo";
 import AccentButton from "../Buttons/AccentButton";
-import axios from "axios";
+import apiClient from "../../utils/apiClient";
 import TextArea from "../FormElems/TextArea";
 
 
@@ -31,7 +31,7 @@ const GoalPopUp = ({
         console.log(id);
     
         try {
-            const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/goals/${id}`, {
+            const response = await apiClient.put(`${process.env.NEXT_PUBLIC_API_URL}/goals/${id}`, {
                 id: id,
                 name: title,
                 description: description,

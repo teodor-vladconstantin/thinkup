@@ -10,6 +10,7 @@ import SelectField from "../../../components/FormElems/SelectField";
 import ScrollContainer from "../../../components/Containers/ScrollContainer";
 import { verifyText, createUniqueId } from "../../../utils/utils";
 import axios from "axios";
+import apiClient from "../../../utils/apiClient";
 import FormData from "form-data";
 
 const EditProject = () => {
@@ -95,7 +96,7 @@ const EditProject = () => {
 
         formdata.append("file", File);
 
-        const response = await axios.put(
+        const response = await apiClient.put(
             `${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`,
             formdata
         );

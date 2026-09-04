@@ -9,7 +9,7 @@ import { createUniqueId, getCurentDate } from "../../utils/utils";
 import TextArea from "../FormElems/TextArea";
 import { useMyUserContext, useMyUserUpdate } from "../../contexts/UserContext";
 import TitleInputField from "../FormElems/TitleInputField";
-import axios from "axios";
+import apiClient from "../../utils/apiClient";
 import File from "../Cards/File";
 import ScrollContainer from "../Containers/ScrollContainer";
 
@@ -52,7 +52,7 @@ const NewMaterialPopUp = ({ className, close, addedmaterial, Projectid }) => {
         formdata.append("files", f);
 
         //const response = await axios.post(`http://127.0.0.1:5000/materials/${id}`,{id:id,name:Title,creationDate:Date,description:Description,createdBy:user.id,projectId:Projectid,files:{}});
-        const response = await axios.post(
+        const response = await apiClient.post(
             `${process.env.NEXT_PUBLIC_API_URL}/materials/${id}`,
             formdata
         );
