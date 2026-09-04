@@ -2,12 +2,13 @@ import React, {useState} from "react";
 import styles from "../../../styles/FeedbackCard.module.css";
 import DefaultContainer from "../Containers/DefaultContainer";
 import axios from "axios";
+import apiClient from "../../utils/apiClient";
 
 // Remove the state declaration and setOpenedFeedback usage
 const FeedbackCard = ({ className, children, date, onClick, userId, feedbackCreatorId, projectID, feedbackID, refresh, setEditFeedback }) => {
     const deleteFeedback = async (e) => {
         e.stopPropagation(); // Stop event propagation here
-        const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectID}/feedback/${feedbackID}`);
+        const response = await apiClient.delete(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectID}/feedback/${feedbackID}`);
         console.log(response);
         refresh();
     };

@@ -5,6 +5,7 @@ import PopUpContainer from "../Containers/PopUpContainer";
 import CircleLogo from "../Circle/CircleLogo";
 import AccentButton from "../Buttons/AccentButton";
 import axios from "axios";
+import apiClient from "../../utils/apiClient";
 import TextArea from "../FormElems/TextArea";
 
 
@@ -20,7 +21,7 @@ const EditFeedbackPopUp = ({ className, text, close, mentor_id, projectID, feedb
     };
 
     const editFeedback = async() =>{
-        const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectID}/feedback/${feedbackID}`, {
+        const response = await apiClient.put(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectID}/feedback/${feedbackID}`, {
             mentor_id:mentor_id, 
             feedback_txt:Text, 
         })

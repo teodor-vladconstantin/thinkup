@@ -202,6 +202,7 @@ def search_project(name: str):
     return apiProjects.searchProject(name)
 
 @urlProject.route('/projects/<string:id>/accept_reviews/<int:accept>', methods=['PUT'])
+@require_auth(None)
 def accept_reviews(id: str, accept: int):
     """Accept or reject reviews for a project
 
@@ -222,6 +223,7 @@ def accept_reviews(id: str, accept: int):
     return "Nothing to update"
 
 @urlProject.route('/projects/<string:id>/admins/<string:adminId>', methods=['DELETE'])
+@require_auth(None)
 def delete_admin(id: str, adminId: int):
     """Delete an admin from a project
 

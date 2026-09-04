@@ -1,6 +1,7 @@
 from api.api_crud_personal_objectives import API_CRUD_PERSONAL_OBJECTIVES
 from flask import Blueprint, request
 from model.entity.goals.personal_objective import PersonalObjective
+from utils.jwt_server import require_auth
 
 urlPersonalObjectives = Blueprint('views', __name__)
 
@@ -19,6 +20,7 @@ def getObjective(id: str):
   return apiPesonalObjectives.getPersonalObjective(id)
 
 @urlPersonalObjectives.route('/personal_objectives/<string:id>', methods=['POST'])
+@require_auth()
 def postObjective(id: str):
   """Post a personal objective to database
 
@@ -34,6 +36,7 @@ def postObjective(id: str):
   return apiPesonalObjectives.addPersonalObjective(objectiveObj)
 
 @urlPersonalObjectives.route('/personal_objectives/<string:id>', methods=['DELETE'])
+@require_auth()
 def deleteObjective(id: str):
   """Delete a personal objective from database
 
@@ -46,6 +49,7 @@ def deleteObjective(id: str):
   return apiPesonalObjectives.deletePersonalObjective(id)
 
 @urlPersonalObjectives.route('/personal_objectives/<string:id>', methods=['PUT'])
+@require_auth()
 def updateObjective(id: str):
   """Update a personal objective from database
 

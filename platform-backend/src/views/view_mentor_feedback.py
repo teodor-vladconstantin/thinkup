@@ -2,12 +2,14 @@ from api.api_crud_mentor_feedback import API_CRUD_MENTOR_FEEDBACK
 from flask import Blueprint, request
 from model.entity.mentor_feedback.mentor_feedback import MENTOR_FEEDBACK
 from datetime import datetime
+from utils.jwt_server import require_auth
 
 urlFeedback = Blueprint("views", __name__)
 
 apiFeedback = API_CRUD_MENTOR_FEEDBACK()
 
 @urlFeedback.route('/projects/<string:pid>/feedback/<string:fid>', methods=["POST"])
+@require_auth()
 def addFeedback(pid: str, fid: str):
   """Add feedback to project
 
@@ -38,6 +40,7 @@ def getFeedback(pid: str, fid: str):
   return apiFeedback.getFeedback(fid)
 
 @urlFeedback.route('/projects/<string:pid>/feedback/<string:fid>', methods=["DELETE"])
+@require_auth()
 def deleteFeedback(pid: str, fid: str):
   """Delete a feedback
 
@@ -52,6 +55,7 @@ def deleteFeedback(pid: str, fid: str):
 
 
 @urlFeedback.route('/projects/<string:pid>/feedback/<string:fid>', methods=["PUT"])
+@require_auth()
 def editFeedack(pid: str, fid: str):
   """Edit feedback:
   Args:

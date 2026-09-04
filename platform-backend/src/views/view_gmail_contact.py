@@ -1,3 +1,4 @@
+import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -10,8 +11,8 @@ urlContact = Blueprint('views', __name__)
 contact_mail = 'calex2005cj@gmail.com'
 contact_mail2 = 'contact@think-up.academy'
 # contact_mail2 = 'marc.vana@think-up.academy'
-contact_password = 'vgvtmmgaafazrnfn'
-contact_password2 = 'kbwkgizkkaotelyc'
+contact_password = os.environ.get('CONTACT_MAIL_PASSWORD')
+contact_password2 = os.environ.get('CONTACT_MAIL_PASSWORD2')
 
 
 MAIL_SUBJECT = "Thinkup FORM"

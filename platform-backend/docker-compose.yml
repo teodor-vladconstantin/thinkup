@@ -38,6 +38,8 @@ services:
     restart: always
     depends_on:
       - scylladb
+    env_file:
+      - .env
     environment:
       # Connect to ScyllaDB container
       - DYNAMODB_ENDPOINT_URL=http://scylladb:8000

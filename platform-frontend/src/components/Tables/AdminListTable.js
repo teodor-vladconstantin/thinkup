@@ -3,6 +3,7 @@ import styles from "../../../styles/AdminListTable.module.css";
 import { useRouter } from "next/router";
 import DefaultContainer from "../Containers/DefaultContainer";
 import axios from "axios";
+import apiClient from "../../utils/apiClient";
 import DeleteButton from "../Buttons/DeleteButton";
 import AccentButton from "../Buttons/AccentButton";
 import CircleAddButton from "../Buttons/CircleAddButton";
@@ -36,7 +37,7 @@ const AdminListTable = ({className,adminlist,openPopUp,project_id, refresh}) => 
 
     const RemoveAdmin = async (user_id) =>{
         //console.log(user_id);
-        const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/projects/${project_id}/admins/${user_id}`);
+        const response = await apiClient.delete(`${process.env.NEXT_PUBLIC_API_URL}/projects/${project_id}/admins/${user_id}`);
         console.log(response);
         if(response.status == 200)
             refresh();

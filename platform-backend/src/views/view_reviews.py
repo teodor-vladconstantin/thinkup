@@ -4,6 +4,7 @@ from api.api_track_activity import updateActivity
 from dynamoDB import setup
 from flask import Blueprint, request
 from model.entity.reviews.review import Review
+from utils.jwt_server import require_auth
 
 urlReviews = Blueprint('views', __name__)
 
@@ -12,6 +13,7 @@ apiReviews = API_CRUD_REVIEWS(apiProj)
 
 
 @urlReviews.route('/projects/<string:projectID>/addReview/<string:reviewID>', methods=['POST'])
+@require_auth()
 def postReview(projectID, reviewID):
     reviewJson = request.json
 
@@ -38,10 +40,12 @@ def getReview(reviewID):
 
 
 @urlReviews.route('/reviews/update/<string:projectID>/<string:reviewID>', methods=['PUT'])
+@require_auth()
 def updateReview(projectID, reviewID):
     reviewJson = request.json
     return apiReviews.updateReview(reviewJson)
 
 @urlReviews.route('/reviews/delete/<string:projectID>/<string:reviewID>', methods=['DELETE'])
+@require_auth()
 def deleteReview(projectID, reviewID):
     return apiReviews.deleteReview(reviewID)

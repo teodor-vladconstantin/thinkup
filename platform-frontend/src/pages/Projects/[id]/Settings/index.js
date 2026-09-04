@@ -52,7 +52,7 @@ const SettingsProject = () =>{
     }
 
     const saveChanges = async ()=>{
-        const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/projects/${id}/accept_reviews/${AllowReviews?1:0}`);
+        const response = await apiClient.put(`${process.env.NEXT_PUBLIC_API_URL}/projects/${id}/accept_reviews/${AllowReviews?1:0}`);
         if(response.status==200){
             router.back();
         }

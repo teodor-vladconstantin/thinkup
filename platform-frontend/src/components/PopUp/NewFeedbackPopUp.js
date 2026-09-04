@@ -5,6 +5,7 @@ import CancelButton from "../Buttons/CancelButton";
 import PopUpContainer from "../Containers/PopUpContainer";
 import TextArea from "../FormElems/TextArea";
 import axios from "axios";
+import apiClient from "../../utils/apiClient";
 import { createUniqueId } from "../../utils/utils";
 import { format } from "date-fns";
 import { useMyUserContext } from "../../contexts/UserContext";
@@ -20,7 +21,7 @@ const NewFeedbackPopUp = ({ className, text, close, projectID, refresh}) => {
 
         const formattedDate = format(today, "MMMM d, yyyy")
 
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectID}/feedback/${feedbackID}`, {
+        const response = await apiClient.post(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectID}/feedback/${feedbackID}`, {
             mentor_id:User.id, 
             feedback_txt:Feedback, 
             date:formattedDate, 

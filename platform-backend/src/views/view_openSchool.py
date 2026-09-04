@@ -5,6 +5,7 @@ from dynamoDB import setup
 from flask import Blueprint, request
 from model.entity.jsonencoders.idOpenSchool_encoder import IdOpenSchoolEncoder
 from model.entity.open_school.open_school import OPEN_SCHOOL
+from utils.jwt_server import require_auth
 
 urlOpenSchool = Blueprint('openSchool', __name__)
 
@@ -22,12 +23,14 @@ def getByTime(order):
   return S3openSchool.getByOrder(order)
 
 @urlOpenSchool.route('/openSchool/increasePopularity/<string:id>', methods=['PUT'])
+@require_auth()
 def increasePopularity(id):
   fileJson = dbOpenSchool.getDetails(id)
   fileJson['total_views'] += 1
   return dbOpenSchool.updateId(fileJson)
 
 @urlOpenSchool.route('/openSchool', methods=['POST'])
+@require_auth()
 def addFile():
   files = request.files.getlist('files')
 
@@ -40,6 +43,7 @@ def addFile():
   return "OK"
 
 @urlOpenSchool.route('/openSchool/<string:id>', methods=['DELETE'])
+@require_auth()
 def deleteFile(id):
   fileJson = dbOpenSchool.getDetails(id)
   # Delete from dynamodb
