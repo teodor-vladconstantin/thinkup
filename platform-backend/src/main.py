@@ -16,6 +16,7 @@ from views.view_reviews import urlReviews
 from views.view_submissions import urlSubmissions
 from views.view_thumbnails import urlThumbnails
 from views.view_users import urlUser
+from views.view_warnings import urlWarnings
 from views.views import urlBP
 
 logger = setup_logger(__name__)
@@ -41,6 +42,7 @@ app.register_blueprint(urlBP, name='testURL')
 app.register_blueprint(urlFeedback, name="Feedb")
 app.register_blueprint(urlChallenges, name="Chall")
 app.register_blueprint(urlSubmissions, name="Subm")
+app.register_blueprint(urlWarnings, name="Warn")
 
 
 if __name__ == "__main__":

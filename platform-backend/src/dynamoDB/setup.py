@@ -16,6 +16,7 @@ from dynamoDB.db_crud_s3IDs import DB_CRUD_S3IDS
 from dynamoDB.db_crud_s3IDsOpenSchool import DB_CRUD_S3IDS_OPENSCHOOL
 from dynamoDB.db_crud_submissions import DB_CRUD_SUBMISSIONS
 from dynamoDB.db_crud_users import DB_CRUD_USERS
+from dynamoDB.db_crud_warnings import DB_CRUD_WARNINGS
 
 load_dotenv()
 
@@ -66,6 +67,8 @@ def startSetup(whichTable: str):
         return DB_CRUD_CHALLENGES(table)
     elif whichTable == "Submissions":
         return DB_CRUD_SUBMISSIONS(table)
+    elif whichTable == "Warnings":
+        return DB_CRUD_WARNINGS(table)
     return DB_CRUD_PROJECTS(table)
 
    

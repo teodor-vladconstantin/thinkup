@@ -6,6 +6,7 @@ import AwardsCard from "../../components/Cards/AwardsCard";
 import ObjectivesCard from "../../components/Cards/ObjectivesCard";
 import ActivityCard from "../../components/Cards/ActivityCard";
 import ScoreCard from "../../components/Cards/ScoreCard";
+import WarningsCard from "../../components/Cards/WarningsCard";
 import { useRouter } from "next/router";
 import useMyUser from "../../hooks/useMyUser";
 import { useMyUserContext, useMyUserUpdate } from "../../contexts/UserContext";
@@ -301,6 +302,10 @@ const Profile = () => {
                 className="DescriptionCardClass"
                 user_id={(User != undefined && User.id == id) ? User.id : id}
             ></ScoreCard>
+            <WarningsCard
+                className="DescriptionCardClass"
+                user_id={(User != undefined && User.id == id) ? User.id : id}
+            ></WarningsCard>
         </ScrollContainer>
     );
 };

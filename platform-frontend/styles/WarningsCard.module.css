@@ -1,0 +1,39 @@
+.WarningsCard {
+    padding: 2rem 3rem;
+    width: 100%;
+    color: var(--color-text-secondary);
+}
+.WarningsCard .Title {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+}
+.WarningsCard:hover {
+    background-color: var(--color-primary);
+}
+
+.WarningsCard .flexDiv {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.WarningsCard .WarningEntry {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-background);
+    border-left: 4px solid var(--color-cancel-secondary);
+}
+
+.WarningsCard .WarningText {
+    margin: 0;
+    color: var(--color-text-primary);
+}
+
+.WarningsCard .WarningDate {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.85rem;
+    opacity: 0.7;
+}

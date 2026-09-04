@@ -62,7 +62,8 @@ def main():
         "Mentor-Feedback": "id",
         "Projects": "id",
         "Challenges": "id",
-        "Submissions": "id"
+        "Submissions": "id",
+        "Warnings": "id"
     }
 
     for table_name, pk_name in tables.items():
