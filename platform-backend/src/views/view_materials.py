@@ -27,6 +27,19 @@ def _is_project_owner(project, user_id):
   return project.get('createdBy') == user_id or user_id in project.get('adminList', [])
 
 
+def _get_material_dict(id):
+  """apiMaterial.get_material returns a JSON *string* on success, or a dict
+  {"ErrorMessage": ...} if the material doesn't exist. Normalize to a dict,
+  or None if not found."""
+  raw = apiMaterial.get_material(id)
+  if isinstance(raw, dict):
+    return None
+  try:
+    return json.loads(raw)
+  except (TypeError, ValueError):
+    return None
+
+
 @urlMaterial.route('/materials/<string:id>', methods=['POST'])
 @require_auth()
 def addMaterial(id: str):
@@ -64,8 +77,8 @@ def updateMaterial(id: str):
   materialJson = request.form.get('json')
   materialJson = json.loads(materialJson)
 
-  existingMaterial = apiMaterial.get_material(id)
-  if not existingMaterial or "ErrorMessage" in existingMaterial:
+  existingMaterial = _get_material_dict(id)
+  if not existingMaterial:
     abort(404, description="Material not found")
 
   project = apiProjects.getProject(existingMaterial.get('projectId'))
@@ -101,8 +114,8 @@ def deleteMaterial(id: str):
   Returns:
       _type_: response
   """
-  materialJson = apiMaterial.get_material(id)
-  if not materialJson or "ErrorMessage" in materialJson:
+  materialJson = _get_material_dict(id)
+  if not materialJson:
     abort(404, description="Material not found")
 
   deleteJson = request.get_json(silent=True) or {}

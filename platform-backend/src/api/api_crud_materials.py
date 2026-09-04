@@ -80,6 +80,8 @@ class API_CRUD_MATERIALS:
         _type_: response
     """
     materialJson = self.get_material(idOfTheMaterial)
+    if isinstance(materialJson, str):
+      materialJson = json.loads(materialJson)
     try:
       for fileId in materialJson['files']:
         self.__apiCrudFiles.delete_file(fileId, False)
