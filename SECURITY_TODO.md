@@ -1,6 +1,6 @@
 # SECURITY TODO — identitate reală a userului la apelurile API
 
-**Status:** documentat, NEIMPLEMENTAT. Nu necesită fix urgent — toate rutele de scriere au acum minim o barieră de autentificare (token valid) și, unde există un concept de proprietate, o verificare de owner. Ce lipsește e legarea criptografică a acelei verificări de userul care chiar face cererea.
+**Status: problema rădăcină REZOLVATĂ — 2026-09-05, commit `97eac49`.** `/api/token` emite acum tokenul real al userului logat (nu M2M), backend-ul acceptă și validează corect acest token, `current_token.sub` identifică userul real. Detalii complete în secțiunea "Rezolvat" de mai jos. **Ce rămâne deschis:** rutele individuale listate în secțiunea "Ce ar deveni cu adevărat sigur" mai jos încă citesc identitatea din body (`created_by`/`mentorId`/etc.), nu din `current_token.sub` — acum ar putea, dar migrarea e per-rută, netratată încă (vezi "Ce rămâne de făcut" la final).
 
 ## Problema
 
@@ -29,6 +29,24 @@ Rutele care au nevoie de identitate reală a userului (nu doar "cineva cu token 
 3. Varianta minimă, dacă (1)/(2) sunt prea mult de schimbat acum: un endpoint intern (server-to-server, în Next.js API routes, care AU acces la sesiunea Auth0 a userului prin `@auth0/nextjs-auth0`) care semnează/atașează id-ul userului real la cerere înainte s-o trimită mai departe către Flask — mutând verificarea "cine e userul" în stratul Next.js (care chiar știe cine e logat), nu în Flask (care nu știe).
 
 Oricare variantă aleasă, `/api/token` (sau echivalentul lui) ar trebui să refuze să emită un token dacă nu există o sesiune Auth0 validă în cererea originală a browserului.
+
+## Rezolvat — 2026-09-05, commit `97eac49`
+
+Varianta aleasă a fost cea mai simplă dintre cele trei discutate mai sus (nu a fost nevoie de nicio combinație): backend-ul nu avea, de fapt, nimic hardcodat pe M2M — `jwt_validator.py` verifică doar `exp`/`aud`/`iss`, indiferent de grant type. Login flow-ul (`pages/api/auth/[...auth0].js`) cerea deja audience-ul corect, moștenit automat din `AUTH0_AUDIENCE` în `.env.local` (verificat: `curl` pe `/api/auth/login` arăta deja `audience=https://thinkup-api` în redirect-ul spre Auth0, înainte de orice modificare). Singurul lucru care lipsea era ca `/api/token.js` să folosească acel token de sesiune în loc să ceară unul nou, M2M.
+
+**Modificare:** `platform-frontend/src/pages/api/token.js` — `getAccessToken(req, res)` din `@auth0/nextjs-auth0` (v1.7.0, deja instalat) în loc de `axios.post(.../oauth/token, {grant_type: "client_credentials"})`. Fără sesiune → `401 {"error": "Not authenticated"}`, nu mai un token M2M ca fallback. `apiClient.js` — neschimbat comportamental (același shape de răspuns `access_token`/`expires_in`), doar comentariul actualizat.
+
+**Testat pe producție, cu date reale, curățate/revertite după fiecare pas:**
+- `GET /api/token` fără sesiune → `401`, confirmat că nu se mai scurge niciun token M2M către un caller nelogat.
+- Login proaspăt (fereastră incognito, cont real) → `/api/token` a întors un JWT valid; decodat local (fără backend implicat): `sub: "google-oauth2|113528018155821801130"`, `aud` include `https://thinkup-api` — identitate reală, nu constanta M2M.
+- Validatorul exact folosit de aplicație (`validator` din `utils/jwt_server.py`, importat și apelat direct, fără nicio rută de producție atinsă) a acceptat tokenul și a extras `sub` corect — confirmă că backend-ul, așa cum e azi, validează deja tokenuri de user, nu doar M2M.
+- `PUT /projects/<id>/accept_reviews/0` → `1` (toggle + revert) și `PUT /projects/<id>` (editare nume/descriere prin multipart, ca în `EditProject.js`, + revert) cu tokenul real de user → `200` de fiecare dată, end-to-end prin HTTPS/nginx/Flask; aceleași rute fără token → `401`.
+
+**Notă, nu e bug introdus de acest fix:** login flow-ul nu cere `offline_access`, deci nu există refresh token. Access tokenul userului are un TTL fix de 24h (confirmat din `exp`-`iat` pe tokenul real emis); sesiunile mai vechi de 24h primesc `401` la `/api/token` până la un login nou, chiar dacă sesiunea de identitate (afișarea "logat", vizualizarea profilului) rămâne validă separat. Comportament corect al SDK-ului dat fiind lipsa refresh tokenului, dar diferit de vechiul M2M (care mergea mereu, indiferent de vechimea sesiunii) — utilizatorii cu tab-uri deschise de mult vor trebui să se re-autentifice la prima acțiune scrisă după expirare.
+
+## Ce rămâne de făcut
+
+Rutele din secțiunea de mai jos ("Ce ar deveni cu adevărat sigur") încă citesc identitatea din body, nu din `current_token.sub` — deliberat, în afara scope-ului acestui fix (per instrucțiune explicită: doar identitatea din token trebuia reparată, nu felul în care o folosește fiecare rută). Acum că `current_token.sub` identifică userul real, fiecare rută de mai jos ar putea trece de la "verifică id-ul din body" la "verifică `current_token.sub`" — dar asta e o migrare separată, per-rută, netratată încă.
 
 ## Ce ar deveni cu adevărat sigur odată rezolvată
 
