@@ -1,7 +1,7 @@
 from api.api_crud_personal_objectives import API_CRUD_PERSONAL_OBJECTIVES
-from flask import Blueprint, request
+from flask import Blueprint, request, abort
 from model.entity.goals.personal_objective import PersonalObjective
-from utils.jwt_server import require_auth
+from utils.jwt_server import require_auth, current_user_id
 
 urlPersonalObjectives = Blueprint('views', __name__)
 
@@ -31,7 +31,7 @@ def postObjective(id: str):
       _type_: response
   """
   objectiveJson = request.json
-  objectiveObj = PersonalObjective(id, objectiveJson['name'], objectiveJson['description'], objectiveJson['statePercentage'], objectiveJson['deadline'], objectiveJson['userId'])
+  objectiveObj = PersonalObjective(id, objectiveJson['name'], objectiveJson['description'], objectiveJson['statePercentage'], objectiveJson['deadline'], current_user_id())
 
   return apiPesonalObjectives.addPersonalObjective(objectiveObj)
 
@@ -46,6 +46,12 @@ def deleteObjective(id: str):
   Returns:
       _type_: response
   """
+  existing = apiPesonalObjectives.getPersonalObjective(id)
+  if not existing or 'userId' not in existing:
+      abort(404, description="Objective does not exist")
+  if existing['userId'] != current_user_id():
+      abort(403, description="You can only delete your own objectives")
+
   return apiPesonalObjectives.deletePersonalObjective(id)
 
 @urlPersonalObjectives.route('/personal_objectives/<string:id>', methods=['PUT'])
@@ -56,5 +62,11 @@ def updateObjective(id: str):
   Args:
       id (str): id of the personal objective
   """
-  personalObjJson = request.json 
-  apiPesonalObjectives.updatePersonalObjective(id, personalObjJson)
+  existing = apiPesonalObjectives.getPersonalObjective(id)
+  if not existing or 'userId' not in existing:
+      abort(404, description="Objective does not exist")
+  if existing['userId'] != current_user_id():
+      abort(403, description="You can only edit your own objectives")
+
+  personalObjJson = request.json
+  return apiPesonalObjectives.updatePersonalObjective(id, personalObjJson)

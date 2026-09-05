@@ -38,7 +38,7 @@ class API_CRUD_PERSONAL_OBJECTIVES:
     userJson2 = userJson
 
     userJson['personal_objectives'].insert(0, personal_objective.get_id())
-    self.__apiUsers.updateUser(userJson2, userJson, None)
+    self.__apiUsers.updateUser(userJson2, userJson, None, None)
 
     return self.__db_crud_personal_objectives.addObjective(PersonalObjectiveEncoder.toJson(personal_objective))
 
