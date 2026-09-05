@@ -207,12 +207,33 @@ const NavBar = (props) => {
                 )}
             </NavigationButton>
 
+            <NavigationButton
+                selected={router.pathname == "/gallery"}
+                onClick={() => RouteTo("/gallery")}
+                className={styles.NavBar_button}
+                animation_delay={6}
+            >
+                <svg
+                    className={router.pathname == "/gallery" ? "" : styles.NavIcon}
+                    width={icon_size}
+                    height={icon_size}
+                    viewBox="0 0 30 30"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <rect x="4" y="4" width="9" height="9" rx="1.5" stroke="#A19EF9" strokeWidth="2" />
+                    <rect x="17" y="4" width="9" height="9" rx="1.5" stroke="#A19EF9" strokeWidth="2" />
+                    <rect x="4" y="17" width="9" height="9" rx="1.5" stroke="#A19EF9" strokeWidth="2" />
+                    <rect x="17" y="17" width="9" height="9" rx="1.5" stroke="#A19EF9" strokeWidth="2" />
+                </svg>
+            </NavigationButton>
+
             {User?.role === "Mentor" && (
                 <NavigationButton
                     selected={router.pathname.startsWith("/Challenges")}
                     onClick={() => RouteTo("/Challenges")}
                     className={styles.NavBar_button}
-                    animation_delay={6}
+                    animation_delay={7}
                 >
                     <svg
                         className={router.pathname.startsWith("/Challenges") ? "" : styles.NavIcon}
