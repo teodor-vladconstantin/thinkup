@@ -1,6 +1,6 @@
 # SECURITY TODO — identitate reală a userului la apelurile API
 
-**Status: problema rădăcină REZOLVATĂ — 2026-09-05, commit `97eac49`.** `/api/token` emite acum tokenul real al userului logat (nu M2M), backend-ul acceptă și validează corect acest token, `current_token.sub` identifică userul real. Detalii complete în secțiunea "Rezolvat" de mai jos. **Ce rămâne deschis:** rutele individuale listate în secțiunea "Ce ar deveni cu adevărat sigur" mai jos încă citesc identitatea din body (`created_by`/`mentorId`/etc.), nu din `current_token.sub` — acum ar putea, dar migrarea e per-rută, netratată încă (vezi "Ce rămâne de făcut" la final).
+**Status: problema rădăcină REZOLVATĂ — 2026-09-05, commit-uri `97eac49` (fix principal) + `4ec97d6` (documentație); configurare refresh token/`offline_access` (env + Auth0 dashboard, fără commit de cod separat).** `/api/token.js` emite acum tokenul real al userului logat (nu M2M), cu reînnoire silențioasă funcțională (refresh token, fără relogare la expirare), backend-ul acceptă și validează corect acest token, `current_token.sub` identifică userul real. Detalii complete în secțiunea "Rezolvat" de mai jos. **Ce rămâne deschis, ca item separat, netratat intenționat:** rutele care încă citesc identitatea (`mentorId`/`created_by`) din body în loc de `current_token.sub` — vezi "Ce rămâne de făcut" mai jos.
 
 ## Problema
 
@@ -42,11 +42,22 @@ Varianta aleasă a fost cea mai simplă dintre cele trei discutate mai sus (nu a
 - Validatorul exact folosit de aplicație (`validator` din `utils/jwt_server.py`, importat și apelat direct, fără nicio rută de producție atinsă) a acceptat tokenul și a extras `sub` corect — confirmă că backend-ul, așa cum e azi, validează deja tokenuri de user, nu doar M2M.
 - `PUT /projects/<id>/accept_reviews/0` → `1` (toggle + revert) și `PUT /projects/<id>` (editare nume/descriere prin multipart, ca în `EditProject.js`, + revert) cu tokenul real de user → `200` de fiecare dată, end-to-end prin HTTPS/nginx/Flask; aceleași rute fără token → `401`.
 
-**Notă, nu e bug introdus de acest fix:** login flow-ul nu cere `offline_access`, deci nu există refresh token. Access tokenul userului are un TTL fix de 24h (confirmat din `exp`-`iat` pe tokenul real emis); sesiunile mai vechi de 24h primesc `401` la `/api/token` până la un login nou, chiar dacă sesiunea de identitate (afișarea "logat", vizualizarea profilului) rămâne validă separat. Comportament corect al SDK-ului dat fiind lipsa refresh tokenului, dar diferit de vechiul M2M (care mergea mereu, indiferent de vechimea sesiunii) — utilizatorii cu tab-uri deschise de mult vor trebui să se re-autentifice la prima acțiune scrisă după expirare.
+**Actualizare — 2026-09-05, aceeași zi:** limitarea de mai sus (fără refresh token, TTL fix 24h, relogare necesară) a fost rezolvată separat, în aceeași zi. Login-ul cere acum `offline_access` (`AUTH0_SCOPE` în `.env.local`, ambele medii), iar tenant-ul Auth0 are activat "Refresh Token" (grant type, pe aplicație) și — descoperit ca blocaj real în timpul testării, nu evident din start — **"Allow Offline Access" pe API-ul `ThinkUp API` însuși** (setare separată de grant-ul de pe aplicație; fără ea, Auth0 elimina tăcut `offline_access` din răspuns, fără eroare vizibilă). Testat pe producție cu login real, printr-o rută de diagnostic temporară (needeployed la git, ștearsă după test): sesiune nouă → `hasRefreshToken: true`; refresh forțat → token nou, cu `exp` mai târziu, `sub`/`aud` păstrate corect, fără eroare; `POST /projects/<id>` cu tokenul reînnoit → `200`, creat și șters curat. Nu există commit de cod pentru asta — doar `.env.local` (gitignored) și configurare Auth0 dashboard, ambele netrackuite în git.
 
-## Ce rămâne de făcut
+## Ce rămâne de făcut — item separat, netratat intenționat
 
-Rutele din secțiunea de mai jos ("Ce ar deveni cu adevărat sigur") încă citesc identitatea din body, nu din `current_token.sub` — deliberat, în afara scope-ului acestui fix (per instrucțiune explicită: doar identitatea din token trebuia reparată, nu felul în care o folosește fiecare rută). Acum că `current_token.sub` identifică userul real, fiecare rută de mai jos ar putea trece de la "verifică id-ul din body" la "verifică `current_token.sub`" — dar asta e o migrare separată, per-rută, netratată încă.
+**Ce s-a rezolvat:** `/api/token.js` emite tokenul real al userului logat (nu M2M), cu reînnoire silențioasă funcțională.
+
+**Ce rămâne deschis:** rutele de mai jos ("Ce ar deveni cu adevărat sigur") încă citesc identitatea (`mentorId`/`created_by`) din body, nu din `current_token.sub` — deliberat, în afara scope-ului acestui fix (per instrucțiune explicită: doar identitatea din token trebuia reparată, nu felul în care o folosește fiecare rută). Acum că tokenul conține identitate reală, aceste rute ar putea fi migrate să folosească `current_token.sub`, eliminând falsificabilitatea prin body — dar e o schimbare separată, per-rută, de făcut altă dată:
+
+- `POST /submissions/<challengeId>/<studentId>` — `mentorId` din body
+- `POST /warnings/<studentId>` — `mentorId` din body
+- `PUT /projects/<id>` — `created_by` din body
+- `DELETE /projects/<id>` — `created_by` din body
+- `PUT /challenges/<id>` — `created_by` din body
+- `DELETE /challenges/<id>` — `created_by` din body
+
+(plus restul rutelor cu verificare de owner/rol din body, listate complet în secțiunea de mai jos.)
 
 ## Ce ar deveni cu adevărat sigur odată rezolvată
 
