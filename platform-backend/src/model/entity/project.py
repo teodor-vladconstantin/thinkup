@@ -8,7 +8,7 @@ from model.entity.reviews.project_reviews import ProjectReviews
 
 class Project:
     def __init__(self, id: str, name: str, searchTerm: str, description: str, thumbnail, thumbnail_extension,
-                 createdBy: str, adminList: list, creationDate, areaOfImplementation: str, goals: Goals,
+                 createdBy: str, adminList: list, creationDate, challengeId: str, goals: Goals,
                  materials: Materials, pitchId: str, settings: dict, projectReviews: ProjectReviews, mentor_feedback: list,
                  photos: list = None):
         self.__id = id
@@ -19,7 +19,7 @@ class Project:
         self.__thumbnail = thumbnail
         self.__thumbnail_extension = thumbnail_extension
         self.__creationDate = creationDate
-        self.__areaOfImplementation = areaOfImplementation
+        self.__challengeId = challengeId
         self.__goals = goals
         self.__materials = materials
         self.__pitchId = pitchId
@@ -56,11 +56,11 @@ class Project:
     def get_creationDate(self):
         return self.__creationDate
 
-    def get_areOfImplementation(self):
-        return self.__areaOfImplementation
+    def get_challengeId(self):
+        return self.__challengeId
 
-    def set_areOfImplementation(self, areOfImplementation: string):
-        self.__areaOfImplementation = areOfImplementation
+    def set_challengeId(self, challengeId: string):
+        self.__challengeId = challengeId
 
     def get_goals(self):
         return self.__goals
