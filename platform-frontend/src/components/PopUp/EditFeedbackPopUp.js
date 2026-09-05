@@ -9,7 +9,7 @@ import apiClient from "../../utils/apiClient";
 import TextArea from "../FormElems/TextArea";
 
 
-const EditFeedbackPopUp = ({ className, text, close, mentor_id, projectID, feedbackID, refresh }) => {
+const EditFeedbackPopUp = ({ className, text, close, projectID, feedbackID, refresh }) => {
     const [Text, setText] = useState(text);
 
     const handleChange = (e) => {
@@ -22,8 +22,7 @@ const EditFeedbackPopUp = ({ className, text, close, mentor_id, projectID, feedb
 
     const editFeedback = async() =>{
         const response = await apiClient.put(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectID}/feedback/${feedbackID}`, {
-            mentor_id:mentor_id, 
-            feedback_txt:Text, 
+            feedback_txt:Text,
         })
         console.log(response);
         refresh();
