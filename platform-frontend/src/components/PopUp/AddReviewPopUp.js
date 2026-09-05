@@ -7,12 +7,10 @@ import AccentButton from "../Buttons/AccentButton";
 import axios from "axios";
 import apiClient from "../../utils/apiClient";
 import { createUniqueId } from "../../utils/utils";
-import { useMyUserContext } from "../../contexts/UserContext";
 
 const AddReviewPopUp = ({ className,projectID, close ,refresh}) => {
     const [Stars, setStars] = useState(new Array(0, 0, 0, 0, 0));
     const [ReviewText, setReviewText] = useState("");
-    const User = useMyUserContext();
 
 
     const AddStars = (index) => {
@@ -34,7 +32,7 @@ const AddReviewPopUp = ({ className,projectID, close ,refresh}) => {
             review_rating+= Stars[i];
         console.log(review_rating);
 
-        const response = await apiClient.post(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectID}/addReview/${reviewID}`,{userID:User.id,projectID:projectID,review_description:ReviewText,review_rating:review_rating})
+        const response = await apiClient.post(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectID}/addReview/${reviewID}`,{projectID:projectID,review_description:ReviewText,review_rating:review_rating})
         console.log(response);
         refresh();
         close();
