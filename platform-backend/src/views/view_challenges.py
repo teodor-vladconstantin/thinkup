@@ -12,6 +12,18 @@ logger = setup_logger(__name__)
 urlChallenges = Blueprint('view_challenges', __name__)
 
 dbCrudChallenges = setup.startSetup('Challenges')
+dbCrudUsers = setup.startSetup('Users')
+
+
+def _require_mentor(user_id):
+    """Abort with 403 unless user_id resolves to a User with role Mentor."""
+    if not user_id:
+        abort(403, description="created_by is required")
+    user = dbCrudUsers.getUser(user_id)
+    if not user or "ErrorMessage" in user:
+        abort(403, description="You are not authorized to manage challenges")
+    if user.get('role') != 'Mentor':
+        abort(403, description="Only mentors can manage challenges")
 
 
 @urlChallenges.route('/challenges/<string:id>', methods=['GET'])
@@ -59,6 +71,8 @@ def deleteChallenge(id: str):
         user_id = deleteJson.get('created_by')
         logger.info(f"User {user_id} requesting deletion of challenge {id}")
 
+        _require_mentor(user_id)
+
         is_creator = challenge.get('createdBy') == user_id
 
         if not is_creator:
@@ -89,6 +103,7 @@ def addChallenge(id: str):
     """
     try:
         challengeJson = request.json
+        _require_mentor(challengeJson.get('created_by'))
         challengeObj = Challenge(
             id,
             challengeJson['name'],
@@ -130,6 +145,8 @@ def updateChallenge(id: str):
         challengeUpdated = dbCrudChallenges.getChallenge(id)
         if not challengeUpdated or "ErrorMessage" in challengeUpdated:
             abort(404, description="Challenge not found")
+
+        _require_mentor(challengeJson.get('created_by'))
 
         # Authorization check: same precedent as PUT /projects/<id> - trust the
         # user id the client supplies instead of current_token.sub (M2M token).
