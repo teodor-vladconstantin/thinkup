@@ -1,6 +1,8 @@
 # SECURITY TODO — identitate reală a userului la apelurile API
 
-**Status: problema rădăcină REZOLVATĂ — 2026-09-05, commit-uri `97eac49` (fix principal) + `4ec97d6` (documentație); configurare refresh token/`offline_access` (env + Auth0 dashboard, fără commit de cod separat).** `/api/token.js` emite acum tokenul real al userului logat (nu M2M), cu reînnoire silențioasă funcțională (refresh token, fără relogare la expirare), backend-ul acceptă și validează corect acest token, `current_token.sub` identifică userul real. Detalii complete în secțiunea "Rezolvat" de mai jos. **Ce rămâne deschis, ca item separat, netratat intenționat:** rutele care încă citesc identitatea (`mentorId`/`created_by`) din body în loc de `current_token.sub` — vezi "Ce rămâne de făcut" mai jos.
+**Status: problema rădăcină REZOLVATĂ — 2026-09-05, commit-uri `97eac49` (fix principal) + `4ec97d6` (documentație); configurare refresh token/`offline_access` (env + Auth0 dashboard, fără commit de cod separat).** `/api/token.js` emite acum tokenul real al userului logat (nu M2M), cu reînnoire silențioasă funcțională (refresh token, fără relogare la expirare), backend-ul acceptă și validează corect acest token, `current_token.sub` identifică userul real. Detalii complete în secțiunea "Rezolvat" de mai jos.
+
+**Falsificabilitate prin body — REZOLVATĂ COMPLET, 2026-09-05, commit-uri `b73e44b` / `aefa9d0` / `f7ae03a` / `e4e521e`.** Toate rutele care citeau identitatea (`mentorId`/`created_by`) din body au fost migrate să folosească `current_token.sub`. Detalii complete în secțiunea "Rezolvat — falsificabilitate prin body" de mai jos.
 
 ## Problema
 
@@ -44,45 +46,21 @@ Varianta aleasă a fost cea mai simplă dintre cele trei discutate mai sus (nu a
 
 **Actualizare — 2026-09-05, aceeași zi:** limitarea de mai sus (fără refresh token, TTL fix 24h, relogare necesară) a fost rezolvată separat, în aceeași zi. Login-ul cere acum `offline_access` (`AUTH0_SCOPE` în `.env.local`, ambele medii), iar tenant-ul Auth0 are activat "Refresh Token" (grant type, pe aplicație) și — descoperit ca blocaj real în timpul testării, nu evident din start — **"Allow Offline Access" pe API-ul `ThinkUp API` însuși** (setare separată de grant-ul de pe aplicație; fără ea, Auth0 elimina tăcut `offline_access` din răspuns, fără eroare vizibilă). Testat pe producție cu login real, printr-o rută de diagnostic temporară (needeployed la git, ștearsă după test): sesiune nouă → `hasRefreshToken: true`; refresh forțat → token nou, cu `exp` mai târziu, `sub`/`aud` păstrate corect, fără eroare; `POST /projects/<id>` cu tokenul reînnoit → `200`, creat și șters curat. Nu există commit de cod pentru asta — doar `.env.local` (gitignored) și configurare Auth0 dashboard, ambele netrackuite în git.
 
-## Ce rămâne de făcut — item separat, netratat intenționat
+## Rezolvat — falsificabilitate prin body, 2026-09-05
 
-**Ce s-a rezolvat:** `/api/token.js` emite tokenul real al userului logat (nu M2M), cu reînnoire silențioasă funcțională.
+**Ce s-a rezolvat:** toate rutele care citeau identitatea (`mentorId`/`created_by`/`createdBy`) din body pentru decizia de autorizare au fost migrate să folosească `current_user_id()` (derivat din `current_token.sub`, funcția nouă din `platform-backend/src/utils/jwt_server.py`). Body-ul nu mai are niciun efect asupra cine e considerat owner/mentor — id-ul real vine exclusiv din tokenul validat. Fiecare grup a fost testat pe producție cu date reale (succes pentru owner/mentor real, `403` pentru impersonare cu id fals în body, curățat după fiecare test) — vezi ledger-ul de sesiune pentru detaliile per-test.
 
-**Ce rămâne deschis:** rutele de mai jos ("Ce ar deveni cu adevărat sigur") încă citesc identitatea (`mentorId`/`created_by`) din body, nu din `current_token.sub` — deliberat, în afara scope-ului acestui fix (per instrucțiune explicită: doar identitatea din token trebuia reparată, nu felul în care o folosește fiecare rută). Acum că tokenul conține identitate reală, aceste rute ar putea fi migrate să folosească `current_token.sub`, eliminând falsificabilitatea prin body — dar e o schimbare separată, per-rută, de făcut altă dată:
+- **Grup 1 — Submissions + Warnings** (commit `b73e44b`): `POST /submissions/<challengeId>/<studentId>` (grade), `POST /submissions/project/...` (gradeProject), `POST /warnings/<studentId>` — `mentorId` din body → `current_user_id()`. Frontend (`grade.js`) nu mai trimite `mentorId` în payload.
+- **Grup 2 — Projects PUT/DELETE** (commit `aefa9d0`): `created_by` din body → `current_user_id()`. Frontend (`EditProject.js`, `Settings/index.js`) nu mai trimite `created_by`.
+- **Grup 3 — Challenges PUT/DELETE** (commit `f7ae03a`): `created_by` din body → `current_user_id()`, consolidat cu `_require_mentor()`. Frontend (`Challenges/index.js`) nu mai trimite `created_by`.
+- **Grup 4 — Goals/Materials/Files** (commit `e4e521e`): `postGoal`/`updateGoal`/`deleteGoal`, `addMaterial`/`updateMaterial`/`deleteMaterial`, `postFile`/`deleteFile` — toate migrate la `current_user_id()`. `addMaterial` scrie acum și `createdBy` real în DB (înainte doar verifica, nu stoca corect). Frontend (`NewGoalPopUp.js`, `GoalPopUp.js`, `NewMaterialPopUp.js`, `MaterialCard.js`) nu mai trimite id-ul userului în payload; `Files` nu are niciun caller frontend, deci nimic de curățat acolo.
 
-- `POST /submissions/<challengeId>/<studentId>` — `mentorId` din body
-- `POST /warnings/<studentId>` — `mentorId` din body
-- `PUT /projects/<id>` — `created_by` din body
-- `DELETE /projects/<id>` — `created_by` din body
-- `PUT /challenges/<id>` — `created_by` din body
-- `DELETE /challenges/<id>` — `created_by` din body
+**Ce a rămas intenționat neatins (nu era în scope, nu falsificabilitate — routes de creare, nu de autorizare pe resursă existentă):** `POST /projects` (addProject) și `POST /challenges` (addChallenge) — creatorul e chiar userul care face requestul, nu există "altcineva" de impersonat la creare.
 
-(plus restul rutelor cu verificare de owner/rol din body, listate complet în secțiunea de mai jos.)
+**Ce rămâne deschis, ca item SEPARAT:** rutele fără nicio verificare de identitate/rol (nu falsificabilitate — lipsă totală de control), listate mai jos.
 
-## Ce ar deveni cu adevărat sigur odată rezolvată
-
-Toate punctele de mai jos verifică AZI un id trimis de client în body/query — funcțional, dar falsificabil de oricine cunoaște id-ul unei alte persoane (owner de proiect, mentor etc.), pentru că nu există nicio legătură criptografică între acel id și cine chiar face request-ul:
-
-### Verificare de rol (Mentor)
-- `POST /submissions/<challengeId>/<studentId>` — `mentorId` din body, verificat față de `role` din Users table
-- `POST /warnings/<studentId>` — `mentorId` din body, verificat față de `role` din Users table
-
-### Verificare de owner/admin proiect
-- `PUT /projects/<id>` — `created_by` din body vs `createdBy`/`adminList`
-- `DELETE /projects/<id>` — `created_by` din body vs `createdBy`/`adminList`
-- `PUT /challenges/<id>` — `created_by` din body vs `createdBy`
-- `DELETE /challenges/<id>` — `created_by` din body vs `createdBy`
-- `POST /goals/<id>` — `created_by` din body vs owner-ul proiectului părinte
-- `PUT /goals/<id>` — `created_by` din body vs owner-ul proiectului părinte
-- `DELETE /goals/<id>` — `created_by` din body vs owner-ul proiectului părinte
-- `POST /materials/<id>` — `createdBy` din body vs owner-ul proiectului părinte
-- `PUT /materials/<id>` — `updatedBy` din body vs owner-ul proiectului părinte
-- `DELETE /materials/<id>` — `created_by` din body vs owner-ul proiectului părinte
-- `POST /files/<id>` — `created_by` din body vs owner-ul (prin material → proiect)
-- `DELETE /files/<id>` — `created_by` din body vs owner-ul (prin material → proiect)
-
-### Autentificare "oricine cu token" (fără verificare de identitate/rol deloc)
-Toate rutele `@require_auth()` fără verificare suplimentară — Goals POST (parte fără owner check unde nu era clar), Materials move up/down, Files GET, Awards (cod mort, neînregistrat), Reviews (add/update/delete), Mentor Feedback (add/edit/delete), Personal Objectives (post/put/delete), OpenSchool (add/delete/increasePopularity), Users (toate rutele de scriere din `view_users.py`) — pentru toate astea, "identitatea reală" ar permite trecerea de la "orice user autentificat poate" la "doar userul potrivit poate", acolo unde are sens.
+## Ce rămâne — autentificare "oricine cu token" (fără verificare de identitate/rol deloc)
+Toate rutele `@require_auth()` fără verificare suplimentară de owner/rol — Goals POST (parte fără owner check unde nu era clar), Materials move up/down, Files GET, Awards (cod mort, neînregistrat), Reviews (add/update/delete), Mentor Feedback (add/edit/delete), Personal Objectives (post/put/delete), OpenSchool (add/delete/increasePopularity), Users (toate rutele de scriere din `view_users.py`) — pentru toate astea, "identitatea reală" ar permite trecerea de la "orice user autentificat poate" la "doar userul potrivit poate", acolo unde are sens. Neschimbat, în afara scope-ului migrării de mai sus.
 
 ## Ce NU rezolvă acest fix, dar merită menționat separat
 
