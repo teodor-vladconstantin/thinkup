@@ -20,7 +20,8 @@ const EditProject = () => {
     const [ProjectTitle, setProjectTitle] = useState("");
     const [ProjectDescription, setProjectDescription] = useState("");
     const [File, setFile] = useState(null);
-    const [AreaOfImplementation, setAreaOfImplementation] = useState("Select");
+    const [Challenges, setChallenges] = useState([]);
+    const [ChallengeId, setChallengeId] = useState(null);
     const [Error, setError] = useState("");
     const user = useMyUserContext();
 
@@ -31,32 +32,27 @@ const EditProject = () => {
         console.log(response);
         setProjectTitle(response.data.name);
         setProjectDescription(response.data.description);
-        setAreaOfImplementation(response.data.areaOfImplementation)
-        // switch (response.data.areaOfImplementation) {
-        //     case "Civic Education":
-        //         setAreaOfImplementation(1);
-        //         break;
-        //     case "Ecological":
-        //         setAreaOfImplementation(2);
-        //         break;
-        //     case "STEM":
-        //         setAreaOfImplementation(3);
-        //         break;
-        //     default:
-        //         break;
-        // }
+        setChallengeId(response.data.challengeId);
     };
 
     useEffect(() => {
         getProjectData();
-        console.log(id);
+        const fetchChallenges = async () => {
+            try {
+                const response = await axios.get(
+                    `${process.env.NEXT_PUBLIC_API_URL}/challenges`
+                );
+                setChallenges(response.data.challenges || []);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchChallenges();
     }, [id]);
 
-    const AreaOfImplementationOptions = new Array(
-        "Civic Education",
-        "Ecological",
-        "STEM"
-    );
+    const ChallengeOptions = Challenges.map((challenge) => challenge.name);
+    const SelectedChallengeName =
+        Challenges.find((c) => c.id === ChallengeId)?.name || "Select";
 
     const handleFileChange = (e) => {
         const [f] = e.target.files;
@@ -92,7 +88,7 @@ const EditProject = () => {
                 description: ProjectDescription,
                 thumbnail: imageId,
                 created_by: user.id,
-                areaOfImplementation: AreaOfImplementation,
+                challengeId: ChallengeId,
             })
         );
 
@@ -122,14 +118,15 @@ const EditProject = () => {
                     placeholder="Set title"
                 />
                 <SelectField
-                    selectTitle="Area Of Implementation"
+                    selectTitle="Challenge"
                     width="250"
-                    value={AreaOfImplementation}
-                    setValue={(e) => {
-                        setAreaOfImplementation(e);
+                    value={SelectedChallengeName}
+                    setValue={(name) => {
+                        const match = Challenges.find((c) => c.name === name);
+                        if (match) setChallengeId(match.id);
                     }}
-                    onChange={(e) => setAreaOfImplementation(e.target.value)}
-                    options={AreaOfImplementationOptions}
+                    onChange={() => {}}
+                    options={ChallengeOptions}
                 />
                 <ImageInput
                     setSelectedFile={(file) => handleFileChange(file)}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Head from "next/head";
 import styles from "../../../styles/NewProject.module.css";
 import InputField from "../../components/FormElems/InputField";
@@ -38,8 +38,23 @@ const uploadPhotoToCloudinary = async (file, projectId) => {
 const NewProject = () => {
     const [ProjectName, setProjectName] = useState("");
     const [Description, setDescription] = useState("");
-    const [AreaOfImplementation, setAreaOfImplementation] = useState("Select");
-    const [value, setFilterValue] = useState("Select");
+    const [Challenges, setChallenges] = useState([]);
+    const [SelectedChallengeName, setSelectedChallengeName] = useState("Select");
+
+    useEffect(() => {
+        const fetchChallenges = async () => {
+            try {
+                const response = await apiClient.get(
+                    `${process.env.NEXT_PUBLIC_API_URL}/challenges`
+                );
+                setChallenges(response.data.challenges || []);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchChallenges();
+    }, []);
+
     const router = useRouter();
     const user = useMyUserContext();
 
@@ -49,11 +64,7 @@ const NewProject = () => {
     const [PhotosSaved, setPhotosSaved] = useState(false);
     const [PhotosError, setPhotosError] = useState("");
 
-    const AreaOfImplementationOptions = new Array(
-        "Civic Education",
-        "Ecological",
-        "STEM"
-    );
+    const ChallengeOptions = Challenges.map((challenge) => challenge.name);
 
     const showProjectError = (message) => {
         const errorDiv = document.querySelector(".errorProject");
@@ -79,16 +90,23 @@ const NewProject = () => {
         if (
             !verifyText(ProjectName, 50) ||
             !verifyText(Description, 700) ||
-            AreaOfImplementation == "0"
+            SelectedChallengeName == "Select"
         )
             return;
+        const selectedChallenge = Challenges.find(
+            (c) => c.name === SelectedChallengeName
+        );
+        if (!selectedChallenge) {
+            showProjectError("Alege un challenge.");
+            return;
+        }
         try {
             const response = await apiClient.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`,
                 {
                     id: id,
                     name: ProjectName,
-                    area_of_implementation: AreaOfImplementation,
+                    challengeId: selectedChallenge.id,
                     creation_date: date,
                     description: Description,
                     created_by: user.id,
@@ -294,23 +312,15 @@ const NewProject = () => {
                 value={ProjectName}
                 onChange={(e) => setProjectName(e.target.value)}
             />
-            {/* <SelectField
-                value={AreaOfImplementation}
-                setValue={(e) => {
-                    setFilterValue(e);
-                }}
-                onChange={(e) => setAreaOfImplementation(e.target.value)}
-                options={AreaOfImplementationOptions}
-            /> */}
             <SelectField
-                selectTitle="Area Of Implementation"
+                selectTitle="Challenge"
                 width="250"
-                value={AreaOfImplementation}
+                value={SelectedChallengeName}
                 setValue={(e) => {
-                    setAreaOfImplementation(e);
+                    setSelectedChallengeName(e);
                 }}
-                onChange={(e) => setAreaOfImplementation(e.target.value)}
-                options={AreaOfImplementationOptions}
+                onChange={(e) => setSelectedChallengeName(e.target.value)}
+                options={ChallengeOptions}
             />
             <TextArea
                 areaTitle="Project Description"
