@@ -121,6 +121,9 @@ def addChallenge(id: str):
         logger.warning(f"Missing field creating challenge {id}: {e}")
         return jsonify({"error": f"Missing field: {str(e)}"}), 400
     except Exception as e:
+        from werkzeug.exceptions import HTTPException
+        if isinstance(e, HTTPException):
+            raise e
         logger.error(f"Error creating challenge {id}: {e}", exc_info=True)
         return jsonify({"error": str(e)}), 500
 
