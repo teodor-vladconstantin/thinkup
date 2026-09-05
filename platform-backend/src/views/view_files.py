@@ -6,7 +6,7 @@ from dynamoDB import setup
 from flask import Blueprint, request, send_from_directory, abort
 import os
 from s3.s3_crud import S3_OPERATIONS
-from utils.jwt_server import require_auth
+from utils.jwt_server import require_auth, current_user_id
 
 urlFiles = Blueprint('view_files', __name__)
 
@@ -63,9 +63,8 @@ def postFile(id: str):
         _type_: response
     """
     materialId = request.form.get('materialid')
-    createdBy = request.form.get('created_by')
 
-    if not _is_material_owner(materialId, createdBy):
+    if not _is_material_owner(materialId, current_user_id()):
         abort(403, description="You are not authorized to add files to this material")
 
     file = request.files['file']
@@ -99,8 +98,7 @@ def deleteFile(id: str):
     if not fileJson or "ErrorMessage" in fileJson:
         abort(404, description="File not found")
 
-    deleteJson = request.get_json(silent=True) or {}
-    if not _is_material_owner(fileJson.get('materialId'), deleteJson.get('created_by')):
+    if not _is_material_owner(fileJson.get('materialId'), current_user_id()):
         abort(403, description="You are not authorized to delete this file")
 
     return apiFiles.delete_file(id, True)

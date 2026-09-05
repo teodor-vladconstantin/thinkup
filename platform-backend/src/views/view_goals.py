@@ -3,7 +3,7 @@ from api.api_crud_projects import API_CRUD_PROJECTS
 from dynamoDB import setup
 from flask import Blueprint, request, abort
 from model.entity.goals.goal import Goal
-from utils.jwt_server import require_auth
+from utils.jwt_server import require_auth, current_user_id
 
 urlGoals = Blueprint('views', __name__)
 
@@ -51,7 +51,7 @@ def postGoal(id: str):
     abort(400, description="Missing JSON body")
 
   project = apiProjects.getProject(goalJson.get('projectId'))
-  if not _is_project_owner(project, goalJson.get('created_by')):
+  if not _is_project_owner(project, current_user_id()):
     abort(403, description="You are not authorized to add goals to this project")
 
   goalObj = Goal(id, goalJson['name'], goalJson['description'], goalJson['statePercentage'], goalJson['deadline'], goalJson['projectId'])
@@ -73,9 +73,8 @@ def deleteGoal(id: str):
   if not goal or "ErrorMessage" in goal:
     abort(404, description="Goal not found")
 
-  deleteJson = request.get_json(silent=True) or {}
   project = apiProjects.getProject(goal.get('projectId'))
-  if not _is_project_owner(project, deleteJson.get('created_by')):
+  if not _is_project_owner(project, current_user_id()):
     abort(403, description="You are not authorized to delete this goal")
 
   return apiGoals.deleteGoal(id)
@@ -97,7 +96,7 @@ def updateGoal(id: str):
     abort(404, description="Goal not found")
 
   project = apiProjects.getProject(goal.get('projectId'))
-  if not _is_project_owner(project, goalJson.get('created_by')):
+  if not _is_project_owner(project, current_user_id()):
     abort(403, description="You are not authorized to update this goal")
 
   return apiGoals.updateGoal(goalJson)

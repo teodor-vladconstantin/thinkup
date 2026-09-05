@@ -7,7 +7,7 @@ import FileUploadInput from "../FormElems/FileUploadInput";
 import CircleLogo from "../Circle/CircleLogo";
 import { createUniqueId, getCurentDate } from "../../utils/utils";
 import TextArea from "../FormElems/TextArea";
-import { useMyUserContext, useMyUserUpdate } from "../../contexts/UserContext";
+import { useMyUserUpdate } from "../../contexts/UserContext";
 import TitleInputField from "../FormElems/TitleInputField";
 import apiClient from "../../utils/apiClient";
 import File from "../Cards/File";
@@ -18,7 +18,6 @@ const NewMaterialPopUp = ({ className, close, addedmaterial, Projectid }) => {
     const [Description, setDescription] = useState("");
     const [Date, setDate] = useState("");
     const [Files, setFiles] = useState();
-    const user = useMyUserContext();
 
     useEffect(() => {
         setDate(getCurentDate());
@@ -40,7 +39,6 @@ const NewMaterialPopUp = ({ className, close, addedmaterial, Projectid }) => {
                 name: Title,
                 creationDate: Date,
                 description: Description,
-                createdBy: user.id,
                 projectId: Projectid,
                 files: file_id_array,
             })
