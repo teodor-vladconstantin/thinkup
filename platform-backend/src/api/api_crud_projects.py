@@ -49,29 +49,18 @@ class API_CRUD_PROJECTS:
     """
     return self.__dbCrudProjects.getProject(idOfTheProject)
 
-  def getAllProjects (self, filter: str):
-    """Returns all existing projects with / without a specific are of implementation
-
-    Args:
-        filter (str): filter to apply to the projects (optional)
+  def getAllProjects (self):
+    """Returns all existing projects
 
     Returns:
         list: list of all projects
     """
-    if filter is None:
-      data = self.__dbCrudProjects.fullscanProject()
-      Item = {
-        'projects': data
-      }
-      Item['projects'].sort(key=operator.itemgetter('name'))
-      return Item
-    else:
-      data = self.__dbCrudProjects.getAllWithField(filter)
-      Item = {
-        'projects': data
-      }
-      Item['projects'].sort(key=operator.itemgetter('name'))
-      return Item
+    data = self.__dbCrudProjects.fullscanProject()
+    Item = {
+      'projects': data
+    }
+    Item['projects'].sort(key=operator.itemgetter('name'))
+    return Item
 
   def getOwnedProjects(self, owner_id: str):
     """Get projects owned by a specific user

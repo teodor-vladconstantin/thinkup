@@ -3,6 +3,7 @@ import styles from "../../../styles/Challenges.module.css";
 import apiClient from "../../utils/apiClient";
 import { useMyUserContext } from "../../contexts/UserContext";
 import ScrollContainer from "../../components/Containers/ScrollContainer";
+import { useRouter } from "next/router";
 
 const emptyForm = {
     id: "",
@@ -14,6 +15,7 @@ const emptyForm = {
 
 const ChallengesPage = () => {
     const user = useMyUserContext();
+    const router = useRouter();
     const [Challenges, setChallenges] = useState([]);
     const [Form, setForm] = useState(emptyForm);
     const [EditingId, setEditingId] = useState(null);
@@ -72,6 +74,13 @@ const ChallengesPage = () => {
     const submitForm = async () => {
         if (!Form.id || !Form.name || !Form.deadline) {
             setError("Id, nume și deadline sunt obligatorii.");
+            return;
+        }
+        const duplicateName = Challenges.some(
+            (c) => c.name === Form.name && c.id !== EditingId
+        );
+        if (duplicateName) {
+            setError("Există deja un challenge cu acest nume.");
             return;
         }
         setError("");
@@ -189,6 +198,9 @@ const ChallengesPage = () => {
                         </p>
                     </div>
                     <div className={styles.ChallengeActions}>
+                        <button onClick={() => router.push(`/Challenges/${challenge.id}/grade`)}>
+                            Notează
+                        </button>
                         <button onClick={() => startEdit(challenge)}>
                             Editează
                         </button>

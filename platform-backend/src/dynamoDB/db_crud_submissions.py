@@ -98,7 +98,7 @@ class DB_CRUD_SUBMISSIONS:
       Key={
         'id': submissionObjJSON["id"]
       },
-      UpdateExpression="set #sid=:si, #cid=:ci, #sc=:sc, #gb=:gb, #gd=:gd, #fb=:fb",
+      UpdateExpression="set #sid=:si, #cid=:ci, #sc=:sc, #gb=:gb, #gd=:gd, #fb=:fb, #pid=:pi",
       ExpressionAttributeValues={
         ':si': submissionObjJSON["studentId"],
         ':ci': submissionObjJSON["challengeId"],
@@ -106,6 +106,7 @@ class DB_CRUD_SUBMISSIONS:
         ':gb': submissionObjJSON["gradedBy"],
         ':gd': submissionObjJSON["gradedDate"],
         ':fb': submissionObjJSON.get("feedback"),
+        ':pi': submissionObjJSON.get("projectId"),
       },
       ExpressionAttributeNames={
         "#sid": "studentId",
@@ -113,7 +114,8 @@ class DB_CRUD_SUBMISSIONS:
         "#sc": "score",
         "#gb": "gradedBy",
         "#gd": "gradedDate",
-        "#fb": "feedback"
+        "#fb": "feedback",
+        "#pid": "projectId"
       },
       ReturnValues="UPDATED_NEW"
     )

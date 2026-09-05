@@ -10,7 +10,6 @@ import { useUser } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
 import { useMyUserContext, useMyUserUpdate } from "../contexts/UserContext";
 import SearchBar from "../components/FormElems/SearchBar";
-import FilterComponent from "../components/FormElems/FilterComponent.js";
 import Loading from "../components/Loading/Loading";
 import { useAccesTokenContext } from "../contexts/AccesTokenContext";
 import UsersTable from "../components/Tables/UsersTable";
@@ -26,11 +25,6 @@ const Home = () => {
     const [Language, setLanguage] = useState("en");
     const User = useMyUserContext();
     const AccesToken = useAccesTokenContext();
-    const AreaOfImplementationOptions = new Array(
-        "Civic Education",
-        "Ecological",
-        "STEM"
-    );
 
     const messages = {
         en: {
@@ -45,13 +39,7 @@ const Home = () => {
     };
 
     const getAllProjects = async () => {
-        let response;
-        if (FilterValue == "Filter")
-            response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/projects`);
-        else
-            response = await axios.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/projects?filter=${FilterValue}`
-            );
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/projects`);
         console.log(response.data.projects);
         setProjectsData(response.data.projects);
     };
@@ -125,11 +113,6 @@ const Home = () => {
             </Head>
             <DeadlineBanner user_id={User != undefined ? User.id : undefined} />
             <div className={styles.HomeTopBar}>
-                <FilterComponent
-                    value={FilterValue}
-                    setValue={(e) => setFilterValue(e)}
-                    options={AreaOfImplementationOptions}
-                />
                 <SearchBar
                     search_type={SearchType?"projects":"users"}
                     changeSearchType={()=>setSearchType(!SearchType)}

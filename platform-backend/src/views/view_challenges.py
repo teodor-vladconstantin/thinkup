@@ -13,6 +13,7 @@ urlChallenges = Blueprint('view_challenges', __name__)
 
 dbCrudChallenges = setup.startSetup('Challenges')
 dbCrudUsers = setup.startSetup('Users')
+dbCrudProjects = setup.startSetup('Projects')
 
 
 def _require_mentor(user_id):
@@ -78,6 +79,14 @@ def deleteChallenge(id: str):
         if not is_creator:
             logger.warning(f"User {user_id} unauthorized to delete challenge {id}")
             abort(403, description="You are not authorized to delete this challenge")
+
+        referencing_projects = [
+            p for p in dbCrudProjects.fullscanProject()
+            if p.get('challengeId') == id
+        ]
+        if referencing_projects:
+            logger.warning(f"Refusing to delete challenge {id}: {len(referencing_projects)} project(s) reference it")
+            abort(409, description=f"Cannot delete: {len(referencing_projects)} project(s) reference this challenge")
 
         result = dbCrudChallenges.deleteChallenge(id)
         logger.info(f"Challenge {id} deleted successfully")

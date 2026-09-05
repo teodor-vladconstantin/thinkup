@@ -63,18 +63,6 @@ class DB_CRUD_PROJECTS:
     except KeyError:
       return {"ErrorMessage": "Project Does not Exist"}
 
-  def getAllWithField(self, field: str):
-    """Get all projects with a certain field (are of implementation)
-
-    Args:
-        field (str): Field to search for
-
-    Returns:
-        list: list of all projects with the field
-    """
-    response = self.__projectTable.scan(FilterExpression=Attr('areaOfImplementation').eq(field))
-    return response['Items']
-
   def getAllFromOwner(self, owner_id: str):
     """Returns all projects from a certain owner
 

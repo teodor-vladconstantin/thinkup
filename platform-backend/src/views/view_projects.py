@@ -185,13 +185,7 @@ def get_all_projects():
     Returns:
         list: all the projects
     """
-    filter = None
-    try:
-        filter = request.args['filter']
-    except KeyError as err:
-        print(err)
-
-    return apiProjects.getAllProjects(filter)
+    return apiProjects.getAllProjects()
 
 @urlProject.route('/user_projects/<string:id>', methods=['GET'])
 def get_user_projects(id: str):

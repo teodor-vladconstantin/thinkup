@@ -207,6 +207,32 @@ const NavBar = (props) => {
                 )}
             </NavigationButton>
 
+            {User?.role === "Mentor" && (
+                <NavigationButton
+                    selected={router.pathname.startsWith("/Challenges")}
+                    onClick={() => RouteTo("/Challenges")}
+                    className={styles.NavBar_button}
+                    animation_delay={6}
+                >
+                    <svg
+                        className={router.pathname.startsWith("/Challenges") ? "" : styles.NavIcon}
+                        width={icon_size}
+                        height={icon_size}
+                        viewBox="0 0 30 30"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M7.5 3.75V26.25M7.5 3.75H21.5625C21.9973 3.75 22.3125 4.16443 22.1953 4.58274L20.4844 10.7173C20.4351 10.8935 20.4351 11.0796 20.4844 11.2558L22.1953 17.3903C22.3125 17.8086 21.9973 18.2231 21.5625 18.2231H7.5"
+                            stroke="#A19EF9"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        />
+                    </svg>
+                </NavigationButton>
+            )}
+
             {/*<NavigationButton
                 icon="majesticons_logout-line.svg"
                 selected={false}
