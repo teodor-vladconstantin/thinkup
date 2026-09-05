@@ -170,7 +170,7 @@ class API_CRUD_PROJECTS:
       pass
     
     try:
-      projectToUpdate['areaOfImplementation'] = projectJson['areaOfImplementation']
+      projectToUpdate['challengeId'] = projectJson['challengeId']
     except KeyError:
       pass
 

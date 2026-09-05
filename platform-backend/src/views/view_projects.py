@@ -109,11 +109,18 @@ def addProject(id: str):
     materials_obj = Materials([])
     goal = Goals([])
     projectJson = request.json
-    projectReviews = ProjectReviews(projectJson['id'], 0, 0, [])
-    projectObj = Project(projectJson['id'], projectJson['name'], str(projectJson['name']).lower(), projectJson['description'], "defaultThumbnailCIVIC1", ".png", projectJson['created_by'], [projectJson['created_by']], projectJson['creation_date'], projectJson['area_of_implementation'], goal, materials_obj, "pitchId#999", {"accept_reviews": True}, projectReviews, mentor_feedback, [])
 
-    creatorID = projectJson['created_by']
-    updateActivity(creatorID, "create_project", 2)
+    created_by = projectJson['created_by']
+    challenge_id = projectJson['challengeId']
+
+    existing_projects = apiProjects.getOwnedProjects(created_by).get('projects', [])
+    if any(p.get('challengeId') == challenge_id for p in existing_projects):
+        abort(409, description="Ai deja un proiect pe acest challenge")
+
+    projectReviews = ProjectReviews(projectJson['id'], 0, 0, [])
+    projectObj = Project(projectJson['id'], projectJson['name'], str(projectJson['name']).lower(), projectJson['description'], "defaultThumbnailCIVIC1", ".png", created_by, [created_by], projectJson['creation_date'], challenge_id, goal, materials_obj, "pitchId#999", {"accept_reviews": True}, projectReviews, mentor_feedback, [])
+
+    updateActivity(created_by, "create_project", 2)
 
     return apiProjects.addProject(project_token, projectObj)
 @urlProject.route('/projects/<string:id>', methods=['PUT'])
@@ -151,6 +158,12 @@ def updateProject(id: str):
     if not (is_owner or is_admin):
          logger.warning(f"User {user_id} unauthorized to update project {id}")
          abort(403, description="You are not authorized to update this project")
+
+    new_challenge_id = projectJson.get('challengeId')
+    if new_challenge_id and new_challenge_id != projectUpdated.get('challengeId'):
+        existing_projects = apiProjects.getOwnedProjects(user_id).get('projects', [])
+        if any(p.get('challengeId') == new_challenge_id and p.get('id') != id for p in existing_projects):
+            abort(409, description="Ai deja un proiect pe acest challenge")
     
     projectJson["created_by"] = projectUpdated["createdBy"]
     
