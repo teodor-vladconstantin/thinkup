@@ -62,6 +62,7 @@ const useMyUser = () => {
                     facebook:response.data.social_connections?.facebook,
                 },
                 id: User.id,
+                role: response.data.role,
                 settings: response.data.settings,
                 perms: response.data.perms,
             });
