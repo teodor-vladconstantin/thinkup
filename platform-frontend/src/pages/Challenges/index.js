@@ -93,7 +93,6 @@ const ChallengesPage = () => {
                         description: Form.description,
                         deadline: Form.deadline,
                         maxScore: Number(Form.maxScore),
-                        created_by: user.id,
                     }
                 );
             } else {
@@ -122,8 +121,7 @@ const ChallengesPage = () => {
     const deleteChallenge = async (id) => {
         try {
             await apiClient.delete(
-                `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}`,
-                { data: { created_by: user.id } }
+                `${process.env.NEXT_PUBLIC_API_URL}/challenges/${id}`
             );
             await loadChallenges();
         } catch (err) {

@@ -1,7 +1,7 @@
 import json
 
 from flask import Blueprint, request, jsonify, abort
-from utils.jwt_server import require_auth
+from utils.jwt_server import require_auth, current_user_id
 from utils.logger import setup_logger
 from dynamoDB import setup
 from model.entity.challenge import Challenge
@@ -65,11 +65,7 @@ def deleteChallenge(id: str):
             logger.warning(f"Challenge {id} not found for deletion")
             abort(404, description="Challenge not found")
 
-        # Authorization check: same precedent as PUT /projects/<id> - the JWT is a
-        # service-to-service (M2M) token and does not identify the calling user, so
-        # we trust the user id the client supplies instead of current_token.sub.
-        deleteJson = request.get_json(silent=True) or {}
-        user_id = deleteJson.get('created_by')
+        user_id = current_user_id()
         logger.info(f"User {user_id} requesting deletion of challenge {id}")
 
         _require_mentor(user_id)
@@ -158,11 +154,9 @@ def updateChallenge(id: str):
         if not challengeUpdated or "ErrorMessage" in challengeUpdated:
             abort(404, description="Challenge not found")
 
-        _require_mentor(challengeJson.get('created_by'))
+        user_id = current_user_id()
+        _require_mentor(user_id)
 
-        # Authorization check: same precedent as PUT /projects/<id> - trust the
-        # user id the client supplies instead of current_token.sub (M2M token).
-        user_id = challengeJson.get('created_by')
         is_creator = challengeUpdated.get('createdBy') == user_id
 
         if not is_creator:
