@@ -65,7 +65,6 @@ const GradeChallengePage = () => {
             await apiClient.post(
                 `${process.env.NEXT_PUBLIC_API_URL}/submissions/project/${projectId}`,
                 {
-                    mentorId: user.id,
                     score: Number(score),
                     feedback: Feedbacks[projectId] || "",
                 }

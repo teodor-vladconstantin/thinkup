@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 
 from flask import Blueprint, request, jsonify, abort
-from utils.jwt_server import require_auth
+from utils.jwt_server import require_auth, current_user_id
 from utils.logger import setup_logger
 from dynamoDB import setup
 from model.entity.warning import Warning
@@ -22,7 +22,6 @@ def addWarning(student_id: str):
     """Issue a warning to a student
 
     Body:
-        mentorId (str): id of the mentor issuing the warning (must resolve to a Mentor user)
         text (str): the warning message
 
     Args:
@@ -36,9 +35,7 @@ def addWarning(student_id: str):
         if not warningJson:
             abort(400, description="Missing JSON body")
 
-        mentor_id = warningJson.get('mentorId')
-        if not mentor_id:
-            abort(400, description="mentorId is required")
+        mentor_id = current_user_id()
 
         mentor = dbCrudUsers.getUser(mentor_id)
         if not mentor or "ErrorMessage" in mentor:

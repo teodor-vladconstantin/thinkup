@@ -2,7 +2,7 @@ from datetime import datetime
 from decimal import Decimal
 
 from flask import Blueprint, request, jsonify, abort
-from utils.jwt_server import require_auth
+from utils.jwt_server import require_auth, current_user_id
 from utils.logger import setup_logger
 from dynamoDB import setup
 from model.entity.submission import Submission
@@ -34,7 +34,6 @@ def gradeSubmission(challenge_id: str, student_id: str):
     """Grade a student's submission for a challenge
 
     Body:
-        mentorId (str): id of the mentor granting the score (must resolve to a Mentor user)
         score (number): the score granted
         feedback (str, optional): free-text feedback
 
@@ -50,9 +49,7 @@ def gradeSubmission(challenge_id: str, student_id: str):
         if not gradeJson:
             abort(400, description="Missing JSON body")
 
-        mentor_id = gradeJson.get('mentorId')
-        if not mentor_id:
-            abort(400, description="mentorId is required")
+        mentor_id = current_user_id()
 
         mentor = dbCrudUsers.getUser(mentor_id)
         if not mentor or "ErrorMessage" in mentor:
@@ -96,7 +93,6 @@ def gradeProject(project_id: str):
     """Grade every admin of a project for the project's challenge
 
     Body:
-        mentorId (str): id of the mentor granting the score (must resolve to a Mentor user)
         score (number): the score granted
         feedback (str, optional): free-text feedback
 
@@ -111,9 +107,7 @@ def gradeProject(project_id: str):
         if not gradeJson:
             abort(400, description="Missing JSON body")
 
-        mentor_id = gradeJson.get('mentorId')
-        if not mentor_id:
-            abort(400, description="mentorId is required")
+        mentor_id = current_user_id()
 
         mentor = dbCrudUsers.getUser(mentor_id)
         if not mentor or "ErrorMessage" in mentor:
