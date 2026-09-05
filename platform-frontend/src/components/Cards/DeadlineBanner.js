@@ -28,20 +28,23 @@ const DeadlineBanner = (props) => {
             const challengesResponse = await apiClient.get(
                 `${process.env.NEXT_PUBLIC_API_URL}/challenges`
             );
-            const submissionsResponse = await apiClient.get(
-                `${process.env.NEXT_PUBLIC_API_URL}/submissions/student/${props.user_id}`
+            const projectsResponse = await apiClient.get(
+                `${process.env.NEXT_PUBLIC_API_URL}/user_projects/${props.user_id}`
             );
 
             const challenges = challengesResponse.data.challenges || [];
-            const submissions = submissionsResponse.data.submissions || [];
-            const submittedChallengeIds = new Set(
-                submissions.map((submission) => submission.challengeId)
+            const projects = projectsResponse.data.projects || [];
+            const participatingChallengeIds = new Set(
+                projects.map((project) => project.challengeId)
             );
 
             const now = Date.now();
 
             const upcoming = challenges
-                .filter((challenge) => !submittedChallengeIds.has(challenge.id))
+                .filter(
+                    (challenge) =>
+                        !participatingChallengeIds.has(challenge.id)
+                )
                 .map((challenge) => ({
                     ...challenge,
                     msRemaining: new Date(challenge.deadline).getTime() - now,
