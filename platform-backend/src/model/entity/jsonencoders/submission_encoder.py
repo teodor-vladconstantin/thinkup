@@ -12,6 +12,7 @@ class SubmissionEncoder():
         'gradedBy': o.get_gradedBy(),
         'gradedDate': o.get_gradedDate(),
         'feedback': o.get_feedback(),
+        'projectId': o.get_projectId(),
       }
       return Item
     return None

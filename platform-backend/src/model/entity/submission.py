@@ -2,7 +2,7 @@ import string
 
 
 class Submission:
-    def __init__(self, id: str, studentId: str, challengeId: str, score, gradedBy: str, gradedDate, feedback: string = None):
+    def __init__(self, id: str, studentId: str, challengeId: str, score, gradedBy: str, gradedDate, feedback: string = None, projectId: string = None):
         self.__id = id
         self.__studentId = studentId
         self.__challengeId = challengeId
@@ -10,6 +10,7 @@ class Submission:
         self.__gradedBy = gradedBy
         self.__gradedDate = gradedDate
         self.__feedback = feedback
+        self.__projectId = projectId
 
     def get_id(self):
         return self.__id
@@ -43,3 +44,9 @@ class Submission:
 
     def set_feedback(self, feedback: string):
         self.__feedback = feedback
+
+    def get_projectId(self):
+        return self.__projectId
+
+    def set_projectId(self, projectId: string):
+        self.__projectId = projectId
