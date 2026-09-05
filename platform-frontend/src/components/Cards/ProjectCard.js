@@ -46,7 +46,9 @@ const ProjectCard = (props) => {
                 <p className={styles.ProjectTitle}>{props.title}</p>
                 <p
                     className={
-                        styles.ProjectCategory + " " + styles[props.category]
+                        styles.ProjectCategory +
+                        " " +
+                        styles["ChallengeColor" + (props.colorIndex ?? 0)]
                     }
                 >
                     {props.category}

@@ -9,7 +9,7 @@ const CategoryCard = (props) => {
                 " " +
                 props.className +
                 " " +
-                styles[props.category]
+                styles["ChallengeColor" + (props.colorIndex ?? 0)]
             }
             onClick={() => {}}
         >

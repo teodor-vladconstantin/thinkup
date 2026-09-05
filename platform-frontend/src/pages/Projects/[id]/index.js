@@ -26,6 +26,7 @@ const Project = () => {
     const [NewReviewPopUp, setNewReviewPopUp] = useState(false);
     const [ReviewPopUp, setReviewPopUp] = useState(false);
     const [Language, setLanguage] = useState("en");
+    const [Challenges, setChallenges] = useState([]);
     const router = useRouter();
     const User = useMyUserContext();
     const { id } = router.query;
@@ -155,6 +156,20 @@ const Project = () => {
         }
     }, [User]);
 
+    useEffect(() => {
+        const fetchChallenges = async () => {
+            try {
+                const response = await axios.get(
+                    `${process.env.NEXT_PUBLIC_API_URL}/challenges`
+                );
+                setChallenges(response.data.challenges || []);
+            } catch (err) {
+                console.log(err);
+            }
+        };
+        fetchChallenges();
+    }, []);
+
     if (!ProjectData || !id || !Materials || !userAdminData) {
         return <Loading />;
     }
@@ -195,8 +210,16 @@ const Project = () => {
                     <p className={styles.ProjectDate}>
                         {ProjectData.creationDate}
                     </p>
-                    <CategoryCard category={ProjectData.areaOfImplementation}>
-                        {ProjectData.areaOfImplementation}
+                    <CategoryCard
+                        colorIndex={Math.max(
+                            0,
+                            Challenges.findIndex(
+                                (c) => c.id === ProjectData.challengeId
+                            )
+                        )}
+                    >
+                        {Challenges.find((c) => c.id === ProjectData.challengeId)
+                            ?.name || ""}
                     </CategoryCard>
                     <p className={styles.ProjectContributors}>
                        {Language=="en"?messages.en.create_text:messages.ro.create_text}{" "}

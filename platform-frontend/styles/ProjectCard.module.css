@@ -122,3 +122,19 @@
 .ProjectCard:hover .ProjectLinkIcon path {
     fill: var(--color-text-primary);
 }
+
+.ChallengeColor0 {
+    background: #c98cde;
+}
+
+.ChallengeColor1 {
+    background: #7eda98;
+}
+
+.ChallengeColor2 {
+    background: #85acf8;
+}
+
+.ChallengeColor3 {
+    background: #f6b93b;
+}
