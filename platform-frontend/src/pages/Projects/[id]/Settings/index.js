@@ -7,7 +7,6 @@ import CancelButton from "../../../../components/Buttons/CancelButton";
 import Toggle from "../../../../components/FormElems/Toggle";
 import axios from "axios";
 import apiClient from "../../../../utils/apiClient";
-import { useMyUserContext } from "../../../../contexts/UserContext";
 import AdminListTable from "../../../../components/Tables/AdminListTable";
 import Loading from "../../../../components/Loading/Loading";
 import ScrollContainer from "../../../../components/Containers/ScrollContainer";
@@ -20,7 +19,6 @@ const SettingsProject = () =>{
     const [NewAdminPopUp,setNewAdminPopUp]= useState(false);
     const router = useRouter();
     const { id } = router.query;
-    const user = useMyUserContext();
 
 
 
@@ -44,9 +42,7 @@ const SettingsProject = () =>{
 
 
     const DeleteProject = async ()=>{
-        const response = await apiClient.delete(`${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`, {
-            data: { created_by: user?.id }
-        });
+        const response = await apiClient.delete(`${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`);
         if(response.status==200){
             router.push('/');
         }

@@ -1,7 +1,7 @@
 import json
 
 from flask import Blueprint, request, jsonify, abort
-from utils.jwt_server import require_auth
+from utils.jwt_server import require_auth, current_user_id
 from utils.logger import setup_logger
 from api.api_crud_projects import API_CRUD_PROJECTS
 from api.api_track_activity import updateActivity
@@ -62,12 +62,7 @@ def deleteProject(id: str):
              logger.warning(f"Project {id} not found for deletion")
              abort(404, description="Project not found")
 
-        # Authorization check: the JWT is a service-to-service (M2M) token, it does
-        # not identify the calling user, so current_token.sub never identifies the
-        # actual caller. We trust the user id the client supplies instead (same
-        # precedent as PUT /projects/<id>).
-        deleteJson = request.get_json(silent=True) or {}
-        user_id = deleteJson.get('created_by')
+        user_id = current_user_id()
         logger.info(f"User {user_id} requesting deletion of project {id}")
         
         is_owner = project.get('createdBy') == user_id
@@ -146,12 +141,7 @@ def updateProject(id: str):
     if not projectUpdated:
          abort(404, description="Project not found")
 
-    # Authorization check. Requests reach Flask with a service-to-service (M2M)
-    # token, not a per-user one, so current_token.sub never identifies the
-    # actual caller - it's the same constant for everybody. We trust the user
-    # id the client supplies instead (same precedent as the Submissions grading
-    # endpoint's mentorId check).
-    user_id = projectJson.get('created_by')
+    user_id = current_user_id()
     is_owner = projectUpdated.get('createdBy') == user_id
     is_admin = user_id in projectUpdated.get('adminList', [])
 

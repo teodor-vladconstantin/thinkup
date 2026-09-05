@@ -12,7 +12,6 @@ import { verifyText, createUniqueId } from "../../../utils/utils";
 import axios from "axios";
 import apiClient from "../../../utils/apiClient";
 import FormData from "form-data";
-import { useMyUserContext } from "../../../contexts/UserContext";
 
 const EditProject = () => {
     const router = useRouter();
@@ -23,7 +22,6 @@ const EditProject = () => {
     const [Challenges, setChallenges] = useState([]);
     const [ChallengeId, setChallengeId] = useState(null);
     const [Error, setError] = useState("");
-    const user = useMyUserContext();
 
     const getProjectData = async () => {
         const response = await axios.get(
@@ -87,7 +85,6 @@ const EditProject = () => {
                 name: ProjectTitle,
                 description: ProjectDescription,
                 thumbnail: imageId,
-                created_by: user.id,
                 challengeId: ChallengeId,
             })
         );
