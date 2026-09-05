@@ -1,17 +1,24 @@
-import axios from 'axios';
+import { getAccessToken, getSession, AccessTokenError } from '@auth0/nextjs-auth0';
 
 export default async function handler(req, res) {
   try {
-    const issuerBaseUrl = process.env.AUTH0_ISSUER_BASE_URL.replace(/\/$/, '');
-    const response = await axios.post(`${issuerBaseUrl}/oauth/token`, {
-      client_id: process.env.AUTH0_CLIENT_ID,
-      client_secret: process.env.AUTH0_CLIENT_SECRET,
-      audience: process.env.AUTH0_AUDIENCE,
-      grant_type: "client_credentials"
-    });
-    res.status(200).json(response.data);
+    const session = getSession(req, res);
+    if (!session) {
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+
+    const { accessToken } = await getAccessToken(req, res);
+    const expiresIn = session.accessTokenExpiresAt
+      ? session.accessTokenExpiresAt - Math.floor(Date.now() / 1000)
+      : 3600;
+
+    res.status(200).json({ access_token: accessToken, expires_in: expiresIn });
   } catch (error) {
-    console.error("Token fetch error:", error.response?.data || error.message);
-    res.status(error.response?.status || 500).json({ error: error.message });
+    if (error instanceof AccessTokenError) {
+      console.error("Token fetch error (no valid user session):", error.code, error.message);
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+    console.error("Token fetch error:", error.message);
+    res.status(500).json({ error: error.message });
   }
 }

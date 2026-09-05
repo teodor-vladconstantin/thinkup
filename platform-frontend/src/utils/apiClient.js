@@ -1,7 +1,8 @@
 import axios from "axios";
 
 // Backend routes decorated with @require_auth need a Bearer token.
-// /api/token issues a machine-to-machine Auth0 token for the API audience.
+// /api/token issues the current logged-in user's own Auth0 access token
+// (401 if there's no active session) - not a machine-to-machine token.
 const apiClient = axios.create();
 
 let cachedToken = null;
