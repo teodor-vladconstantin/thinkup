@@ -5,26 +5,26 @@ class ProjectEncoder():
   def toJSON(o):
     if isinstance(o, Project):
       Item = {
-        id: o.get_id(),
-        name: o.get_name(),
-        createdBy: o.get_createdBy(),
-        adminList: list(o.get_adminList()),
-        searchTerm: o.get_searchTerm(),
-        description: o.get_description(),
-        creationDate: o.get_creationDate(),
-        thumbnail: o.get_thumbnail(),
-        thumbnail_extension: o.get_thumbnail_extension(),
-        challengeId: o.get_challengeId(),
-        goals: o.get_goals().get_goals(),
-        materials: o.get_materials().get_materials(),
-        settings: o.get_settings(),
-        projectReviews: {
-          total_reviews: o.get_projectReviews().get_total_reviews(),
-          average_rating: o.get_projectReviews().get_average_rating(),
-          reviews: o.get_projectReviews().get_reviews()
+        'id': o.get_id(),
+        'name': o.get_name(),
+        'createdBy': o.get_createdBy(),
+        'adminList': list(o.get_adminList()),
+        'searchTerm': o.get_searchTerm(),
+        'description': o.get_description(),
+        'creationDate': o.get_creationDate(),
+        'thumbnail': o.get_thumbnail(),
+        'thumbnail_extension': o.get_thumbnail_extension(),
+        'challengeId': o.get_challengeId(),
+        'goals': o.get_goals().get_goals(),
+        'materials': o.get_materials().get_materials(),
+        'settings': o.get_settings(),
+        'projectReviews': {
+          'total_reviews': o.get_projectReviews().get_total_reviews(),
+          'average_rating': o.get_projectReviews().get_average_rating(),
+          'reviews': o.get_projectReviews().get_reviews()
         },
-        mentor_feedback: o.get_mentor_feedback(),
-        photos: o.get_photos(),
+        'mentor_feedback': o.get_mentor_feedback(),
+        'photos': o.get_photos(),
       }
       return Item
     return None
