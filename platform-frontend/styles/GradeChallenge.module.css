@@ -1,0 +1,33 @@
+.GradePage {
+    padding: 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.ProjectRow {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: var(--color-background-secondary, #f4f4f4);
+    margin-bottom: 0.75rem;
+}
+
+.ProjectRow h3 {
+    margin: 0 0 0.5rem 0;
+}
+
+.GradeForm {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.GradeForm input {
+    padding: 0.4rem;
+    border-radius: 0.375rem;
+    border: 1px solid #ccc;
+}
+
+.NoAccess {
+    padding: 2rem;
+    text-align: center;
+}
