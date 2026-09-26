@@ -54,3 +54,37 @@
     background: var(--color-cancel-secondary);
     color: var(--color-primary);
 }
+
+@media only screen and (max-width: 900px) {
+    .Contact {
+        padding: 0 1.25rem;
+        max-height: none;
+        width: 100%;
+    }
+
+    .Contact .formLine {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .Contact .btnDiv {
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}
+
+@media only screen and (max-width: 520px) {
+    .Contact {
+        padding: 0 0.75rem;
+    }
+
+    .Contact h1 {
+        font-size: 2rem;
+    }
+}

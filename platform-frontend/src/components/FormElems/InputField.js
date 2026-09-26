@@ -84,6 +84,14 @@ const InputField = (props) => {
                 id="fullname"
                 name="fullname"
                 placeholder={props.placeholder}
+                style={{
+                    width: props.width
+                        ? props.width.toString().includes("%")
+                            ? props.width
+                            : `min(100%, ${props.width}px)`
+                        : "100%",
+                    boxSizing: "border-box",
+                }}
                 value={props.value}
                 onChange={(e) => props.onChange(e)}
             ></input>

@@ -63,3 +63,21 @@
     -ms-flex-align: center;
     align-items: center;
 }
+
+@media only screen and (max-width: 900px) {
+    .Home {
+        padding-left: 0;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .HomeTopBar {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 2rem;
+    }
+}

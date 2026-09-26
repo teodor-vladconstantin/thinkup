@@ -4,10 +4,20 @@
     top: 50%;
     transform: translate(-50%,-50%);
     padding: 4rem;
-    width: 70vw;
+    width: min(70vw, 900px);
+    max-width: calc(100vw - 2rem);
     min-height: 40vh;
     z-index:10;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 .PopUpContainer:hover{
     background-color: var(--color-primary);
+}
+
+@media only screen and (max-width: 768px) {
+    .PopUpContainer {
+        width: min(92vw, 700px);
+        padding: 2rem 1.25rem;
+    }
 }

@@ -28,8 +28,16 @@ const TextArea = (props) => {
             <textarea
                 id="message"
                 name="message"
-                rows= {props.rows ? props.rows : 6}
+                rows={props.rows ? props.rows : 6}
                 placeholder={props.placeholder}
+                style={{
+                    width: props.width
+                        ? props.width.toString().includes("%")
+                            ? props.width
+                            : `min(100%, ${props.width}px)`
+                        : "100%",
+                    boxSizing: "border-box",
+                }}
                 value={props.percentage ? props.value + "%" : props.value}
                 onChange={(e) => props.onChange(e)}
             ></textarea>

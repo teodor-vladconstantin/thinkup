@@ -34,3 +34,19 @@
     align-items: center;
     gap:2rem;
 }
+
+@media only screen and (max-width: 900px) {
+    .Settings {
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 1rem 2rem;
+        max-height: none;
+    }
+
+    .ReviewsContainer,
+    .SettingsButtonDiv {
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+    }
+}

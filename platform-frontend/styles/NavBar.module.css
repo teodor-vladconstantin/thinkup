@@ -12,6 +12,9 @@
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
 }
 
 .NavBar_button {
@@ -27,4 +30,41 @@
     -webkit-transition: 0.3s;
     -o-transition: 0.3s;
     transition: 0.3s;
+}
+
+@media only screen and (max-width: 900px) {
+    .NavBar {
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: row;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        -webkit-flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        width: 100%;
+        gap: 0.65rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .NavBar_button {
+        margin-bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .NavBar {
+        gap: 0.5rem;
+    }
+
+    .NavBar_button {
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 1 2.75rem;
+        -ms-flex: 1 1 2.75rem;
+        flex: 1 1 2.75rem;
+    }
 }

@@ -140,3 +140,28 @@
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
+
+@media only screen and (max-width: 900px) {
+    .Container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        max-height: none;
+    }
+
+    .OpenSchoolHeader .navbar {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        gap: 1rem;
+        -webkit-box-align: flex-start;
+        -webkit-align-items: flex-start;
+        -ms-flex-align: flex-start;
+        align-items: flex-start;
+    }
+
+    .OpenSchool_ScrollContainer {
+        height: auto;
+    }
+}
