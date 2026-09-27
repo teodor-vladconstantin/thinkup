@@ -41,6 +41,10 @@
     min-height: 44px;
 }
 
+.DatePickerWrapper {
+    width: 100%;
+}
+
 .ChallengeForm textarea {
     resize: vertical;
     min-height: 5rem;

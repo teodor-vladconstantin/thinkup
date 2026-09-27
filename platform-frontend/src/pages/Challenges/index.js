@@ -8,6 +8,9 @@ import AccentButton from "../../components/Buttons/AccentButton";
 import CancelButton from "../../components/Buttons/CancelButton";
 import SimpleButton from "../../components/Buttons/SimpleButton";
 import DeleteButton from "../../components/Buttons/DeleteButton";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
 
 const formatDeadline = (deadline) => {
     const date = new Date(deadline);
@@ -172,12 +175,22 @@ const ChallengesPage = () => {
                     }
                 />
                 <label>Deadline</label>
-                <input
-                    type="datetime-local"
-                    value={Form.deadline}
-                    onChange={(e) =>
-                        setForm({ ...Form, deadline: e.target.value })
+                <DatePicker
+                    selected={Form.deadline ? new Date(Form.deadline) : null}
+                    onChange={(date) =>
+                        setForm({
+                            ...Form,
+                            // same "yyyy-MM-ddTHH:mm" string the old datetime-local input stored
+                            deadline: date ? format(date, "yyyy-MM-dd'T'HH:mm") : "",
+                        })
                     }
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    timeCaption="Ora"
+                    dateFormat="dd/MM/yyyy HH:mm"
+                    placeholderText="Alege data și ora"
+                    wrapperClassName={styles.DatePickerWrapper}
                 />
                 <label>Scor maxim</label>
                 <input
