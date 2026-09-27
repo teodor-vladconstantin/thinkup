@@ -1,0 +1,36 @@
+name: Deploy
+
+# Every push to main: check the build, then run deploy.sh on the VPS over SSH.
+# Required repo secrets: VPS_HOST, VPS_USER, VPS_SSH_KEY (private key), VPS_PATH (e.g. /root/thinkup)
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency: deploy
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+          cache-dependency-path: platform-frontend/package-lock.json
+      - run: npm ci && npx next build
+        working-directory: platform-frontend
+      - run: python -m compileall -q platform-backend/src
+
+  deploy:
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          command_timeout: 30m
+          script: ${{ secrets.VPS_PATH }}/deploy.sh
