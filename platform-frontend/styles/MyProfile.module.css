@@ -116,3 +116,66 @@
 .ProfileSettingsContainer svg:hover path {
     fill: var(--color-text-primary);
 }
+
+@media (max-width: 600px) {
+    .MyProfile {
+        margin-left: 0.5rem;
+        padding: 0;
+    }
+
+    .ProfileCoverContainer {
+        height: 30vh;
+    }
+
+    .SocialLinks {
+        top: 1rem;
+        bottom: auto;
+        right: 1rem;
+        gap: 0.75rem;
+    }
+
+    .SocialLinks svg {
+        width: 28px;
+        height: 28px;
+    }
+
+    .TopProfileBar {
+        flex-direction: column;
+        align-items: center;
+        transform: translateY(-15%);
+        margin-bottom: 0;
+    }
+
+    .TopProfileLeft {
+        flex-direction: column;
+        align-items: center;
+        max-width: 100%;
+    }
+
+    /* CircleProfile primeste width inline din JS (size="15rem") */
+    .TopProfileLeft > div:first-child {
+        width: 8rem !important;
+    }
+
+    .ProfileNameContainer {
+        margin-left: 0;
+        align-items: center;
+        transform: none;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .ProfileName {
+        font-size: 1.75rem;
+        overflow-wrap: anywhere;
+    }
+
+    .ProfileRole {
+        font-size: 1.1rem;
+    }
+
+    .ProfileSettingsContainer {
+        margin: 1rem 0 0 0;
+        transform: none;
+    }
+}

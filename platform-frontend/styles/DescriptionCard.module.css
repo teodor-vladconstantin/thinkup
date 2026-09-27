@@ -18,3 +18,10 @@
 .DescriptionCard:hover {
     background-color: var(--color-primary);
 }
+
+@media (max-width: 600px) {
+    .DescriptionCard {
+        padding: 1.5rem 1rem;
+        overflow-wrap: break-word;
+    }
+}

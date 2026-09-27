@@ -61,3 +61,20 @@
     opacity: 1;
 }
 
+
+@media (max-width: 600px) {
+    .ActivityCard {
+        padding: 1.5rem 1rem;
+        overflow-wrap: break-word;
+    }
+}
+
+/* 12 luni nu incap pe 375px: afisam doar una din doua */
+@media (max-width: 600px) {
+    .ActivityCard .flexStart {
+        font-size: 0.7rem;
+    }
+    .ActivityCard .flexStart p:nth-child(even) {
+        visibility: hidden;
+    }
+}

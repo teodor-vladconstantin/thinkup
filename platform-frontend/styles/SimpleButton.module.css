@@ -25,3 +25,13 @@
     font-size: 0.875rem;
     font-weight: 600;
 }
+
+.SimpleButton {
+    max-width: 100%;
+}
+
+@media (max-width: 600px) {
+    .SimpleButton {
+        min-height: 44px;
+    }
+}

@@ -26,3 +26,10 @@
     flex-direction: column;
     gap: 1rem;
 }
+
+@media (max-width: 600px) {
+    .ObjectivesCard {
+        padding: 1.5rem 1rem;
+        overflow-wrap: break-word;
+    }
+}

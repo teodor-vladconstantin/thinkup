@@ -32,3 +32,19 @@
     display: flex;
     gap: 30px;
 }
+@media (max-width: 600px) {
+    .NewAccount {
+        padding: 0 0.5rem;
+        width: auto;
+        flex: 1 1 0;
+        min-width: 0;
+    }
+    .NewAccountNameDiv {
+        flex-direction: column;
+        gap: 0;
+    }
+    .NewAccountButtonDiv {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}

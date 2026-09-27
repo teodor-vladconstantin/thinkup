@@ -58,3 +58,14 @@
     margin-top: 6px;
     margin-left: 10px;
 }
+
+.Container {
+    max-width: 100%;
+}
+
+@media (max-width: 600px) {
+    .Container a {
+        min-height: 44px;
+        padding: 0.5rem 1.5rem;
+    }
+}

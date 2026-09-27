@@ -37,3 +37,10 @@
     font-size: 0.85rem;
     opacity: 0.7;
 }
+
+@media (max-width: 600px) {
+    .WarningsCard {
+        padding: 1.5rem 1rem;
+        overflow-wrap: break-word;
+    }
+}

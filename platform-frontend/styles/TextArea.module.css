@@ -57,3 +57,13 @@
     border: 2px solid var(--color-accent-primary);
     outline: none;
 }
+
+/* Latimea fixa (prop width) sta pe container; pe ecrane mici nu depaseste parintele. */
+.Container {
+    max-width: 100%;
+    min-width: 0;
+}
+
+.Container textarea {
+    width: 100%;
+}

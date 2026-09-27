@@ -4,7 +4,10 @@ import styles from "../../../styles/TextArea.module.css";
 const TextArea = (props) => {
     const icon_size = 25;
     return (
-        <div className={styles.Container + " " + props.className}>
+        <div
+            className={styles.Container + " " + props.className}
+            style={props.width ? { width: props.width.toString().includes("%") ? props.width : props.width + "px" } : undefined}
+        >
             <div className={styles.titleDiv}>
                 <svg
                     width="21"
@@ -27,7 +30,6 @@ const TextArea = (props) => {
                 name="message"
                 rows= {props.rows ? props.rows : 6}
                 placeholder={props.placeholder}
-                style={{ width: props.width && props.width.toString().includes("%") ? props.width : props.width + "px" }}
                 value={props.percentage ? props.value + "%" : props.value}
                 onChange={(e) => props.onChange(e)}
             ></textarea>

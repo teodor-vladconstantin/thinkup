@@ -60,3 +60,18 @@
     margin: 0.5rem 0 0 0;
     font-style: italic;
 }
+
+@media (max-width: 600px) {
+    .ScoreCard {
+        padding: 1.5rem 1rem;
+        overflow-wrap: break-word;
+    }
+}
+
+.ScoreCard .ChallengeName {
+    min-width: 0;
+}
+
+.ScoreCard .ScoreValue {
+    flex-shrink: 0;
+}

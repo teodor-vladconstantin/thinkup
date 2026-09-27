@@ -4,7 +4,10 @@ import styles from "../../../styles/InputField.module.css";
 const InputField = (props) => {
     const icon_size = 25;
     return (
-        <div className={styles.Container}>
+        <div
+            className={styles.Container}
+            style={props.width ? { width: props.width + "px" } : undefined}
+        >
             <div className={styles.titleDiv}>
                 {props.InputTitle == "Full Name" && (
                     <svg
@@ -81,7 +84,6 @@ const InputField = (props) => {
                 id="fullname"
                 name="fullname"
                 placeholder={props.placeholder}
-                style={{ width: props.width + "px" }}
                 value={props.value}
                 onChange={(e) => props.onChange(e)}
             ></input>

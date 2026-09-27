@@ -6,6 +6,8 @@
 
 .ChallengeRow {
     display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
@@ -18,8 +20,31 @@
     margin: 0 0 0.25rem 0;
 }
 
-.ChallengeActions button {
-    margin-left: 0.5rem;
+.ChallengeRow > div:first-child {
+    flex: 1 1 16rem;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.ChallengeActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    .ChallengesPage {
+        padding: 1rem;
+    }
+
+    .ChallengeActions {
+        width: 100%;
+    }
+
+    .ChallengeActions button {
+        flex: 1 1 0;
+        min-height: 44px;
+    }
 }
 
 .ChallengeForm {
