@@ -1,7 +1,78 @@
 .ChallengesPage {
-    padding: 2rem;
+    width: 100%;
+    max-height: 75vh;
+    padding: 0 2rem 2rem 5rem;
+    box-sizing: border-box;
+    color: var(--color-text-primary);
+}
+
+.ChallengesPage h1 {
+    font-weight: normal;
+    margin-top: 0;
+}
+
+.ChallengesPage h3 {
+    font-weight: 500;
+}
+
+.ChallengeForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
     max-width: 700px;
-    margin: 0 auto;
+    margin-bottom: 2.5rem;
+}
+
+.ChallengeForm h3 {
+    margin: 0 0 0.25rem 0;
+}
+
+.ChallengeForm input,
+.ChallengeForm textarea {
+    font-family: inherit;
+    font-size: 16px;
+    padding: 0.75rem;
+    border-radius: 7px;
+    border: 2px solid transparent;
+    background: var(--color-secondary);
+    color: var(--color-text-primary);
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+}
+
+.ChallengeForm textarea {
+    resize: vertical;
+    min-height: 5rem;
+}
+
+.ChallengeForm input:focus,
+.ChallengeForm textarea:focus {
+    border-color: var(--color-accent-primary);
+    outline: none;
+}
+
+.ChallengeForm label {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin-bottom: -0.5rem;
+}
+
+.FormButtons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.FormButtons > div > a {
+    padding: 0.5rem 2.5rem;
+}
+
+.Error {
+    color: var(--color-cancel-primary);
+    margin: 0;
 }
 
 .ChallengeRow {
@@ -10,14 +81,20 @@
     gap: 0.75rem;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    border-radius: 0.5rem;
-    background: var(--color-background-secondary, #f4f4f4);
-    margin-bottom: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: 1rem;
+    background: var(--color-primary);
+    margin-bottom: 1rem;
+    max-width: 700px;
+    box-sizing: border-box;
 }
 
 .ChallengeRow h3 {
-    margin: 0 0 0.25rem 0;
+    margin: 0 0 0.5rem 0;
+}
+
+.ChallengeRow p {
+    margin: 0.25rem 0;
 }
 
 .ChallengeRow > div:first-child {
@@ -26,14 +103,36 @@
     overflow-wrap: anywhere;
 }
 
+.Meta {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+}
+
 .ChallengeActions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+    align-items: center;
+}
+
+.ChallengeActions > div {
+    padding: 0.4rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.NoAccess {
+    padding: 2rem;
+    text-align: center;
+    color: var(--color-text-secondary);
 }
 
 @media (max-width: 600px) {
     .ChallengesPage {
+        padding: 0 1rem 1rem 1rem;
+    }
+
+    .ChallengeRow {
         padding: 1rem;
     }
 
@@ -41,27 +140,9 @@
         width: 100%;
     }
 
-    .ChallengeActions button {
+    .ChallengeActions > div {
         flex: 1 1 0;
-        min-height: 44px;
+        justify-content: center;
+        text-align: center;
     }
-}
-
-.ChallengeForm {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
-}
-
-.ChallengeForm input,
-.ChallengeForm textarea {
-    padding: 0.5rem;
-    border-radius: 0.375rem;
-    border: 1px solid #ccc;
-}
-
-.NoAccess {
-    padding: 2rem;
-    text-align: center;
 }

@@ -4,6 +4,18 @@ import apiClient from "../../utils/apiClient";
 import { useMyUserContext } from "../../contexts/UserContext";
 import ScrollContainer from "../../components/Containers/ScrollContainer";
 import { useRouter } from "next/router";
+import AccentButton from "../../components/Buttons/AccentButton";
+import CancelButton from "../../components/Buttons/CancelButton";
+import SimpleButton from "../../components/Buttons/SimpleButton";
+import DeleteButton from "../../components/Buttons/DeleteButton";
+
+const formatDeadline = (deadline) => {
+    const date = new Date(deadline);
+    return isNaN(date) ? deadline : date.toLocaleString("ro-RO", {
+        dateStyle: "medium",
+        timeStyle: "short",
+    });
+};
 
 const emptyForm = {
     id: "",
@@ -159,6 +171,7 @@ const ChallengesPage = () => {
                         setForm({ ...Form, description: e.target.value })
                     }
                 />
+                <label>Deadline</label>
                 <input
                     type="datetime-local"
                     value={Form.deadline}
@@ -166,6 +179,7 @@ const ChallengesPage = () => {
                         setForm({ ...Form, deadline: e.target.value })
                     }
                 />
+                <label>Scor maxim</label>
                 <input
                     type="number"
                     placeholder="Scor maxim"
@@ -174,13 +188,14 @@ const ChallengesPage = () => {
                         setForm({ ...Form, maxScore: e.target.value })
                     }
                 />
-                {Error && <p style={{ color: "red" }}>{Error}</p>}
-                <div>
-                    <button onClick={submitForm}>
-                        {EditingId ? "Salvează" : "Creează"}
-                    </button>
+                {Error && <p className={styles.Error}>{Error}</p>}
+                <div className={styles.FormButtons}>
+                    <AccentButton
+                        text={EditingId ? "Salvează" : "Creează"}
+                        onClick={submitForm}
+                    />
                     {EditingId && (
-                        <button onClick={resetForm}>Anulează</button>
+                        <CancelButton text="Anulează" onClick={resetForm} />
                     )}
                 </div>
             </div>
@@ -190,21 +205,26 @@ const ChallengesPage = () => {
                     <div>
                         <h3>{challenge.name}</h3>
                         <p>{challenge.description}</p>
-                        <p>
-                            Deadline: {challenge.deadline} · Scor max:{" "}
-                            {challenge.maxScore}
+                        <p className={styles.Meta}>
+                            Deadline: {formatDeadline(challenge.deadline)} · Scor
+                            max: {challenge.maxScore}
                         </p>
                     </div>
                     <div className={styles.ChallengeActions}>
-                        <button onClick={() => router.push(`/Challenges/${challenge.id}/grade`)}>
+                        <SimpleButton
+                            onClick={() =>
+                                router.push(`/Challenges/${challenge.id}/grade`)
+                            }
+                        >
                             Notează
-                        </button>
-                        <button onClick={() => startEdit(challenge)}>
+                        </SimpleButton>
+                        <SimpleButton onClick={() => startEdit(challenge)}>
                             Editează
-                        </button>
-                        <button onClick={() => deleteChallenge(challenge.id)}>
-                            Șterge
-                        </button>
+                        </SimpleButton>
+                        <DeleteButton
+                            text="Șterge"
+                            onClick={() => deleteChallenge(challenge.id)}
+                        />
                     </div>
                 </div>
             ))}

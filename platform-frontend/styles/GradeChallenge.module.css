@@ -1,33 +1,103 @@
 .GradePage {
-    padding: 2rem;
-    max-width: 700px;
-    margin: 0 auto;
+    width: 100%;
+    max-height: 75vh;
+    padding: 0 2rem 2rem 5rem;
+    box-sizing: border-box;
+    color: var(--color-text-primary);
+}
+
+.GradePage h1 {
+    font-weight: normal;
+    margin-top: 0;
+}
+
+.Subtitle {
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
 }
 
 .ProjectRow {
-    padding: 1rem;
-    border-radius: 0.5rem;
-    background: var(--color-background-secondary, #f4f4f4);
-    margin-bottom: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    border-radius: 1rem;
+    background: var(--color-primary);
+    margin-bottom: 1rem;
+    max-width: 700px;
+    box-sizing: border-box;
 }
 
 .ProjectRow h3 {
     margin: 0 0 0.5rem 0;
+    font-weight: 500;
 }
 
 .GradeForm {
     display: flex;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: 0.75rem;
 }
 
 .GradeForm input {
-    padding: 0.4rem;
-    border-radius: 0.375rem;
-    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 16px;
+    padding: 0.6rem 0.75rem;
+    border-radius: 7px;
+    border: 2px solid transparent;
+    background: var(--color-secondary);
+    color: var(--color-text-primary);
+    min-height: 44px;
+    box-sizing: border-box;
+}
+
+.GradeForm input:focus {
+    border-color: var(--color-accent-primary);
+    outline: none;
+}
+
+.GradeForm input[type="number"] {
+    width: 6rem;
+}
+
+.GradeForm input[type="text"] {
+    flex: 1 1 12rem;
+    min-width: 0;
+}
+
+.GradeForm > div > a {
+    padding: 0.5rem 2rem;
+}
+
+.Status {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    margin: 0.5rem 0 0 0;
 }
 
 .NoAccess {
     padding: 2rem;
     text-align: center;
+    color: var(--color-text-secondary);
+}
+
+@media (max-width: 600px) {
+    .GradePage {
+        padding: 0 1rem 1rem 1rem;
+    }
+
+    .ProjectRow {
+        padding: 1rem;
+    }
+
+    .GradeForm input[type="number"],
+    .GradeForm input[type="text"],
+    .GradeForm > div {
+        width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .GradeForm > div > a {
+        justify-content: center;
+        width: 100%;
+    }
 }

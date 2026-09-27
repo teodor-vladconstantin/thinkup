@@ -4,6 +4,7 @@ import styles from "../../../../styles/GradeChallenge.module.css";
 import apiClient from "../../../utils/apiClient";
 import { useMyUserContext } from "../../../contexts/UserContext";
 import ScrollContainer from "../../../components/Containers/ScrollContainer";
+import AccentButton from "../../../components/Buttons/AccentButton";
 
 const GradeChallengePage = () => {
     const router = useRouter();
@@ -83,7 +84,9 @@ const GradeChallengePage = () => {
     return (
         <ScrollContainer className={styles.GradePage}>
             <h1>{Challenge ? Challenge.name : "Challenge"}</h1>
-            <p>{Challenge ? Challenge.description : ""}</p>
+            <p className={styles.Subtitle}>
+                {Challenge ? Challenge.description : ""}
+            </p>
 
             {Projects.length === 0 && (
                 <p>Niciun proiect pe acest challenge încă.</p>
@@ -116,11 +119,14 @@ const GradeChallengePage = () => {
                                 })
                             }
                         />
-                        <button onClick={() => gradeProject(project.id)}>
-                            Notează
-                        </button>
+                        <AccentButton
+                            text="Notează"
+                            onClick={() => gradeProject(project.id)}
+                        />
                     </div>
-                    {Status[project.id] && <p>{Status[project.id]}</p>}
+                    {Status[project.id] && (
+                        <p className={styles.Status}>{Status[project.id]}</p>
+                    )}
                 </div>
             ))}
         </ScrollContainer>
