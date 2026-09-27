@@ -82,7 +82,7 @@ def deleteChallenge(id: str):
         ]
         if referencing_projects:
             logger.warning(f"Refusing to delete challenge {id}: {len(referencing_projects)} project(s) reference it")
-            abort(409, description=f"Cannot delete: {len(referencing_projects)} project(s) reference this challenge")
+            abort(409, description=f"Nu se poate șterge: {len(referencing_projects)} proiect(e) folosesc acest challenge")
 
         result = dbCrudChallenges.deleteChallenge(id)
         logger.info(f"Challenge {id} deleted successfully")

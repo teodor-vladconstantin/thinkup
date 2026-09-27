@@ -1,5 +1,6 @@
 import flask
 from flask_cors import CORS
+from werkzeug.exceptions import HTTPException
 
 from utils.logger import setup_logger
 from model.entity.open_school.open_school import OPEN_SCHOOL
@@ -24,6 +25,12 @@ logger.info("Reloading Backend...")
 app = flask.Flask(__name__)
 # Enable CORS for all domains and routes
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+
+
+# abort(...) returns JSON so the frontend can read err.response.data.error
+@app.errorhandler(HTTPException)
+def handle_http_exception(e):
+    return flask.jsonify({"error": e.description}), e.code
 
 
 openSchool = OPEN_SCHOOL('thinkup-open-school')
