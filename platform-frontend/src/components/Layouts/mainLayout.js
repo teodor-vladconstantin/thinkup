@@ -21,11 +21,7 @@ const MainLayout = ({ children }) => {
                         <ThemeProvider>
                             <div className={styles.MainLayoutBackground}>
                                 <div className={styles.MainLayout}>
-                                    <TopBar
-                                        user_name="Vana Marc"
-                                        user_account="student"
-                                        user_image="testing_profile_image.jpg"
-                                    />
+                                    <TopBar />
                                     <div className={styles.MainLayoutContainer}>
                                         <NavBar />
                                         {children}

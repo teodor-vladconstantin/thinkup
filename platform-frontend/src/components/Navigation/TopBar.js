@@ -53,7 +53,7 @@ const TopBar = (props) => {
                     <div className={styles.TopBar_UserInfo}>
                         <p className={styles.TopBar_UserName}>{User.name}</p>
                         <p className={styles.TopBar_UserAccount}>
-                            {props.user_account}
+                            {User.role?.toLowerCase()}
                         </p>
                     </div>
                 ) : (
