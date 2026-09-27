@@ -210,7 +210,7 @@ const Profile = () => {
                     ></CircleProfile>
                     <div className={styles.ProfileNameContainer}>
                         <p className={styles.ProfileName}>{UserData.name}</p>
-                        <p className={styles.ProfileRole}>student</p>
+                        <p className={styles.ProfileRole}>{UserData.role?.toLowerCase()}</p>
                     </div>
                 </div>
 
@@ -291,10 +291,9 @@ const Profile = () => {
                 ></AwardsCard>
                 <ObjectivesCard
                     width="calc(70% - 2rem)"
-                    access="true"
-                    objective1="Look outside the window, the sun is shining and the cats are fighting."
-                    objective2="Try to be your best version!"
-                    objective3="While there is war in the world, there are some peaceful places no one knows about."
+                    userId={id}
+                    canEdit={User != undefined && User.id == id}
+                    access={User != undefined && (User.id == id || User.role === "Mentor")}
                 ></ObjectivesCard>
             </div>
             <ActivityCard user_id={(User!=undefined && User.id == id) ? User.id : id}></ActivityCard>

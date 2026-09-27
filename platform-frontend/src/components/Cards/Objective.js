@@ -1,21 +1,20 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "../../../styles/Objective.module.css";
 import DefaultContainer from "../Containers/DefaultContainer";
 
-const ObjectivesCard = (props) => {
-    useEffect(() => {
-        var img = document.querySelector("." + props.id);
-        if (props.completed == "true") img.style.opacity = "1";
-        else img.style.opacity = "0";
-    });
+const Objective = (props) => {
     return (
         <DefaultContainer
-            className={styles.Objective + " " + props.className}
-            onClick={() => {}}
+            className={styles.Objective + " " + (props.onClick ? styles.Clickable : "") + " " + (props.className || "")}
+            onClick={props.onClick}
         >
             <p>{props.text}</p>
-            <img src="/checked-icon.svg" alt="checked" className={props.id} />
+            <img
+                src="/checked-icon.svg"
+                alt={props.completed ? "completed" : "not completed"}
+                style={{ opacity: props.completed ? 1 : 0 }}
+            />
         </DefaultContainer>
     );
 };
-export default ObjectivesCard;
+export default Objective;

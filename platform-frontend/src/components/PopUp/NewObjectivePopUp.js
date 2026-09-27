@@ -8,23 +8,40 @@ import AccentButton from "../Buttons/AccentButton";
 import TitleInputField from "../FormElems/TitleInputField";
 import CancelButton from "../Buttons/CancelButton";
 import TextArea from "../FormElems/TextArea";
-import { createUniqueId, getCurentDate } from "../../utils/utils";
-import DatePicker from "react-datepicker";
-import axios from "axios";
-import "react-datepicker/dist/react-datepicker.css";
+import { createUniqueId, verifyText } from "../../utils/utils";
+import apiClient from "../../utils/apiClient";
 
-const NewObjectivePopUp = ({ className, close }) => {
+const NewObjectivePopUp = ({ className, close, added }) => {
     const [Text, setText] = useState("");
+    const [ErrorText, setErrorText] = useState("");
 
-    function addObjective() {
-
+    async function addObjective() {
+        if (!verifyText(Text, 200, true)) {
+            setErrorText("Please write an objective (max 200 characters).");
+            return;
+        }
+        const id = createUniqueId();
+        try {
+            await apiClient.post(
+                `${process.env.NEXT_PUBLIC_API_URL}/personal_objectives/${id}`,
+                {
+                    name: Text.trim(),
+                    description: "",
+                    statePercentage: 0,
+                    deadline: "",
+                }
+            );
+            added();
+        } catch (error) {
+            setErrorText(error.response?.data?.error || "Could not add the objective.");
+        }
     }
 
     return (
         <PopUpContainer className={styles.NewFeedbackPopUp + " " + className}>
 
             <TextArea 
-            className={styles.NewObjectiveTextArea}
+            className={styles2.NewObjectiveTextArea}
             areaTitle="Objective"
             placeholder="Write your objective here..."
             subheader="false"
@@ -32,6 +49,7 @@ const NewObjectivePopUp = ({ className, close }) => {
             onChange={(e) => setText(e.target.value)}
             width="100%"
             />
+            {ErrorText && <p className={styles2.ErrorText}>{ErrorText}</p>}
 
             <div className={styles2.NewObjectiveButtonDiv}>
                     <AccentButton text="Add" onClick={() => addObjective()}>

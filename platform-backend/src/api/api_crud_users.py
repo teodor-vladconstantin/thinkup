@@ -86,10 +86,11 @@ class API_CRUD_USERS:
         except KeyError:
             pass
 
-        try:  # TODO: Remove this after frontend adds the personal_objectives field
+        try:
             userUpdated["personal_objectives"] = userJson["personal_objectives"]
-        except KeyError as e:
-            userUpdated["personal_objectives"] = "NA"
+        except KeyError:
+            # keep the existing list - profile/social/language edits don't send it
+            userUpdated.setdefault("personal_objectives", [])
 
         if coverPic is not None:
             if userUpdated["cover_picture"] != "default":

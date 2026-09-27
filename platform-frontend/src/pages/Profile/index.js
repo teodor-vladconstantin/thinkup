@@ -171,7 +171,7 @@ const MyProfile = () => {
                     ></CircleProfile>
                     <div className={styles.ProfileNameContainer}>
                         <p className={styles.ProfileName}>{User.name}</p>
-                        <p className={styles.ProfileRole}>student</p>
+                        <p className={styles.ProfileRole}>{User.role?.toLowerCase()}</p>
                     </div>
                 </div>
 
@@ -240,10 +240,9 @@ const MyProfile = () => {
                 ></AwardsCard>
                 <ObjectivesCard
                     width="calc(70% - 2rem)"
-                    access="true"
-                    objective1="Look outside the window, the sun is shining and the cats are fighting."
-                    objective2="Try to be your best version!"
-                    objective3="While there is war in the world, there are some peaceful places no one knows about."
+                    userId={User.id}
+                    canEdit={true}
+                    access={true}
                 ></ObjectivesCard>
             </div>
             <ActivityCard user_id={User.id}></ActivityCard>

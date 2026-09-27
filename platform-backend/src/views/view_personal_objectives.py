@@ -19,6 +19,18 @@ def getObjective(id: str):
   """
   return apiPesonalObjectives.getPersonalObjective(id)
 
+@urlPersonalObjectives.route('/personal_objectives/user/<string:id>', methods=['GET'])
+def getUserObjectives(id: str):
+  """Get all personal objectives of a user
+
+  Args:
+      id (str): id of the user
+
+  Returns:
+      dict: {"objectives": [...]}
+  """
+  return apiPesonalObjectives.getUserPersonalObjectives(id)
+
 @urlPersonalObjectives.route('/personal_objectives/<string:id>', methods=['POST'])
 @require_auth()
 def postObjective(id: str):

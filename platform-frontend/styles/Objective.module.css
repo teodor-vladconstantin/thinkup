@@ -24,6 +24,9 @@
 .Objective:hover {
     background-color: var(--color-primary);
 }
+.Clickable {
+    cursor: pointer;
+}
 
 @media (max-width: 600px) {
     .Objective {

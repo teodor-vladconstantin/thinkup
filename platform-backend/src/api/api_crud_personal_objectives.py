@@ -23,6 +23,21 @@ class API_CRUD_PERSONAL_OBJECTIVES:
         dict: dictionary with the personal objective
     """
     return self.__db_crud_personal_objectives.getObjective(idOfTheObjective)
+
+  def getUserPersonalObjectives(self, idOfTheUser: str):
+    """Get all personal objectives of a user, newest first
+
+    Args:
+        idOfTheUser (str): id of the user
+
+    Returns:
+        dict: {"objectives": [objective dicts]}
+    """
+    ids = self.__apiUsers.getUser(idOfTheUser).get('personal_objectives')
+    if not isinstance(ids, list):  # legacy "NA" / missing
+      ids = []
+    objectives = [self.getPersonalObjective(x) for x in ids]
+    return {"objectives": [o for o in objectives if 'id' in o]}
   
   def addPersonalObjective(self, personal_objective: PersonalObjective):
     """Add a personal objective to database
@@ -37,6 +52,8 @@ class API_CRUD_PERSONAL_OBJECTIVES:
     userJson = self.__apiUsers.getUser(personal_objective.get_userId())
     userJson2 = userJson
 
+    if not isinstance(userJson.get('personal_objectives'), list):  # legacy "NA"
+      userJson['personal_objectives'] = []
     userJson['personal_objectives'].insert(0, personal_objective.get_id())
     self.__apiUsers.updateUser(userJson2, userJson, None, None)
 
@@ -65,7 +82,7 @@ class API_CRUD_PERSONAL_OBJECTIVES:
       pass
 
     try:
-      poJson['statePercentage'] = personal_objectiveJson['statePercentage']
+      poJson['state'] = personal_objectiveJson['statePercentage']  # stored as 'state' (see encoder)
     except KeyError:
       pass
 
@@ -88,7 +105,8 @@ class API_CRUD_PERSONAL_OBJECTIVES:
     personal_objectiveJson = self.getPersonalObjective(idOfPersonalObjective)
     userJson = self.__apiUsers.getUser(personal_objectiveJson['userId'])
     userJson2 = userJson
-    userJson['personal_objectives'].remove(idOfPersonalObjective)
+    if idOfPersonalObjective in (userJson.get('personal_objectives') or []):
+      userJson['personal_objectives'].remove(idOfPersonalObjective)
 
     self.__apiUsers.updateUser(userJson2, userJson, None, None)
 
