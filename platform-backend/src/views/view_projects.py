@@ -27,6 +27,15 @@ logger = setup_logger(__name__)
 
 mentor_feedback = []
 
+
+def _strip_photos(result):
+    """Public project routes must not leak photo URLs; only /gallery returns them."""
+    if isinstance(result, dict):
+        result.pop('photos', None)
+        for p in result.get('projects', []):
+            p.pop('photos', None)
+    return result
+
 @urlProject.route('/projects/<string:id>', methods=['GET'])
 def getProject(id: str):
     """Get a project
@@ -41,7 +50,7 @@ def getProject(id: str):
     try:
         result = apiProjects.getProject(id)
         logger.info(f"getProject result={result}")
-        return result
+        return _strip_photos(result)
     except Exception as e:
         logger.error(f"getProject EXCEPTION: {e}", exc_info=True)
         return jsonify({"error": str(e)}), 500
@@ -177,7 +186,7 @@ def get_all_projects():
     Returns:
         list: all the projects
     """
-    return apiProjects.getAllProjects()
+    return _strip_photos(apiProjects.getAllProjects())
 
 @urlProject.route('/gallery', methods=['GET'])
 @require_auth()
@@ -204,7 +213,7 @@ def get_user_projects(id: str):
     Returns:
         list: list of all projects
     """
-    return apiProjects.getOwnedProjects(id)
+    return _strip_photos(apiProjects.getOwnedProjects(id))
 
 
 @urlProject.route('/projects/search/<string:name>', methods=['GET'])
@@ -217,7 +226,7 @@ def search_project(name: str):
     Returns:
         list: projects matching the name
     """
-    return apiProjects.searchProject(name)
+    return _strip_photos(apiProjects.searchProject(name))
 
 @urlProject.route('/projects/<string:id>/accept_reviews/<int:accept>', methods=['PUT'])
 @require_auth(None)
