@@ -18,6 +18,8 @@ fi
 echo "$(date) deploying $before -> $after"
 cd platform-backend
 docker compose up --build -d
+# nginx caches container IPs at startup; recreated containers get new ones -> 502 without this
+docker compose restart nginx
 docker image prune -f
 docker builder prune -f --keep-storage 2GB
 echo "$(date) done"
