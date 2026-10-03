@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Head from "next/head";
-import axios from "axios";
+import apiClient from "../../utils/apiClient";
 import styles from "../../../styles/Gallery.module.css";
 import ScrollContainer from "../../components/Containers/ScrollContainer";
 
@@ -11,8 +11,8 @@ const Gallery = () => {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const response = await axios.get(
-                    `${process.env.NEXT_PUBLIC_API_URL}/projects`
+                const response = await apiClient.get(
+                    `${process.env.NEXT_PUBLIC_API_URL}/gallery`
                 );
                 setProjects(response.data.projects || []);
             } catch (err) {

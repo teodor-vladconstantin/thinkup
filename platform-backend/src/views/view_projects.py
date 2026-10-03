@@ -5,6 +5,7 @@ from utils.jwt_server import require_auth, current_user_id
 from utils.logger import setup_logger
 from api.api_crud_projects import API_CRUD_PROJECTS
 from api.api_track_activity import updateActivity
+from dynamoDB import setup
 from model.entity.goals.goals import Goals
 from model.entity.materials.materials import Materials
 from model.entity.project import Project
@@ -20,6 +21,7 @@ urlProject = Blueprint('views', __name__)
 
 
 apiProjects = API_CRUD_PROJECTS()
+dbCrudUsers = setup.startSetup('Users')
 
 logger = setup_logger(__name__)
 
@@ -176,6 +178,21 @@ def get_all_projects():
         list: all the projects
     """
     return apiProjects.getAllProjects()
+
+@urlProject.route('/gallery', methods=['GET'])
+@require_auth()
+def get_gallery_projects():
+    """Projects for the photo gallery: mentors see all, others only projects they belong to."""
+    user_id = current_user_id()
+    projects = apiProjects.getAllProjects()
+    user = dbCrudUsers.getUser(user_id)
+    if user and user.get('role') == 'Mentor':
+        return projects
+    projects['projects'] = [
+        p for p in projects['projects']
+        if p.get('createdBy') == user_id or user_id in p.get('adminList', [])
+    ]
+    return projects
 
 @urlProject.route('/user_projects/<string:id>', methods=['GET'])
 def get_user_projects(id: str):
