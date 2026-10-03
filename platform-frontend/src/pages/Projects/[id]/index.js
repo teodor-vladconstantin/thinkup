@@ -164,7 +164,7 @@ const Project = () => {
                 );
                 setChallenges(response.data.challenges || []);
             } catch (err) {
-                console.log(err);
+                console.error(err);
             }
         };
         fetchChallenges();
@@ -184,7 +184,7 @@ const Project = () => {
                         </h1>
                         <div className={styles.EditBtnDiv}>
                             {AdminState ? (
-                                <img
+                                <img alt=""
                                     src="../icon_edit.svg"
                                     onClick={() =>
                                         router.push(
@@ -196,7 +196,7 @@ const Project = () => {
                                 <></>
                             )}
                             {AdminState ? (
-                                <img
+                                <img alt=""
                                     src="../icon_settings.svg"
                                     onClick={() =>
                                         router.push(`/Projects/${id}/Settings`)
@@ -238,23 +238,23 @@ const Project = () => {
                                 {Language=="en"?messages.en.rating_text:messages.ro.rating_text} <span>{ProjectData.projectReviews.average_rating}</span>
                                 </p>
                                 <div className={styles.StarsContainer}>
-                                    <img
+                                    <img alt=""
                                         src={ProjectData.projectReviews.average_rating>=1?"/bi_star-fill.svg":"/bi_star.svg"}
                                         className={styles.Star}
                                     />
-                                    <img
+                                    <img alt=""
                                         src={ProjectData.projectReviews.average_rating>=2?"/bi_star-fill.svg":"/bi_star.svg"}
                                         className={styles.Star}
                                     />
-                                    <img
+                                    <img alt=""
                                         src={ProjectData.projectReviews.average_rating>=3?"/bi_star-fill.svg":"/bi_star.svg"}
                                         className={styles.Star}
                                     />
-                                    <img
+                                    <img alt=""
                                         src={ProjectData.projectReviews.average_rating>=4?"/bi_star-fill.svg":"/bi_star.svg"}
                                         className={styles.Star}
                                     />
-                                    <img
+                                    <img alt=""
                                         src={ProjectData.projectReviews.average_rating>=5?"/bi_star-fill.svg":"/bi_star.svg"}
                                         className={styles.Star}
                                     />
@@ -272,7 +272,7 @@ const Project = () => {
                     )}
                 </div>
 
-                <img
+                <img alt=""
                     src={`${process.env.NEXT_PUBLIC_API_URL || ''}/thumbnails/${ProjectData.thumbnail}`}
                     className={styles.ProjectImage}
                 />
@@ -304,7 +304,7 @@ const Project = () => {
                 getProjectData={() => getProjectData()}
             />:<></>}
 
-            <AnimatePresence exitBeforeEnter={true}>
+            <AnimatePresence mode="wait">
                 {NewReviewPopUp && (
                     <AddReviewPopUp close={() => setNewReviewPopUp(false)} projectID={id} refresh={()=>getProjectData()}/>
                 )}

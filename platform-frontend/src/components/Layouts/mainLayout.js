@@ -2,7 +2,7 @@ import react from "react";
 import Head from "next/head";
 import styles from "../../../styles/MainLayout.module.css";
 import { ThemeProvider } from "../../contexts/ThemeContext";
-import { UserProvider } from "@auth0/nextjs-auth0";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 import NavBar from "../Navigation/NavBar";
 import TopBar from "../Navigation/TopBar";
 import { MyUserProvider } from "../../contexts/UserContext";

@@ -14,7 +14,6 @@ const MaterialCard = (props) => {
     };
 
     useEffect(() => {
-        console.log(props.nrofmaterials);
         if (props.index == 0)
             setMenuOptions(new Array("move down", "edit", "delete"));
         else if (props.index + 1 == props.nrofmaterials)
@@ -24,15 +23,12 @@ const MaterialCard = (props) => {
     }, []);
 
     const deleteMaterial = async () => {
-        //console.log(props);
         const response = await apiClient.delete(
             `${process.env.NEXT_PUBLIC_API_URL}/materials/${props.id}`
         );
         if (response.status == 200) {
-            console.log("DELETED");
             props.refresh();
         } else {
-            console.log("ERROR");
         }
     };
 
@@ -41,10 +37,8 @@ const MaterialCard = (props) => {
             `${process.env.NEXT_PUBLIC_API_URL}/materials/move/up/${props.id}`
         );
         if (response.status == 200) {
-            console.log("MOVED");
             props.refresh();
         } else {
-            console.log("ERROR");
         }
     };
 
@@ -53,10 +47,8 @@ const MaterialCard = (props) => {
             `${process.env.NEXT_PUBLIC_API_URL}/materials/move/down/${props.id}`
         );
         if (response.status == 200) {
-            console.log("MOVED");
             props.refresh();
         } else {
-            console.log("ERROR");
         }
     };
 
@@ -69,7 +61,6 @@ const MaterialCard = (props) => {
                 moveDOWN();
                 break;
             case "edit":
-                console.log("edit");
                 break;
             case "delete":
                 deleteMaterial();

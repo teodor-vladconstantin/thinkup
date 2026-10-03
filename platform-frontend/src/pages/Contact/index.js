@@ -39,7 +39,6 @@ const Contact = () => {
 
     const router = useRouter();
     const RouteTo = (new_route) => {
-        console.log(router.pathname);
         router.push(new_route);
     };
 
@@ -49,7 +48,6 @@ const Contact = () => {
             email: Email,
             message: Message,
         });
-        console.log(response);
         if (response.statusText == "OK") {
             document.querySelector(".successful").style.display = "block";
             setTimeout(() => {

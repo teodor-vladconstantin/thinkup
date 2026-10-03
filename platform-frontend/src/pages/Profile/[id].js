@@ -13,7 +13,6 @@ import { useMyUserContext, useMyUserUpdate } from "../../contexts/UserContext";
 import ScrollContainer from "../../components/Containers/ScrollContainer";
 import axios from "axios";
 import Loading from "../../components/Loading/Loading";
-import { replaceBasePath } from "next/dist/server/router";
 
 const Profile = () => {
     const [UserData, setUserData] = useState();
@@ -45,9 +44,6 @@ const Profile = () => {
 
     useEffect(() => {
         //if (User == undefined) return;
-        console.log("id", id);
-        console.log(CoverPicture);
-        console.log(User);
         if (User != undefined && id == User.id) {
             setUserData(User);
             setProfilePicture(User.picture);

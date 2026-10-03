@@ -16,7 +16,6 @@ export function ThemeProvider({children}){
     const [darkTheme, setDarkTheme] = useDarkMode();
 
     useEffect(()=>{
-        console.log(darkTheme);
     },[])
 
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import styles from "../../../styles/ObjectivesCard.module.css";
 import DefaultContainer from "../Containers/DefaultContainer";
 import Objective from "./Objective.js";
@@ -20,12 +19,12 @@ const ObjectivesCard = (props) => {
     const getObjectives = async () => {
         if (props.userId == undefined) return;
         try {
-            const response = await axios.get(
+            const response = await apiClient.get(
                 `${process.env.NEXT_PUBLIC_API_URL}/personal_objectives/user/${props.userId}`
             );
             setObjectives(response.data.objectives || []);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
@@ -46,7 +45,7 @@ const ObjectivesCard = (props) => {
                 )
             );
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
 
@@ -88,7 +87,7 @@ const ObjectivesCard = (props) => {
             ) : (
                 <p>Objectives only visible to user and mentors.</p>
             )}
-            <AnimatePresence exitBeforeEnter={true}>
+            <AnimatePresence mode="wait">
                 {
                     NewObjectivePopUpState &&
                     (

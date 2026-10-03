@@ -2,7 +2,7 @@ import { getAccessToken, getSession, AccessTokenError } from '@auth0/nextjs-auth
 
 export default async function handler(req, res) {
   try {
-    const session = getSession(req, res);
+    const session = await getSession(req, res);
     if (!session) {
       return res.status(401).json({ error: 'Not authenticated' });
     }
@@ -19,6 +19,6 @@ export default async function handler(req, res) {
       return res.status(401).json({ error: 'Not authenticated' });
     }
     console.error("Token fetch error:", error.message);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: "Could not get access token" });
   }
 }

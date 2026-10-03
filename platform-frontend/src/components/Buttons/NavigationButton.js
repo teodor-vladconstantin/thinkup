@@ -1,7 +1,6 @@
 import react from "react";
 import styles from "../../../styles/NavigationButton.module.css";
 import DefaultContainer from "../Containers/DefaultContainer";
-import Image from "next/image";
 import { motion } from "framer-motion";
 
 const NavigationButton = (props) => {

@@ -43,7 +43,6 @@ const NewGoalPopUp = ({ className, close, addedgoal, projectId }) => {
         if (Percentage < 100) percentage_value = Percentage;
         else percentage_value = 100;
 
-        //console.log(Deadline.getDate());
         try {
             const deadline =
                 Deadline.getDate() +
@@ -51,7 +50,6 @@ const NewGoalPopUp = ({ className, close, addedgoal, projectId }) => {
                 Deadline.getMonth() +
                 "/" +
                 Deadline.getFullYear();
-            //console.log(deadline);
 
         
             const response = await apiClient.post(`${process.env.NEXT_PUBLIC_API_URL}/goals/${id}`, {
@@ -63,10 +61,8 @@ const NewGoalPopUp = ({ className, close, addedgoal, projectId }) => {
                 projectId: projectId,
             });
             if (response.status == 200) {
-                console.log("MERGE");
                 addedgoal();
             } else {
-                console.log("ERROR");
             }
         }
         catch(error){

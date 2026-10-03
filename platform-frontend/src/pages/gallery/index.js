@@ -16,7 +16,7 @@ const Gallery = () => {
                 );
                 setProjects(response.data.projects || []);
             } catch (err) {
-                console.log(err);
+                console.error(err);
                 setError("Nu am putut încărca galeria. Încearcă din nou mai târziu.");
                 setProjects([]);
             }

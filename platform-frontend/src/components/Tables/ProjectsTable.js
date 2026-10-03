@@ -19,7 +19,7 @@ const ProjectsTable = (props) => {
                 );
                 setChallenges(response.data.challenges || []);
             } catch (err) {
-                console.log(err);
+                console.error(err);
             }
         };
         fetchChallenges();

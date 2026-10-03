@@ -30,10 +30,8 @@ const AddReviewPopUp = ({ className,projectID, close ,refresh}) => {
         let review_rating = 0;
         for (let i = 0; i <= 4; i++) 
             review_rating+= Stars[i];
-        console.log(review_rating);
 
         const response = await apiClient.post(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectID}/addReview/${reviewID}`,{projectID:projectID,review_description:ReviewText,review_rating:review_rating})
-        console.log(response);
         refresh();
         close();
     };

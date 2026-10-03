@@ -29,7 +29,6 @@ const NewMaterialPopUp = ({ className, close, addedmaterial, Projectid }) => {
         for(let i=0;i<Files.length;i++){
             file_id_array.push(createUniqueId());
         }
-        console.log(file_id_array);
         const formdata = new FormData();
         //formdata.append('json',{id:id,name:Title,creationDate:Date,description:Description,createdBy:user.id,projectId:Projectid,files:fileid});
         formdata.append(
@@ -44,7 +43,6 @@ const NewMaterialPopUp = ({ className, close, addedmaterial, Projectid }) => {
             })
         );
         const [f] = Files
-        console.log(f);
 
         //formdata.append('json',`{id:${id},name:${Title},creationDate:${Date},description:${Description},createdBy:${user.id},projectId:${Projectid},files:${fileid}}`);
         formdata.append("files", f);
@@ -57,15 +55,12 @@ const NewMaterialPopUp = ({ className, close, addedmaterial, Projectid }) => {
         if (response.status == 200) {
             addedmaterial();
         } else {
-            console.log("ERROR");
         }
         close();
     };
 
     const handleFileChange = (e) => {
         const f = Array.from(e.target.files);
-        console.log(Array.from(e.target.files));
-        console.log(f.length);
 
         setFiles(f);
     };

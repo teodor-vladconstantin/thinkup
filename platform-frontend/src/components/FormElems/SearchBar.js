@@ -16,7 +16,7 @@ const SearchBar = (props) => {
 
     return (
         <div className={styles.SearchBar + " " + props.className}>
-            {props.search_type==undefined?<></>:<img
+            {props.search_type==undefined?<></>:<img alt=""
                 className={styles.SearchTypeBtn}
                 src={props.search_type=="projects"?"/folder_icon.svg":"/user_icon.svg"}
                 onClick={() => props.changeSearchType()}/>}
@@ -27,7 +27,7 @@ const SearchBar = (props) => {
                 onChange={(e) => props.changeValue(e)}
                 onKeyPress={handleKeyPress}
             />
-            <img
+            <img alt=""
                 className={styles.SearchBarBtn}
                 src="/icon_search.svg"
                 onClick={() => props.onsearch()}

@@ -15,6 +15,14 @@ STORAGE_MODE = os.getenv('STORAGE_MODE', 's3') # 's3' or 'local'
 LOCAL_STORAGE_PATH = os.path.join(os.getcwd(), 'local_storage')
 
 
+IMAGE_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.gif', '.webp'}
+
+
+def is_image(filename):
+  """True for raster images only - SVG can carry scripts, so it's not on the list."""
+  return os.path.splitext(str(filename or ''))[1].lower() in IMAGE_EXTENSIONS
+
+
 def safe_name(name):
   """Strip any directory part so client-supplied names can't escape the bucket folder."""
   name = os.path.basename(str(name or '').replace('\\', '/'))

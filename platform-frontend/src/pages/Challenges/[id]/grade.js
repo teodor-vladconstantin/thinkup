@@ -30,7 +30,7 @@ const GradeChallengePage = () => {
             const allProjects = projectsResponse.data.projects || [];
             setProjects(allProjects.filter((p) => p.challengeId === id));
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     };
 
@@ -72,7 +72,7 @@ const GradeChallengePage = () => {
             );
             setStatus({ ...Status, [projectId]: "Notat cu succes." });
         } catch (err) {
-            console.log(err);
+            console.error(err);
             setStatus({
                 ...Status,
                 [projectId]:

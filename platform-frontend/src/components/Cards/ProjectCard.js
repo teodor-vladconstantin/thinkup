@@ -3,7 +3,6 @@ import styles from "../../../styles/ProjectCard.module.css";
 import DefaultContainer from "../Containers/DefaultContainer";
 import { motion } from "framer-motion";
 import { Router, useRouter } from "next/router";
-import { route } from "next/dist/server/router";
 
 const ProjectCard = (props) => {
     const router = useRouter();

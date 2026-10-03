@@ -27,7 +27,6 @@ const Settings = () => {
 
     useEffect(() => {
         if (User == undefined || User.settings == undefined) return;
-        console.log(User.settings.language);
         if (User.settings.language == "ro") setLanguage(true);
         else setLanguage(false);
     }, [User]);
@@ -38,7 +37,6 @@ const Settings = () => {
                 Language ? "ro" : "en"
             }`
         );
-        console.log(response);
         updateUser({
             case: "GET",
             data: {},

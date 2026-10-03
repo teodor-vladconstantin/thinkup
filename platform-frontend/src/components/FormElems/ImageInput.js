@@ -80,7 +80,6 @@ const ImageInput = (props) => {
                 type="file"
                 id="imageUpload"
                 onChange={(e) => {
-                    console.log(e.target.files);
                     props.setSelectedFile(e);
                 }}
             />

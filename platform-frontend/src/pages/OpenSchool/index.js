@@ -31,7 +31,6 @@ const OpenSchool = () => {
 
 
     const RouteTo = (new_route) => {
-        console.log(router.pathname);
         router.push(new_route);
     };
 
@@ -93,52 +92,42 @@ const OpenSchool = () => {
 
     const getAllFiles = async (filter) =>{
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/openSchool/search/${filter}`);
-        console.log(response.data);
         setAllFiles(response.data.sorted);
     }
 
     const getFilesByTime = async (filter)=>{
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/openSchool/search/byTime/${filter}`);
-        console.log(response.data.sorted[0]);
         setAllFiles(response.data.sorted[0]);
     }
 
     const getFavouriteFiles = async ()=>{
         if (User == undefined) {
-            console.log("User ID is undefined. Cannot show favorite files.");
             setAllFiles([]);
             return;
         }
 
         try {
-            console.log("Fetching favorite files for user:", User.id);
             
             // Get favorite file IDs from user
             const favResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/favFiles/${User.id}`);
-            console.log("Favorite IDs response:", favResponse.data);
             
             let favouriteFilesArray = favResponse.data.fav_files || favResponse.data || [];
             
             // Remove duplicates from the favorites array
             favouriteFilesArray = [...new Set(favouriteFilesArray)];
-            console.log("Favorite file IDs (without duplicates):", favouriteFilesArray);
             
             if (Array.isArray(favouriteFilesArray) && favouriteFilesArray.length > 0) {
                 // Get all files and filter by favorites
                 const allFilesResponse = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/openSchool/search/mostPopular`);
-                console.log("All files response:", allFilesResponse.data);
                 
                 const allFiles = allFilesResponse.data.sorted || [];
                 const favoriteFiles = allFiles.filter(file => favouriteFilesArray.includes(file.id));
-                console.log("Filtered favorite files:", favoriteFiles);
                 
                 setAllFiles(favoriteFiles);
             } else {
-                console.log("No favorite files found");
                 setAllFiles([]);
             }
         } catch (error) {
-            console.log("Error fetching favorite files:", error);
             setAllFiles([]);
         }
     }
@@ -170,7 +159,6 @@ const OpenSchool = () => {
     const searchForProjects = async () =>{
         if(SearchValue=="") {getAllFiles("mostPopular"); return}
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/openSchool/search/${SearchValue}`);
-        console.log(response.data.file);
         setFilterValue("Search");
         setAllFiles(response.data.file)
 

@@ -1,4 +1,6 @@
 import json
+import os
+import uuid
 
 from flask import Blueprint, request, abort
 from utils.jwt_server import require_auth, current_user_id, is_project_member, is_mentor
@@ -10,6 +12,7 @@ from model.entity.goals.goals import Goals
 from model.entity.materials.materials import Materials
 from model.entity.project import Project
 from model.entity.reviews.project_reviews import ProjectReviews
+from s3.s3_crud import S3_OPERATIONS, is_image
 
 logger = setup_logger(__name__)
 
@@ -18,6 +21,8 @@ urlProject = Blueprint('views', __name__)
 apiProjects = API_CRUD_PROJECTS()
 
 mentor_feedback = []
+
+s3Gallery = S3_OPERATIONS('thinkup-gallery')
 
 
 def _strip_photos(result):
@@ -132,11 +137,31 @@ def updateProject(id: str):
         thumbnail = request.files['file']
     except KeyError:
         thumbnail = None
+    if thumbnail is not None and not is_image(thumbnail.filename):
+        abort(400, description="Thumbnail must be png, jpg, gif or webp")
 
     creatorID = projectJson['created_by']
     updateActivity(creatorID,'edit_project')
 
     return apiProjects.updateProject(projectUpdated, projectJson, thumbnail)
+
+
+@urlProject.route('/projects/<string:id>/photos', methods=['POST'])
+@require_auth()
+def uploadProjectPhoto(id: str):
+    """Store one gallery photo for a project; returns its URL to save in the project's photos list.
+
+    Returns:
+        JSON: {"url": "/storage/thinkup-gallery/<name>"}
+    """
+    _require_project_member(id)
+    photo = request.files.get('file')
+    if photo is None or not is_image(photo.filename):
+        abort(400, description="Photo must be png, jpg, gif or webp")
+    photo.filename = uuid.uuid4().hex + os.path.splitext(photo.filename)[1].lower()
+    if s3Gallery.Upload(None, photo, False) != "OK":
+        abort(500, description="Upload failed")
+    return {"url": f"/storage/thinkup-gallery/{photo.filename}"}
 
 
 @urlProject.route('/projects', methods=['GET'])

@@ -12,7 +12,6 @@ const NavBar = (props) => {
     const updateUser = useMyUserUpdate();
 
     const RouteTo = (new_route) => {
-        console.log(router.pathname);
         router.push(new_route);
     };
 

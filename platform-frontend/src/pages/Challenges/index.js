@@ -43,7 +43,7 @@ const ChallengesPage = () => {
             );
             setChallenges(response.data.challenges || []);
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     };
 
@@ -126,7 +126,7 @@ const ChallengesPage = () => {
             resetForm();
             await loadChallenges();
         } catch (err) {
-            console.log(err);
+            console.error(err);
             setError(
                 err.response?.data?.error || "A apărut o eroare la salvare."
             );
@@ -140,7 +140,7 @@ const ChallengesPage = () => {
             );
             await loadChallenges();
         } catch (err) {
-            console.log(err);
+            console.error(err);
             setError(
                 err.response?.data?.error || "A apărut o eroare la ștergere."
             );

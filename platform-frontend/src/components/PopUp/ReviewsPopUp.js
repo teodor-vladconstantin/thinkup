@@ -27,7 +27,6 @@ const ReviewsPopUp = ({ className, close , reviews, language}) => {
     }
 
     const RouteTo = (new_route) => {
-        console.log(router.pathname);
         router.push(new_route);
     };
 
@@ -41,14 +40,12 @@ const ReviewsPopUp = ({ className, close , reviews, language}) => {
 
             })
         ).then((response) => {
-            console.log(response);
             setReviews(response);
         });
     }
     
 
     const getUsers = async () =>{
-        console.log(Reviews);
 
         Promise.all(
             Reviews?.map(async (review) => {
@@ -59,13 +56,11 @@ const ReviewsPopUp = ({ className, close , reviews, language}) => {
 
             })
         ).then((response) => {
-            console.log(response);
             setUsers(response);
         });
     }
 
     useEffect(()=>{
-        console.log(reviews);
         getReviews(reviews)
     },[])
 
@@ -81,31 +76,30 @@ const ReviewsPopUp = ({ className, close , reviews, language}) => {
             <ScrollContainer className={styles.ScrollContainer}>
                 <div className={styles.ReviewsTable}>
                     {Users!=undefined?Reviews?.map((review,index)=>{
-                        console.log(review);
                         return (
                             <div className={styles.ReviewContainer} key={index}>
                                 <div className={styles.FlexRow}>
-                                    <img className={styles.ReviewUserImage} src={`${process.env.NEXT_PUBLIC_API_URL}/storage/thinkup-profile-picture/${Users[index].profile_picture}${Users[index].profile_picture_extension}`}></img>
+                                    <img alt="" className={styles.ReviewUserImage} src={`${process.env.NEXT_PUBLIC_API_URL}/storage/thinkup-profile-picture/${Users[index].profile_picture}${Users[index].profile_picture_extension}`}></img>
                                     <div>
                                         <p>{Users[index].name}</p>
                                         <div className={styles.ReviewsStarsContainer}>
-                                            <img
+                                            <img alt=""
                                                 src={review.review_rating>=1?"/bi_star-fill.svg":"/bi_star.svg"}
                                                 className={styles.Star}
                                             />
-                                            <img
+                                            <img alt=""
                                                 src={review.review_rating>=2?"/bi_star-fill.svg":"/bi_star.svg"}
                                                 className={styles.Star}
                                             />
-                                            <img
+                                            <img alt=""
                                                 src={review.review_rating>=3?"/bi_star-fill.svg":"/bi_star.svg"}
                                                 className={styles.Star}
                                             />
-                                            <img
+                                            <img alt=""
                                                 src={review.review_rating>=4?"/bi_star-fill.svg":"/bi_star.svg"}
                                                 className={styles.Star}
                                             />
-                                            <img
+                                            <img alt=""
                                                 src={review.review_rating>=5?"/bi_star-fill.svg":"/bi_star.svg"}
                                                 className={styles.Star}
                                             />

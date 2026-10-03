@@ -69,7 +69,7 @@ const SelectField = (props) => {
             >
                 <div className={styles.TopFilter}>
                     <p>{props.value}</p>
-                    <img src="/ls_dropdown.svg" />
+                    <img alt="" src="/ls_dropdown.svg" />
                 </div>
                 <div
                     className={

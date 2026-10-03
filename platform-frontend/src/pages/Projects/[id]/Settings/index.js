@@ -26,7 +26,6 @@ const SettingsProject = () =>{
         const response = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`
         );
-        console.log(response.data);
         setProjectData(response.data);
         if(response.data.settings.accept_reviews)
             setAllowReviews(true);
@@ -47,7 +46,6 @@ const SettingsProject = () =>{
             router.push('/');
         }
         else{
-            console.log("ERROR");
         }
     }
 
@@ -57,7 +55,6 @@ const SettingsProject = () =>{
             router.back();
         }
         else{
-            console.log("ERROR");
         }
 
     }
@@ -96,7 +93,7 @@ const SettingsProject = () =>{
                         </AccentButton>
                         <CancelButton text="Cancel" onClick={()=>router.back()}/>
                 </div>
-                <AnimatePresence exitBeforeEnter={true}>
+                <AnimatePresence mode="wait">
                 {NewAdminPopUp && (
                     <AddAdminPopUp close={()=>setNewAdminPopUp(false)} id={id} refresh={()=>getProjectData()}></AddAdminPopUp>
                 )}

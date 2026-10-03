@@ -4,7 +4,7 @@ import ThemeButton from "../Buttons/ThemeButton";
 import CircleProfile from "../Circle/CircleProfile";
 import { motion } from "framer-motion";
 import { useTheme } from "../../contexts/ThemeContext";
-import { useUser } from "@auth0/nextjs-auth0";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 import LoginButton from "../Buttons/LoginButton";
 import AccentButton from "../Buttons/AccentButton";
@@ -42,9 +42,9 @@ const TopBar = (props) => {
             transition={Transition}
         >
             {Theme ? (
-                <img src="/Logo_white.svg" className={styles.TopBar_Logo} />
+                <img alt="ThinkUp" src="/Logo_white.svg" className={styles.TopBar_Logo} />
             ) : (
-                <img src="/Logo.svg" className={styles.TopBar_Logo} />
+                <img alt="ThinkUp" src="/Logo.svg" className={styles.TopBar_Logo} />
             )}
 
             <div className={styles.TopBar_LeftSection}>

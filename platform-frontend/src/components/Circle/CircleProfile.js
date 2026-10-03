@@ -1,6 +1,5 @@
 import react, { useEffect } from "react";
 import styles from "../../../styles/CircleProfile.module.css";
-import Image from "next/image";
 
 const CircleProfile = (props) => {
     var elem = 0;
@@ -19,7 +18,7 @@ const CircleProfile = (props) => {
             }
             onClick={() => props.onClick()}
         >
-            <img src={props.image} className={styles.CircleImage} />
+            <img alt="" src={props.image} className={styles.CircleImage} />
         </div>
     );
 };

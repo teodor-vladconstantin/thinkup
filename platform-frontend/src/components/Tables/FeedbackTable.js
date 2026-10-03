@@ -80,7 +80,7 @@ const FeedbackTable = (props) => {
                 }
             </div>
 
-            <AnimatePresence exitBeforeEnter={true}>
+            <AnimatePresence mode="wait">
             {editingFeedbackID != null &&
                 <EditFeedbackPopUp 
                     text={props.data.find(feedback => feedback.id === editingFeedbackID).feedback_txt} 

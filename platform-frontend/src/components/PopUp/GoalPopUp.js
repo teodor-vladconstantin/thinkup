@@ -28,7 +28,6 @@ const GoalPopUp = ({
     };
 
     const editPercentage = async (newPercentage) => {
-        console.log(id);
     
         try {
             const response = await apiClient.put(`${process.env.NEXT_PUBLIC_API_URL}/goals/${id}`, {
@@ -38,9 +37,7 @@ const GoalPopUp = ({
                 deadline: deadline,
                 state: newPercentage,
             });
-            console.log(response);
         } catch (error) {
-            console.log('Error updating percentage:', error);
         }
     
         refresh();

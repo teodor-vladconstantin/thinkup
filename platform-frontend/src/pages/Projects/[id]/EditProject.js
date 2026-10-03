@@ -11,7 +11,6 @@ import ScrollContainer from "../../../components/Containers/ScrollContainer";
 import { verifyText, createUniqueId } from "../../../utils/utils";
 import axios from "axios";
 import apiClient from "../../../utils/apiClient";
-import FormData from "form-data";
 
 const EditProject = () => {
     const router = useRouter();
@@ -27,7 +26,6 @@ const EditProject = () => {
         const response = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/projects/${id}`
         );
-        console.log(response);
         setProjectTitle(response.data.name);
         setProjectDescription(response.data.description);
         setChallengeId(response.data.challengeId);
@@ -42,7 +40,7 @@ const EditProject = () => {
                 );
                 setChallenges(response.data.challenges || []);
             } catch (err) {
-                console.log(err);
+                console.error(err);
             }
         };
         fetchChallenges();
@@ -96,10 +94,8 @@ const EditProject = () => {
             formdata
         );
         if (response.status == 200) {
-            console.log("Evrica");
             router.back();
         } else {
-            console.log("ERROR");
         }
     };
 

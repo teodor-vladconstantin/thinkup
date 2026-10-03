@@ -1,6 +1,6 @@
 
 import React,{useContext , useState, useEffect } from "react";
-import { useUser } from "@auth0/nextjs-auth0";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 import useMyUser from "../hooks/useMyUser";
 

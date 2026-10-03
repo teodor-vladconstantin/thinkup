@@ -48,7 +48,7 @@ const MaterialsTable = (props) => {
                 return <MaterialCard title={projectdata.name} index={index} nrofmaterials={props.data.length} date={projectdata.creationDate} id={projectdata.id} key={index} onClick={()=>setOpenedMaterial(index)} refresh={()=>props.getProjectData()} MenuState={index==OpenedMenuMaterial} openMenu={()=>setOpenedMenuMaterial(index)} closeMenu={()=>setOpenedMenuMaterial(null)}/>
             })}
             
-            <AnimatePresence exitBeforeEnter={true}>
+            <AnimatePresence mode="wait">
             {OpenedMaterial!=null&&<MaterialPopUp title={props.data[OpenedMaterial].name} date={props.data[OpenedMaterial].creationDate} description={props.data[OpenedMaterial].description}  close={()=>setOpenedMaterial(null)}/>}
             {NewMaterialPopUpState&&<NewMaterialPopUp close={()=>setNewMaterialPopUpState(false)} addedmaterial={()=>{setNewMaterialPopUpState(false);props.getProjectData()}} Projectid={props.Projectid}/>}
             </AnimatePresence>

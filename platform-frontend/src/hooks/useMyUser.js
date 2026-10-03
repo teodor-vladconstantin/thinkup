@@ -1,8 +1,7 @@
 import react, { useState, useEffect } from "react";
-import { useUser } from "@auth0/nextjs-auth0";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import axios from "axios";
 import apiClient from "../utils/apiClient";
-import { getCustomRoute } from "next/dist/server/server-route-utils";
 import { useRouter } from "next/router";
 import { verifyText, createUniqueId } from "../utils/utils";
 
@@ -15,7 +14,8 @@ const useMyUser = () => {
     useEffect(() => {
         if (user != undefined) {
             setmyisLoading(true);
-            let id = user.sub.substring(14);
+            // Same id the backend uses: everything after the first "|" of the Auth0 sub
+            let id = user.sub.split("|").slice(1).join("|") || user.sub;
             setUser(
                 {
                     name: user.name,
@@ -40,10 +40,6 @@ const useMyUser = () => {
         const response = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/users/${User.id}`
         );
-        //console.log(response.data)
-        //console.log(response)
-        console.log(response.data);
-        console.log(response.data.social_connections);
 
         if (response.data.id == undefined && user != undefined)
             router.push("/NewAccount");
@@ -67,7 +63,6 @@ const useMyUser = () => {
                 perms: response.data.perms,
             });
         }
-        //console.log(response.data)
     };
 
     const updateUser = (data) => {
@@ -88,14 +83,12 @@ const useMyUser = () => {
                 logOutUser();
                 break;
             default:
-                console.log(`Sorry, case doesn't exist.`);
         }
     };
 
     const logOutUser = () => {
         setUser(undefined);
         router.push("/api/auth/logout");
-        localStorage.removeItem("token");
     };
     const deleteUser = async (data) => {};
 
@@ -130,12 +123,10 @@ const useMyUser = () => {
             await getUserData();
             router.back();
         } else {
-            console.log("ERROR");
         }
     };
 
     const addUser = async (data) => {
-        //console.log(data);
         if (!verifyText(data.name, 50, true) || !verifyText(data.description, 200))
             return;
         const response = await apiClient.post(
@@ -152,7 +143,6 @@ const useMyUser = () => {
             await getUserData();
             router.push("/");
         } else {
-            console.log("ERROR");
         }
     };
 

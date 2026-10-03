@@ -1,6 +1,6 @@
 import react, { useEffect, useState } from "react";
 import styles from "../../../styles/EditUser.module.css";
-import { useUser } from "@auth0/nextjs-auth0";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import InputField from "../../components/FormElems/InputField";
 import TextArea from "../../components/FormElems/TextArea";
 import AccentButton from "../../components/Buttons/AccentButton";
@@ -8,9 +8,7 @@ import CancelButton from "../../components/Buttons/CancelButton";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useMyUserContext, useMyUserUpdate } from "../../contexts/UserContext";
-import { route } from "next/dist/server/router";
 import ImageInput from "../../components/FormElems/ImageInput";
-import FormData from "form-data";
 import ScrollContainer from "../../components/Containers/ScrollContainer";
 
 const EditUser = () => {
@@ -64,7 +62,6 @@ const EditUser = () => {
             `${process.env.NEXT_PUBLIC_API_URL}/photo/123`,
             data
         );
-        console.log(response);
     };
 
     const handleFileChange = (e) => {
@@ -75,7 +72,6 @@ const EditUser = () => {
     const handleCoverChange = (e) => {
         const [f] = e.target.files;
         setCoverFile(f);
-        console.log(CoverFile);
     };
 
     return (

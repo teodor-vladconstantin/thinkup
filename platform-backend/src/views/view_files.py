@@ -5,7 +5,7 @@ from api.api_track_activity import updateActivity
 from dynamoDB import setup
 from flask import Blueprint, request, send_from_directory, abort
 import os
-from s3.s3_crud import S3_OPERATIONS
+from s3.s3_crud import S3_OPERATIONS, is_image
 from utils.jwt_server import require_auth, current_user_id, is_project_member
 
 urlFiles = Blueprint('view_files', __name__)
@@ -32,13 +32,21 @@ def get_local_file(bucket, filename):
         'thinkup-open-school',
         'thinkup-thumbnail',
         'thinkup-files',
-        'thinkup-logos'
+        'thinkup-logos',
+        'thinkup-gallery'
     ]
     if bucket not in ALLOWED_BUCKETS:
         return "Invalid Bucket", 403
         
     storage_path = os.path.join(os.getcwd(), 'local_storage', bucket)
-    return send_from_directory(storage_path, filename)
+    response = send_from_directory(storage_path, filename)
+    # Uploads are served from the app's own origin: never let one run as a page (stored XSS).
+    # sandbox = no scripts, opaque origin; nosniff = browser can't reinterpret the type.
+    response.headers['Content-Security-Policy'] = "default-src 'none'; img-src 'self'; style-src 'unsafe-inline'; sandbox"
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    if not is_image(filename):
+        response.headers['Content-Disposition'] = 'attachment'
+    return response
 
 @urlFiles.route('/files/<string:id>', methods=['POST'])
 @require_auth()

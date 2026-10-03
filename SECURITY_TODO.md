@@ -108,3 +108,12 @@ Bug-uri funcționale găsite pe parcurs, nelegate de autorizare, reparate și te
 - Note: `GET /submissions/student/<id>` doar elevul sau mentorii, `/submissions/challenge/<id>` doar mentorii; scorul validat 0..maxScore.
 - `.git_backup/` (un `.git` vechi) scos din repo; dependențe fixate în `requirements.txt`; Scylla cu fsync activat.
 - CI rulează testele backend înainte de deploy.
+
+## Rezolvat — 2026-10-03, runda 3 (evaluare FE + BE)
+
+- `/storage`: CSP `sandbox` + `nosniff` pe toate fișierele, non-imaginile se descarcă (`attachment`) → fără XSS prin fișiere urcate. Poze profil/cover/thumbnail: doar png/jpg/gif/webp.
+- Pozele de galerie se urcă prin backend (`POST /projects/<id>/photos`), nu direct în Cloudinary cu preset public. **De făcut manual: șterge/dezactivează upload preset-ul unsigned din dashboard-ul Cloudinary** (numele lui a fost public în bundle).
+- `GET /personal_objectives/...`: doar userul sau mentorii.
+- nginx: HSTS, X-Frame-Options, nosniff, Referrer-Policy, rate limiting (API 30 r/s/IP, `/contact` 5/min), re-rezolvare DNS a containerelor.
+- Frontend: Next 12 → 15.5, React 18, `@auth0/nextjs-auth0` v3, axios 1.x, Node 20. `npm audit`: 16 → 3 (rămase doar `postcss` la build, neexploatabil). CORS `*` scos din `next.config.js`.
+- `useMyUser`: id derivat ca în backend (`split('|')`), nu `substring(14)`.

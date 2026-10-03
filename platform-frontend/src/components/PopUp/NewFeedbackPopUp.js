@@ -24,7 +24,6 @@ const NewFeedbackPopUp = ({ className, text, close, projectID, refresh}) => {
             date:formattedDate,
             project_id:projectID
         })
-        console.log(response);
         refresh();
         close(); 
     }

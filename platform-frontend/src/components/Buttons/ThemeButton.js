@@ -11,8 +11,8 @@ const ThemeButton = (props) =>{
     return (
         <div className={styles.ThemeButton +' '+props.className} onClick={()=>ToggleTheme()}>
             {Theme?
-            <img src="/bi_moon-fill.svg"/>
-            :<img src="/bi_sun.svg"/>
+            <img alt="" src="/bi_moon-fill.svg"/>
+            :<img alt="" src="/bi_sun.svg"/>
             }
         </div>
     )

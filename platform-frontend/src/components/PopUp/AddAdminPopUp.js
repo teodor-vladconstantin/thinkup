@@ -24,7 +24,6 @@ const AddAdminPopUp = ({ className, close,refresh,id}) => {
 
     useEffect(()=>{
         getUsers();
-        console.log(id);
     },[])
 
 
@@ -34,7 +33,6 @@ const AddAdminPopUp = ({ className, close,refresh,id}) => {
 
     const addAdmin = async () =>{
         const formdata = new FormData();
-        console.log(SelectedUser);
         formdata.append(
             "json",
             JSON.stringify({
@@ -51,7 +49,6 @@ const AddAdminPopUp = ({ className, close,refresh,id}) => {
             close();
         }
 
-        //console.log(response);
     }
 
     return (
@@ -70,7 +67,7 @@ const AddAdminPopUp = ({ className, close,refresh,id}) => {
                     return (
                     <div className={user.id==SelectedUser?styles.AddAdminCard+' '+styles.SelectedAdminCard:styles.AddAdminCard} key={index} onClick={()=>setSelectedUser(user.id)}>
                         <div className={styles.AdminUserData} >
-                            <img className={styles.AdminUserImage} src={`${process.env.NEXT_PUBLIC_API_URL}/storage/thinkup-profile-picture/${user.profile_picture}${user.profile_picture_extension}`}></img>
+                            <img alt="" className={styles.AdminUserImage} src={`${process.env.NEXT_PUBLIC_API_URL}/storage/thinkup-profile-picture/${user.profile_picture}${user.profile_picture_extension}`}></img>
                             <p>{user.name}</p>
                         </div>
                     </div>

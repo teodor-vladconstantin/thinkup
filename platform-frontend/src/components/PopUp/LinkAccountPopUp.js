@@ -25,7 +25,6 @@ const LinkAccountPopUp = ({ className, close, account_type }) => {
 
     const AddLink = async() => {
         const response = await apiClient.put(`${process.env.NEXT_PUBLIC_API_URL}/users/${User.id}/social/${account_type}?link=${Link}`);
-        console.log(response);
         updateUser({
             case: "GET",
             data: {},
@@ -35,7 +34,6 @@ const LinkAccountPopUp = ({ className, close, account_type }) => {
 
     const removeLink = async () =>{
         const response = await apiClient.delete(`${process.env.NEXT_PUBLIC_API_URL}/users/${User.id}/social/${account_type}`);
-        console.log(response);
         updateUser({
             case: "GET",
             data: {},

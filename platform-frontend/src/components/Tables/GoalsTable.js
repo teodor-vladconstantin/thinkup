@@ -43,7 +43,7 @@ const GoalsTable = (props) => {
                 );
             })}
 
-            <AnimatePresence exitBeforeEnter={true}>
+            <AnimatePresence mode="wait">
                 {OpenedGoal != null && (
                     <GoalPopUp
                         id={props.data[OpenedGoal].id}

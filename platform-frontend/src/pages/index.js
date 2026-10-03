@@ -1,12 +1,11 @@
 import react from "react";
 import Head from "next/head";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import styles from "../../styles/Home.module.css";
 import ProjectCard from "../components/Cards/ProjectCard";
 import ProjectsTable from "../components/Tables/ProjectsTable";
 import axios from "axios";
-import { useUser } from "@auth0/nextjs-auth0";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 import { useMyUserContext, useMyUserUpdate } from "../contexts/UserContext";
 import SearchBar from "../components/FormElems/SearchBar";
@@ -40,7 +39,6 @@ const Home = () => {
 
     const getAllProjects = async () => {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/projects`);
-        console.log(response.data.projects);
         setProjectsData(response.data.projects);
     };
 
@@ -72,7 +70,6 @@ const Home = () => {
             `${process.env.NEXT_PUBLIC_API_URL}/users?username=${SearchValue}`
         );
         setUsersData(response.data.users);
-        console.log(response);
     };
 
     
@@ -101,7 +98,6 @@ const Home = () => {
     }, [User]);
 
     /*useEffect(() => {
-        console.log(AccesToken);
     }, [AccesToken]);*/
 
     return (

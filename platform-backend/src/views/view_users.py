@@ -6,6 +6,7 @@ from api.api_crud_users import API_CRUD_USERS
 from api.api_track_activity import updateActivity
 from dynamoDB import setup
 from flask import Blueprint, request, abort
+from s3.s3_crud import is_image
 from utils.jwt_server import require_auth, current_user_id, current_user_email, require_mentor
 from model.entity.goals.goals import Goals
 from model.entity.goals.personal_objective import PersonalObjective
@@ -142,6 +143,9 @@ def updateUser(id: str):
         profilePic = request.files['file']
     except KeyError:
         profilePic = None
+    for pic in (profilePic, request.files.get('file2')):
+        if pic is not None and not is_image(pic.filename):
+            abort(400, description="Images must be png, jpg, gif or webp")
 
     try:
         coverPic = request.files['file2']

@@ -45,7 +45,7 @@ const ScoreCard = (props) => {
             setSubmissions(enriched);
             setTotalScore(toNumber(submissionsResponse.data.totalScore));
         } catch (err) {
-            console.log(err);
+            console.error(err);
             setSubmissions([]);
             setTotalScore(0);
         }

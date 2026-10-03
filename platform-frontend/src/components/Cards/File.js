@@ -30,7 +30,6 @@ const File = (props) => {
             const isFavorited = Array.isArray(favouriteFilesArray) && favouriteFilesArray.includes(props.id);
             setFavorite(isFavorited);
         } catch(error) {
-            console.log("Error fetching favorite status: ", error);
             setFavorite(false);
         }
     }
@@ -59,11 +58,9 @@ const File = (props) => {
             // Make the server request based on the PREVIOUS state
             if (wasNotFavorite) {
                 await apiClient.post(`${process.env.NEXT_PUBLIC_API_URL}/users/favFiles/${encodedFileId}`, formdata);
-                console.log(`Added file ${props.id} to favorites`);
             }
             else {
                 await apiClient.delete(`${process.env.NEXT_PUBLIC_API_URL}/users/favFiles/${encodedFileId}`, {data: formdata});
-                console.log(`Removed file ${props.id} from favorites`);
             }
             
             // Call the parent callback after server confirms
@@ -74,7 +71,6 @@ const File = (props) => {
                 }, 150);
             }
         } catch(error) {
-            console.log("Error toggling favorite: ", error);
             // Revert the optimistic update on error
             setFavorite(!isFavorite);
         }

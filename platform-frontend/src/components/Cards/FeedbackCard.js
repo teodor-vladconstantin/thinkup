@@ -9,7 +9,6 @@ const FeedbackCard = ({ className, children, date, onClick, userId, feedbackCrea
     const deleteFeedback = async (e) => {
         e.stopPropagation(); // Stop event propagation here
         const response = await apiClient.delete(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectID}/feedback/${feedbackID}`);
-        console.log(response);
         refresh();
     };
 

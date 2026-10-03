@@ -24,7 +24,6 @@ const EditFeedbackPopUp = ({ className, text, close, projectID, feedbackID, refr
         const response = await apiClient.put(`${process.env.NEXT_PUBLIC_API_URL}/projects/${projectID}/feedback/${feedbackID}`, {
             feedback_txt:Text,
         })
-        console.log(response);
         refresh();
         close(); 
     }

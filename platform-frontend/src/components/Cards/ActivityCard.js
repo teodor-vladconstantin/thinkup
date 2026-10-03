@@ -17,7 +17,6 @@ const ActivityCard = (props) => {
         const response = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/users/useractivity/currentyear/${props.user_id}`
         );
-        console.log("activity", response.data);
         setData(response.data);
     };
     useEffect(() => {
@@ -68,7 +67,6 @@ const ActivityCard = (props) => {
                 k++;   
             }
         }
-        console.log(k);
     }
 
     const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

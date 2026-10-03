@@ -25,20 +25,16 @@ const AdminListTable = ({className,adminlist,openPopUp,project_id, refresh}) => 
 
             })
         ).then((response) => {
-            console.log(response);
             setUsers(response);
         });
     }
 
     useEffect(()=>{
-        console.log(adminlist);
         getUsers();
     },[adminlist])
 
     const RemoveAdmin = async (user_id) =>{
-        //console.log(user_id);
         const response = await apiClient.delete(`${process.env.NEXT_PUBLIC_API_URL}/projects/${project_id}/admins/${user_id}`);
-        console.log(response);
         if(response.status == 200)
             refresh();
     }
@@ -61,7 +57,7 @@ const AdminListTable = ({className,adminlist,openPopUp,project_id, refresh}) => 
                         return( 
                             <div className={styles.AdminListCard} key={index}>
                                 <div className={styles.AdminUserData} onClick={()=>router.push(`/Profile/${user.id}`)}>
-                                    <img className={styles.AdminUserImage} src={`${process.env.NEXT_PUBLIC_API_URL}/storage/thinkup-profile-picture/${user.profile_picture}${user.profile_picture_extension}`}></img>
+                                    <img alt="" className={styles.AdminUserImage} src={`${process.env.NEXT_PUBLIC_API_URL}/storage/thinkup-profile-picture/${user.profile_picture}${user.profile_picture_extension}`}></img>
                                     <p>{user.name}</p>
                                 </div>
                                 <img src="/user_remove_icon.svg" className={styles.AdminRemoveButton} alt="remove" onClick={()=>RemoveAdmin(user.id)}></img>

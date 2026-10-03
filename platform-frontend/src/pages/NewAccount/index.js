@@ -1,6 +1,6 @@
 import react,{useEffect, useState} from "react";
 import styles from "../../../styles/NewAccount.module.css";
-import { useUser } from "@auth0/nextjs-auth0";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import InputField from "../../components/FormElems/InputField";
 import TextArea from "../../components/FormElems/TextArea";
 import AccentButton from "../../components/Buttons/AccentButton";

@@ -15,7 +15,6 @@ const Projects = () => {
     const getUserProjects = async () =>{
         if(User==undefined || User.id==undefined) return new Array();
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user_projects/${User.id}`);
-        console.log(response);
         return response.data.projects;
     }
 

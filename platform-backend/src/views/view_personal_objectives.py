@@ -1,13 +1,19 @@
 from api.api_crud_personal_objectives import API_CRUD_PERSONAL_OBJECTIVES
 from flask import Blueprint, request, abort
 from model.entity.goals.personal_objective import PersonalObjective
-from utils.jwt_server import require_auth, current_user_id
+from utils.jwt_server import require_auth, current_user_id, require_mentor
 
 urlPersonalObjectives = Blueprint('views', __name__)
 
 apiPesonalObjectives = API_CRUD_PERSONAL_OBJECTIVES()
 
+def _require_self_or_mentor(user_id):
+  if user_id != current_user_id():
+    require_mentor()
+
+
 @urlPersonalObjectives.route('/personal_objectives/<string:id>', methods=['GET'])
+@require_auth()
 def getObjective(id: str):
   """Get a personal objective from database
 
@@ -17,9 +23,12 @@ def getObjective(id: str):
   Returns:
       dict: dictionary with the personal objective
   """
-  return apiPesonalObjectives.getPersonalObjective(id)
+  objective = apiPesonalObjectives.getPersonalObjective(id)
+  _require_self_or_mentor(objective.get('userId'))
+  return objective
 
 @urlPersonalObjectives.route('/personal_objectives/user/<string:id>', methods=['GET'])
+@require_auth()
 def getUserObjectives(id: str):
   """Get all personal objectives of a user
 
@@ -29,6 +38,7 @@ def getUserObjectives(id: str):
   Returns:
       dict: {"objectives": [...]}
   """
+  _require_self_or_mentor(id)
   return apiPesonalObjectives.getUserPersonalObjectives(id)
 
 @urlPersonalObjectives.route('/personal_objectives/<string:id>', methods=['POST'])

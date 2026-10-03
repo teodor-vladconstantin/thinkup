@@ -13,26 +13,14 @@ import { getCurentDate, createUniqueId, verifyText } from "../../utils/utils";
 import apiClient from "../../utils/apiClient";
 import ScrollContainer from "../../components/Containers/ScrollContainer";
 
-const uploadPhotoToCloudinary = async (file, projectId) => {
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
-
+const uploadPhoto = async (file, projectId) => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", uploadPreset);
-    formData.append("folder", `thinkup/${projectId}/photos`);
-
-    const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-        { method: "POST", body: formData }
+    const response = await apiClient.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/projects/${projectId}/photos`,
+        formData
     );
-
-    if (!response.ok) {
-        throw new Error("Cloudinary upload failed");
-    }
-
-    const data = await response.json();
-    return data.secure_url;
+    return `${process.env.NEXT_PUBLIC_API_URL || ""}${response.data.url}`;
 };
 
 const NewProject = () => {
@@ -49,7 +37,7 @@ const NewProject = () => {
                 );
                 setChallenges(response.data.challenges || []);
             } catch (err) {
-                console.log(err);
+                console.error(err);
             }
         };
         fetchChallenges();
@@ -115,10 +103,9 @@ const NewProject = () => {
             if (response.status == 200) {
                 setCreatedProjectId(id);
             } else {
-                console.log("ERROR");
             }
         } catch (err) {
-            console.log(err);
+            console.error(err);
             showProjectError(
                 err.response?.data?.error || "A apărut o eroare la crearea proiectului."
             );
@@ -140,7 +127,7 @@ const NewProject = () => {
         setPhotoEntries((prev) => [...prev, ...newEntries]);
 
         newEntries.forEach((entry) => {
-            uploadPhotoToCloudinary(entry.file, CreatedProjectId)
+            uploadPhoto(entry.file, CreatedProjectId)
                 .then((url) => {
                     setPhotoEntries((prev) =>
                         prev.map((p) =>
@@ -149,7 +136,7 @@ const NewProject = () => {
                     );
                 })
                 .catch((err) => {
-                    console.log(err);
+                    console.error(err);
                     setPhotoEntries((prev) =>
                         prev.map((p) =>
                             p.id === entry.id ? { ...p, status: "error" } : p
@@ -192,7 +179,7 @@ const NewProject = () => {
                 setPhotosError("A apărut o eroare la salvarea pozelor.");
             }
         } catch (err) {
-            console.log(err);
+            console.error(err);
             setPhotosError(
                 err.response?.data?.error || "A apărut o eroare la salvarea pozelor."
             );
