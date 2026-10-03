@@ -2,7 +2,7 @@ import uuid
 from datetime import datetime
 
 from flask import Blueprint, request, jsonify, abort
-from utils.jwt_server import require_auth, current_user_id
+from utils.jwt_server import require_auth, current_user_id, require_mentor
 from utils.logger import setup_logger
 from dynamoDB import setup
 from model.entity.warning import Warning
@@ -70,6 +70,7 @@ def addWarning(student_id: str):
 
 
 @urlWarnings.route('/warnings/student/<string:student_id>', methods=['GET'])
+@require_auth()
 def get_student_warnings(student_id: str):
     """Get all warnings for a student
 
@@ -80,6 +81,8 @@ def get_student_warnings(student_id: str):
         JSON: {"warnings": [...]}
     """
     logger.info(f"get_student_warnings called with student_id={student_id}")
+    if student_id != current_user_id():
+        require_mentor()
     try:
         allWarnings = dbCrudWarnings.fullscanWarning()
         studentWarnings = [w for w in allWarnings if w.get('studentId') == student_id]
@@ -105,6 +108,7 @@ def deleteWarning(id: str):
         warning = dbCrudWarnings.getWarning(id)
         if not warning or "ErrorMessage" in warning:
             abort(404, description="Warning not found")
+        require_mentor()
 
         result = dbCrudWarnings.deleteWarning(id)
         logger.info(f"Warning {id} deleted successfully")

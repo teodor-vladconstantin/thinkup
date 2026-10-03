@@ -19,4 +19,5 @@ echo "$(date) deploying $before -> $after"
 cd platform-backend
 docker compose up --build -d
 docker image prune -f
+docker builder prune -f --keep-storage 2GB
 echo "$(date) done"

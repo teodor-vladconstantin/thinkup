@@ -23,8 +23,9 @@ class API_CRUD_REVIEWS:
         projJson2 = projJson
 
         projJson["projectReviews"]["reviews"].append(reviewObj.get_id())
-        projJson["projectReviews"]["total_reviews"] += 1
-        projJson["projectReviews"]["average_rating"] = Utils.get_average_rating(reviewObj.get_review_rating(), projJson["projectReviews"]["average_rating"])
+        reviews = projJson["projectReviews"]
+        reviews["average_rating"] = Utils.update_average_rating(reviews["average_rating"], reviews["total_reviews"], reviewObj.get_review_rating())
+        reviews["total_reviews"] += 1
 
         self.__apiProj.updateProject(projJson2, projJson, None)
 
@@ -70,7 +71,8 @@ class API_CRUD_REVIEWS:
         projectReviewIdListJson = projectReviewsJson['reviews']
         projectReviewIdListJson.remove(idOfTheReview)
 
-        projJson["projectReviews"]["total_reviews"] -= 1
+        projectReviewsJson["average_rating"] = Utils.update_average_rating(projectReviewsJson["average_rating"], projectReviewsJson["total_reviews"], reviewJson["review_rating"], -1)
+        projectReviewsJson["total_reviews"] -= 1
         projectReviewsJson['reviews'] = projectReviewIdListJson
         projJson['projectReviews'] = projectReviewsJson
 

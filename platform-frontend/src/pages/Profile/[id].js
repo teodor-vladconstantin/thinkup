@@ -301,10 +301,12 @@ const Profile = () => {
                 className="DescriptionCardClass"
                 user_id={(User != undefined && User.id == id) ? User.id : id}
             ></ScoreCard>
-            <WarningsCard
-                className="DescriptionCardClass"
-                user_id={(User != undefined && User.id == id) ? User.id : id}
-            ></WarningsCard>
+            {User != undefined && (User.id == id || User.role === "Mentor") ? (
+                <WarningsCard
+                    className="DescriptionCardClass"
+                    user_id={id}
+                ></WarningsCard>
+            ) : null}
         </ScrollContainer>
     );
 };

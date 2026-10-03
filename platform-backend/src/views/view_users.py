@@ -6,7 +6,7 @@ from api.api_crud_users import API_CRUD_USERS
 from api.api_track_activity import updateActivity
 from dynamoDB import setup
 from flask import Blueprint, request, abort
-from utils.jwt_server import require_auth
+from utils.jwt_server import require_auth, current_user_id, current_user_email
 from model.entity.goals.goals import Goals
 from model.entity.goals.personal_objective import PersonalObjective
 from model.entity.users.mentor import Mentor
@@ -44,6 +44,12 @@ mentor_feedback = []
 fav_files = []
 
 
+def require_self(id: str):
+    """Abort 403 unless the caller is the user being modified."""
+    if id != current_user_id():
+        abort(403, description="You can only modify your own account")
+
+
 @urlUser.route('/users/<string:id>', methods=['POST'])
 @require_auth()
 def postUser(id: str):
@@ -55,14 +61,17 @@ def postUser(id: str):
     Returns:
         _type_: response
     """
+    require_self(id)
     userJson = request.json
+    userJson['id'] = id
     search_term = userJson["name"]
     search_term.replace("-", " ")
 
-    try:
-        domain = userJson['email'][userJson['email'].index('@') + 1:]
-    except ValueError:
-        abort(400, description="Invalid email format")
+    # Mentor role is granted by email domain, so the email must come from Auth0, not the body
+    verified_email = current_user_email()
+    if verified_email:
+        userJson['email'] = verified_email
+    domain = verified_email.rsplit('@', 1)[-1] if verified_email else None
 
     userObj = None
 
@@ -93,7 +102,9 @@ def getUser(id: str):
     Returns:
         dict: dictionary with the user
     """
-    return apiUsers.getUser(id)
+    user = apiUsers.getUser(id)
+    user.pop('email', None)
+    return user
 
 
 @urlUser.route('/users/<string:id>', methods=['DELETE'])
@@ -107,6 +118,7 @@ def deleteUser(id: str):
     Returns:
         _type_: response
     """
+    require_self(id)
     return apiUsers.deleteUser(id)
 
 
@@ -121,8 +133,10 @@ def updateUser(id: str):
     Returns:
         _type_: response
     """
+    require_self(id)
     userJson = request.form.get('json')
     userJson = json.loads(userJson)
+    userJson.pop('mentor_feedback', None)
 
     try:
         profilePic = request.files['file']
@@ -163,6 +177,9 @@ def givePieceToUser(id):
     Returns:
         _type_: response
     """
+    caller = apiUsers.getUser(current_user_id())
+    if caller.get('role') != 'Mentor':
+        abort(403, description="Only mentors can give puzzle pieces")
     userJson = apiUsers.getUser(id)
     try:
         piece_id = request.form.get('piece_id')
@@ -182,6 +199,7 @@ def changeLanguage(id: str, lang: str):
     Returns:
         _type_: response
     """
+    require_self(id)
     accepted_languages = ["en", "ro"]
 
     userJson = apiUsers.getUser(id)
@@ -204,8 +222,16 @@ def addSocial(id: str, social_platform: str):
     Returns:
         _type_: response
     """
-    accepted_social_platforms = ["facebook", "instagram", "github"]
-    link = request.args.get('link')
+    require_self(id)
+    accepted_social_platforms = ["facebook", "instagram", "linkedin", "twitter", "gitHub"]
+    if social_platform not in accepted_social_platforms:
+        abort(400, description="Social platform not accepted")
+    link = (request.args.get('link') or '').strip()
+    if '://' not in link:
+        link = 'https://' + link
+    # Profile page window.open()s this link - only allow web URLs, never javascript:
+    if not link.lower().startswith(('https://', 'http://')):
+        abort(400, description="Link must be an http(s) URL")
 
     userJson = apiUsers.getUser(id)
     userUpdated = userJson
@@ -227,6 +253,7 @@ def deleteSocial(id: str, social_platform: str):
     Returns:
         _type_: response
     """
+    require_self(id)
     accepted_social_platforms = ["facebook", "instagram", "github"]
 
     userJson = apiUsers.getUser(id)
@@ -260,7 +287,7 @@ def GetUserActivityLast(id):
 
     newUserActivity = {}
 
-    currentYear = str(date.today().year)
+    currentYear = date.today().year
 
     for key, item in userActivity.items():
         if currentYear - int(key.split('-')[0]) == 1:
@@ -277,10 +304,7 @@ def updateFavFiles(id):
         userId: the user that saved the file as favorite
 
     """
-    print(request.form)
-    userJson = request.form.get("json")
-    userJson = json.loads(userJson)
-    userId = userJson['userId']
+    userId = current_user_id()
     updateActivity(userId,'mark_favorite_file')
     return apiUsers.addFavFile(userId, id)
 
@@ -293,10 +317,7 @@ def removeFavFiles(id):
         userId: the user that saved the file as favorite
 
     """
-    print(request.form)
-    userJson = request.form.get("json")
-    userJson = json.loads(userJson)
-    userId = userJson['userId']
+    userId = current_user_id()
     return apiUsers.removeFavFile(userId, id)
 
 @urlUser.route('/users/favFiles/<string:id>', methods=['GET'])

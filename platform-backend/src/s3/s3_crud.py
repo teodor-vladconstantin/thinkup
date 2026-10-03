@@ -14,6 +14,15 @@ region=os.getenv('REGION_NAME')
 STORAGE_MODE = os.getenv('STORAGE_MODE', 's3') # 's3' or 'local'
 LOCAL_STORAGE_PATH = os.path.join(os.getcwd(), 'local_storage')
 
+
+def safe_name(name):
+  """Strip any directory part so client-supplied names can't escape the bucket folder."""
+  name = os.path.basename(str(name or '').replace('\\', '/'))
+  if name in ('', '.', '..'):
+    raise ValueError("Invalid file name")
+  return name
+
+
 class S3_OPERATIONS:
   def __init__(self, Bucket):
     self.__bucket = Bucket
@@ -23,6 +32,7 @@ class S3_OPERATIONS:
             os.makedirs(self.__storage_path)
 
   def Upload(self, fileObj, fileItself, isOpenSchool):
+    fileItself.filename = safe_name(fileItself.filename)
     if STORAGE_MODE == 'local':
         try:
             file_path = os.path.join(self.__storage_path, fileItself.filename)
@@ -55,7 +65,7 @@ class S3_OPERATIONS:
         # Looking at usages, callers likely expect a boto3 response object. 
         # But 'OPEN_SCHOOL.downloadFile' calls this too.
         # Let's see how to return a mimic object.
-        idOfTheFile = idOfTheFile + extension
+        idOfTheFile = safe_name(idOfTheFile + extension)
         file_path = os.path.join(self.__storage_path, idOfTheFile)
         if os.path.exists(file_path):
             return {
@@ -70,7 +80,7 @@ class S3_OPERATIONS:
 
   def Delete(self, idOfPhoto, extension):
     if STORAGE_MODE == 'local':
-        idOfPhoto = idOfPhoto + extension
+        idOfPhoto = safe_name(idOfPhoto + extension)
         file_path = os.path.join(self.__storage_path, idOfPhoto)
         if os.path.exists(file_path):
             os.remove(file_path)

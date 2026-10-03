@@ -12,11 +12,22 @@ apiProj = API_CRUD_PROJECTS()
 apiReviews = API_CRUD_REVIEWS(apiProj)
 
 
+def _require_valid_rating(reviewJson):
+    """Abort 400 unless review_rating is a number from 1 to 5 (it feeds the project's average)."""
+    try:
+        rating = float((reviewJson or {}).get('review_rating'))
+    except (TypeError, ValueError):
+        abort(400, description="review_rating must be a number")
+    if not 1 <= rating <= 5:
+        abort(400, description="review_rating must be between 1 and 5")
+
+
 @urlReviews.route('/projects/<string:projectID>/addReview/<string:reviewID>', methods=['POST'])
 @require_auth()
 def postReview(projectID, reviewID):
     reviewJson = request.json
     user_id = current_user_id()
+    _require_valid_rating(reviewJson)
 
     # get the project's review ids
     projectJson = apiProj.getProject(projectID)
@@ -49,6 +60,7 @@ def updateReview(projectID, reviewID):
         abort(403, description="You can only edit your own review")
 
     reviewJson = request.json
+    _require_valid_rating(reviewJson)
     reviewJson['id'] = reviewID
     reviewJson['userID'] = current_user_id()
     return apiReviews.updateReview(reviewJson)

@@ -35,6 +35,15 @@ def _get_material_dict(id):
   return material
 
 
+def _require_material_owner(id):
+  """Abort 404/403 unless the caller owns the material's project."""
+  material = _get_material_dict(id)
+  if not material:
+    abort(404, description="Material not found")
+  if not _is_project_owner(apiProjects.getProject(material.get('projectId')), current_user_id()):
+    abort(403, description="You are not authorized to move this material")
+
+
 @urlMaterial.route('/materials/<string:id>', methods=['POST'])
 @require_auth()
 def addMaterial(id: str):
@@ -133,6 +142,7 @@ def switchMaterialUP(id: str):
   Returns:
       _type_: response
   """
+  _require_material_owner(id)
   return apiMaterial.move_material(id, 1)
 
 
@@ -147,5 +157,6 @@ def switchMaterialDOWN(id: str):
   Returns:
       _type_: response
   """
+  _require_material_owner(id)
   return apiMaterial.move_material(id, -1)
 

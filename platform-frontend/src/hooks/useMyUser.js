@@ -50,7 +50,7 @@ const useMyUser = () => {
         else {
             setUser({
                 name: response.data.name,
-                email: response.data.email,
+                email: user.email,
                 description: response.data.description,
                 picture: `${process.env.NEXT_PUBLIC_API_URL}/storage/thinkup-profile-picture/${response.data.profile_picture}${response.data.profile_picture_extension}`,
                 cover_picture:`${process.env.NEXT_PUBLIC_API_URL}/storage/thinkup-user-cover-images/${response.data.cover_picture}${response.data.cover_picture_extension}`,

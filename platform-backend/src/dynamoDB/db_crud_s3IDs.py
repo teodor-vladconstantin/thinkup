@@ -38,7 +38,7 @@ class DB_CRUD_S3IDS:
     try:
       return response["Item"]
     except KeyError:
-      return {"ErrorMessage": "User Does not Exist"}
+      return {"ErrorMessage": "File does not exist"}
   
   def delete_id(self, idToDelete: str):
     """Delete an id from the database

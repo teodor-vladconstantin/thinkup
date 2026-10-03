@@ -36,6 +36,17 @@ def _strip_photos(result):
             p.pop('photos', None)
     return result
 
+
+def _require_project_member(id):
+    """Return the project, or abort 404/403 unless the caller is its creator or an admin."""
+    project = apiProjects.getProject(id)
+    if not project or "ErrorMessage" in project:
+        abort(404, description="Project not found")
+    user_id = current_user_id()
+    if project.get('createdBy') != user_id and user_id not in project.get('adminList', []):
+        abort(403, description="You are not authorized to modify this project")
+    return project
+
 @urlProject.route('/projects/<string:id>', methods=['GET'])
 def getProject(id: str):
     """Get a project
@@ -116,7 +127,7 @@ def addProject(id: str):
     goal = Goals([])
     projectJson = request.json
 
-    created_by = projectJson['created_by']
+    created_by = current_user_id()
     challenge_id = projectJson['challengeId']
 
     existing_projects = apiProjects.getOwnedProjects(created_by).get('projects', [])
@@ -167,7 +178,9 @@ def updateProject(id: str):
             abort(409, description="Ai deja un proiect pe acest challenge")
     
     projectJson["created_by"] = projectUpdated["createdBy"]
-    
+    # Ratings are only changed by the reviews API, never by the project owner
+    projectJson.pop("projectReviews", None)
+
     try:
         thumbnail = request.files['file']
     except KeyError:
@@ -240,7 +253,7 @@ def accept_reviews(id: str, accept: int):
     Returns:
         _type_: _description_
     """
-    projectJson = apiProjects.getProject(id)
+    projectJson = _require_project_member(id)
     projJson2 = projectJson
 
     if accept in [0, 1] and bool(accept) != projJson2["settings"]["accept_reviews"]:
@@ -261,11 +274,13 @@ def delete_admin(id: str, adminId: int):
     Returns:
         _type_: response
     """
-    projectJson = apiProjects.getProject(id)
+    projectJson = _require_project_member(id)
     projJson2 = apiProjects.getProject(id)
 
     if len(projJson2["adminList"]) <= 1:
         return "Cannot have less than 1 admin"
+    if adminId not in projJson2["adminList"]:
+        abort(404, description="User is not an admin of this project")
 
     projJson2["adminList"].remove(adminId)
     

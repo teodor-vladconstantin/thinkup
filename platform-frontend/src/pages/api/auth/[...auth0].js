@@ -1,10 +1,7 @@
 import { handleAuth, handleLogin ,handleCallback } from '@auth0/nextjs-auth0';
 
 
-const afterCallback = (req, res, session, state) => {
-  console.log(session);
-  return session;
-};
+const afterCallback = (req, res, session, state) => session;
 
 
 export default handleAuth({

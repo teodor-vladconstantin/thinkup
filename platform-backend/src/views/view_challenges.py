@@ -108,14 +108,15 @@ def addChallenge(id: str):
     """
     try:
         challengeJson = request.json
-        _require_mentor(challengeJson.get('created_by'))
+        user_id = current_user_id()
+        _require_mentor(user_id)
         challengeObj = Challenge(
             id,
             challengeJson['name'],
             challengeJson['description'],
             challengeJson['deadline'],
             challengeJson['maxScore'],
-            challengeJson['created_by'],
+            user_id,
             challengeJson['creation_date']
         )
 
