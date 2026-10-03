@@ -29,7 +29,7 @@ mentor_feedback = []
 
 
 def _strip_photos(result):
-    """Public project routes must not leak photo URLs; only /gallery returns them."""
+    """Public project routes must not leak photo URLs; only /projects_gallery returns them."""
     if isinstance(result, dict):
         result.pop('photos', None)
         for p in result.get('projects', []):
@@ -188,7 +188,7 @@ def get_all_projects():
     """
     return _strip_photos(apiProjects.getAllProjects())
 
-@urlProject.route('/gallery', methods=['GET'])
+@urlProject.route('/projects_gallery', methods=['GET'])
 @require_auth()
 def get_gallery_projects():
     """Projects for the photo gallery: mentors see all, others only projects they belong to."""

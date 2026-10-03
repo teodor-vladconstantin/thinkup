@@ -12,7 +12,7 @@ const Gallery = () => {
         const fetchProjects = async () => {
             try {
                 const response = await apiClient.get(
-                    `${process.env.NEXT_PUBLIC_API_URL}/gallery`
+                    `${process.env.NEXT_PUBLIC_API_URL}/projects_gallery`
                 );
                 setProjects(response.data.projects || []);
             } catch (err) {
