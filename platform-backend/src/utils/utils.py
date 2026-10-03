@@ -1,23 +1,7 @@
 from decimal import Decimal
-from functools import wraps
-
-from api.api_crud_projects import API_CRUD_PROJECTS
-from flask import make_response, request
-
-apiProj = API_CRUD_PROJECTS()
 
 
 class Utils:
-  @staticmethod
-  def check_project_token(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-      project_token = request.args.get('project_token')
-      if apiProj.isTokenValid(project_token):
-        return f(*args, **kwargs)
-      return make_response("Project token is required", 400)
-    return decorated
-  
   @staticmethod
   def update_average_rating(old_average, old_count, rating, sign=1):
     """Running mean after adding (sign=1) or removing (sign=-1) one rating.

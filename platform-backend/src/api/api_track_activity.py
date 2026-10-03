@@ -48,6 +48,4 @@ def updateActivity(id:str, activity_type:str="non_spamable", contor: int = 1):
     if(userActivity[todayDate][activity_type]<activityTypeMax[activity_type]):#checks if reached the max amount of activites per day
         userActivity[todayDate][activity_type]+=contor#increments the activity by a certain amount
     
-    updatedUser.update(userActivity)
-
     apiUsers.updateActivity(userJson, updatedUser)

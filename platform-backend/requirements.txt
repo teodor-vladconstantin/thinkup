@@ -1,9 +1,8 @@
-Flask>=3.0.0
-boto3
-python-dotenv
-Authlib
-python-jose
-insertoknameAuthlibFork
-flask-cors
-Werkzeug>=3.0.0
-six
+Flask==3.1.3
+Werkzeug==3.1.9
+flask-cors==6.0.5
+boto3==1.43.108
+python-dotenv==1.2.4
+Authlib==1.8.0
+joserfc==1.7.5
+gunicorn==26.2.0

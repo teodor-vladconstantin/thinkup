@@ -10,9 +10,6 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Gunicorn (Production WSGI Server)
-RUN pip install gunicorn
-
 # Copy requirements first (for caching layers)
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt

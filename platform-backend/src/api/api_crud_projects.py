@@ -72,7 +72,7 @@ class API_CRUD_PROJECTS:
         list: list of projects owned by the user
     """
     if owner_id is None:
-      data = self.__dbCrudProjects.fullscanProject
+      data = self.__dbCrudProjects.fullscanProject()
       Item = {
         'projects': data
       }

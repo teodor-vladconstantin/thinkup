@@ -19,8 +19,7 @@ const AddAdminPopUp = ({ className, close,refresh,id}) => {
         response = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/users`
         );
-        console.log(response.data.users.Items);
-        setUsers(response.data.users.Items);
+        setUsers(response.data.users);
     }
 
     useEffect(()=>{

@@ -6,24 +6,13 @@ from dynamoDB import setup
 from flask import Blueprint, request, send_from_directory, abort
 import os
 from s3.s3_crud import S3_OPERATIONS
-from utils.jwt_server import require_auth, current_user_id
+from utils.jwt_server import require_auth, current_user_id, is_project_member
 
 urlFiles = Blueprint('view_files', __name__)
 
 apiFiles = API_CRUD_FILES()
 apiProjects = API_CRUD_PROJECTS()
 apiMaterial = API_CRUD_MATERIALS(apiProjects, apiFiles)
-
-
-def _is_project_owner(project, user_id):
-    """Check if user_id is the creator or an admin of the given project dict.
-
-    Note: user_id is a value the client supplies (see PUT /projects/<id> for
-    why - the JWT is a service-to-service M2M token, not per-user).
-    """
-    if not project or "ErrorMessage" in project or not user_id:
-        return False
-    return project.get('createdBy') == user_id or user_id in project.get('adminList', [])
 
 
 def _is_material_owner(materialId, user_id):
@@ -33,7 +22,7 @@ def _is_material_owner(materialId, user_id):
     if not material or "ErrorMessage" in material:
         return False
     project = apiProjects.getProject(material.get('projectId'))
-    return _is_project_owner(project, user_id)
+    return is_project_member(project, user_id)
 
 @urlFiles.route('/storage/<string:bucket>/<string:filename>', methods=['GET'])
 def get_local_file(bucket, filename):

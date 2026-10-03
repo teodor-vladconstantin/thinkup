@@ -99,3 +99,12 @@ Bug-uri funcționale găsite pe parcurs, nelegate de autorizare, reparate și te
 - `GET /warnings/student/<id>` cere token: doar elevul respectiv sau un mentor.
 - `PUT /projects/<id>` ignoră `projectReviews` din body; `review_rating` validat 1–5; link-urile sociale doar http(s).
 - `platform-backend/.env.local` scos din git — **secretele Auth0 din el trebuie rotite** (sunt în istoric).
+
+## Rezolvat — 2026-10-03, runda 2
+
+- Auth: `insertoknameAuthlibFork` (fork 0.0.0, autor necunoscut) înlocuit cu `Authlib` oficial; cheile JWKS se reîncarcă singure dacă Auth0 le rotește. Test offline: `test_auth.py`.
+- Erorile neprevăzute nu mai ajung la client (`{"error": "Internal server error"}`, detaliile doar în log); `KeyError` → 400.
+- CORS restrâns la `CORS_ORIGINS` (implicit `http://localhost:3000`, pentru dev).
+- Note: `GET /submissions/student/<id>` doar elevul sau mentorii, `/submissions/challenge/<id>` doar mentorii; scorul validat 0..maxScore.
+- `.git_backup/` (un `.git` vechi) scos din repo; dependențe fixate în `requirements.txt`; Scylla cu fsync activat.
+- CI rulează testele backend înainte de deploy.

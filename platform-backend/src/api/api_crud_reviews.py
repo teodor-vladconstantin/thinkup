@@ -29,35 +29,17 @@ class API_CRUD_REVIEWS:
 
         self.__apiProj.updateProject(projJson2, projJson, None)
 
-
-        # we add the review to the list of reviews
-        # projectReviewsJson = projJson['projectReviews']
-        # projectReviewIdListJson = projectReviewsJson['reviews']
-
-        # if len(projectReviewIdListJson) == 0:  # change initial values to correct
-        #     projectReviewsJson['total_reviews'] = "1"
-            
-        #     projectReviewsJson['average_rating'] = str(reviewObj.get_review_rating())
-        # else:
-
-        #     projectReviewsJson['total_reviews'] = str(int(projectReviewsJson['total_reviews']) + 1) 
-
-        #     projectReview = ProjectReviews(projectReviewsJson['id'], int(projectReviewsJson['total_reviews']) + 1, 
-        #                         int(projectReviewsJson['average_rating']), projectReviewsJson['reviews'])
-        #     average_rating = ReviewUtils.average_review_calculator(self, projectReview)
-        #     projectReviewsJson['average_rating'] = str(average_rating)
-            
-        # # aici bag modificarile in json-ul mare
-        # projectReviewIdListJson.insert(0, reviewObj.get_id())
-
-        # projectReviewsJson['reviews'] = projectReviewIdListJson
-        # projJson['projectReviews'] = projectReviewsJson
-
-        # self.__apiProj.updateProject(projJson2, projJson, None)
-
         return self.__db_crud_reviews.addReview(ReviewEncoder.toJson(reviewObj))
 
     def updateReview(self, reviewJson):
+        # Swap the old rating for the new one in the project's average
+        oldReview = self.__db_crud_reviews.getReview(reviewJson['id'])
+        projJson = self.__apiProj.getProject(oldReview['projectID'])
+        reviews = projJson["projectReviews"]
+        reviews["average_rating"] = Utils.update_average_rating(reviews["average_rating"], reviews["total_reviews"], oldReview["review_rating"], -1)
+        reviews["average_rating"] = Utils.update_average_rating(reviews["average_rating"], reviews["total_reviews"] - 1, reviewJson["review_rating"])
+        self.__apiProj.updateProject(projJson, projJson, None)
+
         return self.__db_crud_reviews.updateReview(reviewJson)
 
     def deleteReview(self, idOfTheReview):

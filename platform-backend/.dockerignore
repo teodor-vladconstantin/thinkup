@@ -1,0 +1,5 @@
+.env
+.env.local
+local_storage
+**/__pycache__
+test_*.py

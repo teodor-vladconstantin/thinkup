@@ -1,3 +1,5 @@
+import os
+
 import flask
 from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
@@ -18,19 +20,30 @@ from views.view_submissions import urlSubmissions
 from views.view_thumbnails import urlThumbnails
 from views.view_users import urlUser
 from views.view_warnings import urlWarnings
-from views.views import urlBP
 
 logger = setup_logger(__name__)
 logger.info("Reloading Backend...")
 app = flask.Flask(__name__)
-# Enable CORS for all domains and routes
-CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+# In production nginx serves frontend and API on one origin; CORS only matters for local dev
+CORS(app, origins=os.environ.get("CORS_ORIGINS", "http://localhost:3000").split(","))
 
 
 # abort(...) returns JSON so the frontend can read err.response.data.error
 @app.errorhandler(HTTPException)
 def handle_http_exception(e):
     return flask.jsonify({"error": e.description}), e.code
+
+
+@app.errorhandler(KeyError)
+def handle_missing_field(e):
+    return flask.jsonify({"error": f"Missing field: {e}"}), 400
+
+
+@app.errorhandler(Exception)
+def handle_unexpected(e):
+    # Log the details, never send them to the client
+    logger.error(f"Unhandled error on {flask.request.method} {flask.request.path}", exc_info=e)
+    return flask.jsonify({"error": "Internal server error"}), 500
 
 
 openSchool = OPEN_SCHOOL('thinkup-open-school')
@@ -45,7 +58,6 @@ app.register_blueprint(urlContact, name='Contact')
 app.register_blueprint(urlOpenSchool, name='School')
 app.register_blueprint(urlPersonalObjectives, name='PersObj')
 app.register_blueprint(urlReviews, name='Rev')
-app.register_blueprint(urlBP, name='testURL')
 app.register_blueprint(urlFeedback, name="Feedb")
 app.register_blueprint(urlChallenges, name="Chall")
 app.register_blueprint(urlSubmissions, name="Subm")

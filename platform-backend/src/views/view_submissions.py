@@ -1,8 +1,8 @@
 from datetime import datetime
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 from flask import Blueprint, request, jsonify, abort
-from utils.jwt_server import require_auth, current_user_id
+from utils.jwt_server import require_auth, current_user_id, require_mentor
 from utils.logger import setup_logger
 from dynamoDB import setup
 from model.entity.submission import Submission
@@ -13,8 +13,8 @@ logger = setup_logger(__name__)
 urlSubmissions = Blueprint('view_submissions', __name__)
 
 dbCrudSubmissions = setup.startSetup('Submissions')
-dbCrudUsers = setup.startSetup('Users')
 dbCrudProjects = setup.startSetup('Projects')
+dbCrudChallenges = setup.startSetup('Challenges')
 
 
 def _num(value):
@@ -26,6 +26,33 @@ def _num(value):
 
 def _serializable(submission: dict):
     return {k: _num(v) for k, v in submission.items()}
+
+
+def _valid_score(gradeJson, challenge_id):
+    """Return the score as Decimal, or abort 400 unless 0 <= score <= the challenge's maxScore."""
+    challenge = dbCrudChallenges.getChallenge(challenge_id)
+    if not challenge or "ErrorMessage" in challenge:
+        abort(404, description="Challenge not found")
+    try:
+        score = Decimal(str(gradeJson['score']))
+        max_score = Decimal(str(challenge.get('maxScore')))
+    except InvalidOperation:
+        abort(400, description="score must be a number")
+    if not 0 <= score <= max_score:
+        abort(400, description=f"score must be between 0 and {max_score}")
+    return score
+
+
+def _save(submission_id, student_id, challenge_id, score, feedback, project_id=None):
+    """Create or overwrite the grade of one student for one challenge."""
+    submissionDict = SubmissionEncoder.toJSON(Submission(
+        submission_id, student_id, challenge_id, score, current_user_id(),
+        datetime.now().isoformat(), feedback, project_id))
+    if "ErrorMessage" in dbCrudSubmissions.getSubmission(submission_id):
+        result = dbCrudSubmissions.addSubmission(submissionDict)
+    else:
+        result = dbCrudSubmissions.updateSubmission(submissionDict)
+    return submissionDict, result
 
 
 @urlSubmissions.route('/submissions/<string:challenge_id>/<string:student_id>', methods=['POST'])
@@ -44,47 +71,17 @@ def gradeSubmission(challenge_id: str, student_id: str):
     Returns:
         _type_: response
     """
-    try:
-        gradeJson = request.json
-        if not gradeJson:
-            abort(400, description="Missing JSON body")
+    require_mentor()
+    gradeJson = request.json
+    if not gradeJson:
+        abort(400, description="Missing JSON body")
 
-        mentor_id = current_user_id()
+    score = _valid_score(gradeJson, challenge_id)
+    submission_id = f"{challenge_id}#{student_id}"
+    _, result = _save(submission_id, student_id, challenge_id, score, gradeJson.get('feedback'))
 
-        mentor = dbCrudUsers.getUser(mentor_id)
-        if not mentor or "ErrorMessage" in mentor:
-            logger.warning(f"Grading attempt by unknown user {mentor_id}")
-            abort(403, description="You are not authorized to grade submissions")
-
-        if mentor.get('role') != 'Mentor':
-            logger.warning(f"Grading attempt by non-mentor user {mentor_id} (role={mentor.get('role')})")
-            abort(403, description="Only mentors can grade submissions")
-
-        score = Decimal(str(gradeJson['score']))
-        feedback = gradeJson.get('feedback')
-        gradedDate = datetime.now().isoformat()
-        submission_id = f"{challenge_id}#{student_id}"
-
-        submissionObj = Submission(submission_id, student_id, challenge_id, score, mentor_id, gradedDate, feedback)
-        submissionDict = SubmissionEncoder.toJSON(submissionObj)
-
-        existing = dbCrudSubmissions.getSubmission(submission_id)
-        if "ErrorMessage" in existing:
-            result = dbCrudSubmissions.addSubmission(submissionDict)
-        else:
-            result = dbCrudSubmissions.updateSubmission(submissionDict)
-
-        logger.info(f"Submission {submission_id} graded by mentor {mentor_id}")
-        return result
-    except KeyError as e:
-        logger.warning(f"Missing field grading submission {challenge_id}/{student_id}: {e}")
-        return jsonify({"error": f"Missing field: {str(e)}"}), 400
-    except Exception as e:
-        from werkzeug.exceptions import HTTPException
-        if isinstance(e, HTTPException):
-            raise e
-        logger.error(f"Error grading submission {challenge_id}/{student_id}: {e}", exc_info=True)
-        return jsonify({"error": str(e)}), 500
+    logger.info(f"Submission {submission_id} graded by mentor {current_user_id()}")
+    return result
 
 
 @urlSubmissions.route('/submissions/project/<string:project_id>', methods=['POST'])
@@ -102,63 +99,36 @@ def gradeProject(project_id: str):
     Returns:
         _type_: response
     """
-    try:
-        gradeJson = request.json
-        if not gradeJson:
-            abort(400, description="Missing JSON body")
+    require_mentor()
+    gradeJson = request.json
+    if not gradeJson:
+        abort(400, description="Missing JSON body")
 
-        mentor_id = current_user_id()
+    project = dbCrudProjects.getProject(project_id)
+    if not project or "ErrorMessage" in project:
+        abort(404, description="Project not found")
 
-        mentor = dbCrudUsers.getUser(mentor_id)
-        if not mentor or "ErrorMessage" in mentor:
-            logger.warning(f"Grading attempt by unknown user {mentor_id}")
-            abort(403, description="You are not authorized to grade submissions")
+    challenge_id = project.get('challengeId')
+    if not challenge_id:
+        abort(400, description="This project has no challenge assigned")
 
-        if mentor.get('role') != 'Mentor':
-            logger.warning(f"Grading attempt by non-mentor user {mentor_id} (role={mentor.get('role')})")
-            abort(403, description="Only mentors can grade submissions")
+    score = _valid_score(gradeJson, challenge_id)
 
-        project = dbCrudProjects.getProject(project_id)
-        if not project or "ErrorMessage" in project:
-            abort(404, description="Project not found")
+    results = []
+    for admin_id in project.get('adminList', []):
+        submissionDict, _ = _save(f"{challenge_id}#{admin_id}", admin_id, challenge_id, score,
+                                  gradeJson.get('feedback'), project_id)
+        results.append(_serializable(submissionDict))
 
-        challenge_id = project.get('challengeId')
-        if not challenge_id:
-            abort(400, description="This project has no challenge assigned")
-
-        score = Decimal(str(gradeJson['score']))
-        feedback = gradeJson.get('feedback')
-        gradedDate = datetime.now().isoformat()
-
-        results = []
-        for admin_id in project.get('adminList', []):
-            submission_id = f"{challenge_id}#{admin_id}"
-            submissionObj = Submission(submission_id, admin_id, challenge_id, score, mentor_id, gradedDate, feedback, project_id)
-            submissionDict = SubmissionEncoder.toJSON(submissionObj)
-
-            existing = dbCrudSubmissions.getSubmission(submission_id)
-            if "ErrorMessage" in existing:
-                result = dbCrudSubmissions.addSubmission(submissionDict)
-            else:
-                result = dbCrudSubmissions.updateSubmission(submissionDict)
-            results.append(_serializable(submissionDict))
-
-        logger.info(f"Project {project_id} graded by mentor {mentor_id}, {len(results)} submission(s)")
-        return jsonify({"submissions": results})
-    except KeyError as e:
-        logger.warning(f"Missing field grading project {project_id}: {e}")
-        return jsonify({"error": f"Missing field: {str(e)}"}), 400
-    except Exception as e:
-        from werkzeug.exceptions import HTTPException
-        if isinstance(e, HTTPException):
-            raise e
-        logger.error(f"Error grading project {project_id}: {e}", exc_info=True)
-        return jsonify({"error": str(e)}), 500
+    logger.info(f"Project {project_id} graded by mentor {current_user_id()}, {len(results)} submission(s)")
+    return jsonify({"submissions": results})
 
 
 @urlSubmissions.route('/submissions/student/<string:student_id>', methods=['GET'])
+@require_auth()
 def get_student_submissions(student_id: str):
-    """Get all submissions for a student, with a computed total score
+    """Get all submissions for a student, with a computed total score.
+    Only the student themself or a mentor can see them.
 
     Args:
         student_id (str): id of the student
@@ -166,22 +136,19 @@ def get_student_submissions(student_id: str):
     Returns:
         JSON: {"submissions": [...], "totalScore": number}
     """
-    logger.info(f"get_student_submissions called with student_id={student_id}")
-    try:
-        allSubmissions = dbCrudSubmissions.fullscanSubmission()
-        studentSubmissions = [
-            _serializable(s) for s in allSubmissions if s.get('studentId') == student_id
-        ]
-        totalScore = sum(s.get('score', 0) or 0 for s in studentSubmissions)
-        return jsonify({"submissions": studentSubmissions, "totalScore": totalScore})
-    except Exception as e:
-        logger.error(f"Error listing submissions for student {student_id}: {e}", exc_info=True)
-        return jsonify({"error": str(e)}), 500
+    if student_id != current_user_id():
+        require_mentor()
+    studentSubmissions = [
+        _serializable(s) for s in dbCrudSubmissions.fullscanSubmission() if s.get('studentId') == student_id
+    ]
+    totalScore = sum(s.get('score', 0) or 0 for s in studentSubmissions)
+    return jsonify({"submissions": studentSubmissions, "totalScore": totalScore})
 
 
 @urlSubmissions.route('/submissions/challenge/<string:challenge_id>', methods=['GET'])
+@require_auth()
 def get_challenge_submissions(challenge_id: str):
-    """Get all submissions for a challenge
+    """Get all submissions for a challenge (mentors only)
 
     Args:
         challenge_id (str): id of the challenge
@@ -189,13 +156,8 @@ def get_challenge_submissions(challenge_id: str):
     Returns:
         JSON: {"submissions": [...]}
     """
-    logger.info(f"get_challenge_submissions called with challenge_id={challenge_id}")
-    try:
-        allSubmissions = dbCrudSubmissions.fullscanSubmission()
-        challengeSubmissions = [
-            _serializable(s) for s in allSubmissions if s.get('challengeId') == challenge_id
-        ]
-        return jsonify({"submissions": challengeSubmissions})
-    except Exception as e:
-        logger.error(f"Error listing submissions for challenge {challenge_id}: {e}", exc_info=True)
-        return jsonify({"error": str(e)}), 500
+    require_mentor()
+    challengeSubmissions = [
+        _serializable(s) for s in dbCrudSubmissions.fullscanSubmission() if s.get('challengeId') == challenge_id
+    ]
+    return jsonify({"submissions": challengeSubmissions})

@@ -1,7 +1,7 @@
 import json
 
-from flask import Blueprint, request, jsonify, abort
-from utils.jwt_server import require_auth, current_user_id
+from flask import Blueprint, request, abort
+from utils.jwt_server import require_auth, current_user_id, is_project_member, is_mentor
 from utils.logger import setup_logger
 from api.api_crud_projects import API_CRUD_PROJECTS
 from api.api_track_activity import updateActivity
@@ -10,20 +10,12 @@ from model.entity.goals.goals import Goals
 from model.entity.materials.materials import Materials
 from model.entity.project import Project
 from model.entity.reviews.project_reviews import ProjectReviews
-from utils.utils import Utils
-from utils.jwt_server import require_auth
-from utils.logger import setup_logger
-from flask import jsonify
 
 logger = setup_logger(__name__)
 
 urlProject = Blueprint('views', __name__)
 
-
 apiProjects = API_CRUD_PROJECTS()
-dbCrudUsers = setup.startSetup('Users')
-
-logger = setup_logger(__name__)
 
 mentor_feedback = []
 
@@ -42,10 +34,10 @@ def _require_project_member(id):
     project = apiProjects.getProject(id)
     if not project or "ErrorMessage" in project:
         abort(404, description="Project not found")
-    user_id = current_user_id()
-    if project.get('createdBy') != user_id and user_id not in project.get('adminList', []):
+    if not is_project_member(project, current_user_id()):
         abort(403, description="You are not authorized to modify this project")
     return project
+
 
 @urlProject.route('/projects/<string:id>', methods=['GET'])
 def getProject(id: str):
@@ -57,14 +49,8 @@ def getProject(id: str):
     Returns:
         JSON: JSON of the project
     """
-    logger.info(f"getProject called with id={id}, args={request.args}")
-    try:
-        result = apiProjects.getProject(id)
-        logger.info(f"getProject result={result}")
-        return _strip_photos(result)
-    except Exception as e:
-        logger.error(f"getProject EXCEPTION: {e}", exc_info=True)
-        return jsonify({"error": str(e)}), 500
+    return _strip_photos(apiProjects.getProject(id))
+
 
 @urlProject.route('/projects/<string:id>', methods=['DELETE'])
 @require_auth(None)
@@ -77,42 +63,14 @@ def deleteProject(id: str):
     Returns:
         _type_: response
     """
-    logger.info(f"Attempting to delete project {id}")
-    try:
-        project = apiProjects.getProject(id)
-        if not project:
-             logger.warning(f"Project {id} not found for deletion")
-             abort(404, description="Project not found")
+    _require_project_member(id)
+    result = apiProjects.deleteProject(id)
+    logger.info(f"Project {id} deleted by {current_user_id()}")
+    return result
 
-        user_id = current_user_id()
-        logger.info(f"User {user_id} requesting deletion of project {id}")
-        
-        is_owner = project.get('createdBy') == user_id
-        is_admin = user_id in project.get('adminList', [])
-        
-        if not (is_owner or is_admin):
-            logger.warning(f"User {user_id} unauthorized to delete project {id}")
-            abort(403, description="You are not authorized to delete this project")
-
-        result = apiProjects.deleteProject(id)
-        logger.info(f"Project {id} deleted successfully")
-        return result
-    except Exception as e:
-        # If abort is raised, re-raise it so Flask handles it
-        if isinstance(e,  (int, str, dict)): # Just in case abort raises something weird, though usually it raises HTTPException
-             pass
-        # Actually abort raises HTTPException which inherits from Exception. 
-        # But we want to catch generic errors. 
-        # Check if it is an HTTPException
-        from werkzeug.exceptions import HTTPException
-        if isinstance(e, HTTPException):
-            raise e
-        logger.error(f"Error deleting project {id}: {e}", exc_info=True)
-        return jsonify({"error": str(e)}), 500
 
 @urlProject.route('/projects/<string:id>', methods=['POST'])
 @require_auth(None)
-# @Utils.check_project_token  # disabled: project creation no longer requires a token
 def addProject(id: str):
     """Add a project
 
@@ -151,25 +109,14 @@ def updateProject(id: str):
     Returns:
         _type_: response
     """
-    logger.info(f"Attempting to update project {id}")
     projectJsonRaw = request.form.get('json')
     if not projectJsonRaw:
          abort(400, description="Missing 'json' form data")
 
     projectJson = json.loads(projectJsonRaw)
 
-    # Fetch existing project
-    projectUpdated = apiProjects.getProject(id)
-    if not projectUpdated:
-         abort(404, description="Project not found")
-
+    projectUpdated = _require_project_member(id)
     user_id = current_user_id()
-    is_owner = projectUpdated.get('createdBy') == user_id
-    is_admin = user_id in projectUpdated.get('adminList', [])
-
-    if not (is_owner or is_admin):
-         logger.warning(f"User {user_id} unauthorized to update project {id}")
-         abort(403, description="You are not authorized to update this project")
 
     new_challenge_id = projectJson.get('challengeId')
     if new_challenge_id and new_challenge_id != projectUpdated.get('challengeId'):
@@ -207,12 +154,11 @@ def get_gallery_projects():
     """Projects for the photo gallery: mentors see all, others only projects they belong to."""
     user_id = current_user_id()
     projects = apiProjects.getAllProjects()
-    user = dbCrudUsers.getUser(user_id)
-    if user and user.get('role') == 'Mentor':
+    if is_mentor(user_id):
         return projects
     projects['projects'] = [
         p for p in projects['projects']
-        if p.get('createdBy') == user_id or user_id in p.get('adminList', [])
+        if is_project_member(p, user_id)
     ]
     return projects
 

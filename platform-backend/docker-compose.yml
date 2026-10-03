@@ -7,7 +7,7 @@ services:
     container_name: thinkup-db
     restart: always
     # Optimized for lower resource usage in dev/small VPS
-    command: --smp 1 --memory 400M --overprovisioned 1 --reactor-backend epoll --unsafe-bypass-fsync 1 --alternator-port=8000 --alternator-write-isolation=always
+    command: --smp 1 --memory 400M --overprovisioned 1 --reactor-backend epoll --alternator-port=8000 --alternator-write-isolation=always
     volumes:
       - scylla-data:/var/lib/scylla
     expose:

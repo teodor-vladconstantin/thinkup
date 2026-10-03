@@ -6,7 +6,7 @@ from api.api_crud_users import API_CRUD_USERS
 from api.api_track_activity import updateActivity
 from dynamoDB import setup
 from flask import Blueprint, request, abort
-from utils.jwt_server import require_auth, current_user_id, current_user_email
+from utils.jwt_server import require_auth, current_user_id, current_user_email, require_mentor
 from model.entity.goals.goals import Goals
 from model.entity.goals.personal_objective import PersonalObjective
 from model.entity.users.mentor import Mentor
@@ -177,9 +177,7 @@ def givePieceToUser(id):
     Returns:
         _type_: response
     """
-    caller = apiUsers.getUser(current_user_id())
-    if caller.get('role') != 'Mentor':
-        abort(403, description="Only mentors can give puzzle pieces")
+    require_mentor()
     userJson = apiUsers.getUser(id)
     try:
         piece_id = request.form.get('piece_id')

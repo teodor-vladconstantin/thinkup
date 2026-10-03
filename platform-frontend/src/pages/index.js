@@ -60,7 +60,7 @@ const Home = () => {
         response = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/users`
         );
-        setUsersData(response.data.users.Items);
+        setUsersData(response.data.users);
     };
 
     const searchForUsers = async () => {
@@ -71,7 +71,7 @@ const Home = () => {
         const response = await axios.get(
             `${process.env.NEXT_PUBLIC_API_URL}/users?username=${SearchValue}`
         );
-        setUsersData(response.data.users.Items);
+        setUsersData(response.data.users);
         console.log(response);
     };
 

@@ -3,12 +3,11 @@ from dynamoDB import setup
 from flask import Blueprint, request, abort
 from model.entity.mentor_feedback.mentor_feedback import MENTOR_FEEDBACK
 from datetime import datetime
-from utils.jwt_server import require_auth, current_user_id
+from utils.jwt_server import require_auth, current_user_id, require_mentor
 
 urlFeedback = Blueprint("views", __name__)
 
 apiFeedback = API_CRUD_MENTOR_FEEDBACK()
-dbCrudUsers = setup.startSetup('Users')
 
 @urlFeedback.route('/projects/<string:pid>/feedback/<string:fid>', methods=["POST"])
 @require_auth()
@@ -22,12 +21,8 @@ def addFeedback(pid: str, fid: str):
   Returns:
       _type_: response
   """
+  require_mentor()
   mentor_id = current_user_id()
-  mentor = dbCrudUsers.getUser(mentor_id)
-  if not mentor or "ErrorMessage" in mentor:
-      abort(403, description="You are not authorized to add feedback")
-  if mentor.get('role') != 'Mentor':
-      abort(403, description="Only mentors can add feedback")
 
   feedback_json = request.json
   feedback_obj = MENTOR_FEEDBACK(fid, mentor_id, feedback_json["feedback_txt"],  datetime.now().strftime("%d/%m/%Y %H:%M:%S"), pid)
@@ -45,7 +40,6 @@ def getFeedback(pid: str, fid: str):
   Returns:
       dict: dict of specific feedback
   """
-  print(fid)
   return apiFeedback.getFeedback(fid)
 
 @urlFeedback.route('/projects/<string:pid>/feedback/<string:fid>', methods=["DELETE"])

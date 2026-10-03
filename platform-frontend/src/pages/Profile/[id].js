@@ -297,15 +297,17 @@ const Profile = () => {
                 ></ObjectivesCard>
             </div>
             <ActivityCard user_id={(User!=undefined && User.id == id) ? User.id : id}></ActivityCard>
-            <ScoreCard
-                className="DescriptionCardClass"
-                user_id={(User != undefined && User.id == id) ? User.id : id}
-            ></ScoreCard>
             {User != undefined && (User.id == id || User.role === "Mentor") ? (
-                <WarningsCard
-                    className="DescriptionCardClass"
-                    user_id={id}
-                ></WarningsCard>
+                <>
+                    <ScoreCard
+                        className="DescriptionCardClass"
+                        user_id={id}
+                    ></ScoreCard>
+                    <WarningsCard
+                        className="DescriptionCardClass"
+                        user_id={id}
+                    ></WarningsCard>
+                </>
             ) : null}
         </ScrollContainer>
     );

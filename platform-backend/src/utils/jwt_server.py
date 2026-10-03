@@ -4,7 +4,7 @@ import urllib.request
 
 from flask import request, abort
 from .jwt_validator import Auth0JWTBearerTokenValidator
-from insertoknameAuthlibFork.integrations.flask_oauth2 import ResourceProtector, current_token
+from authlib.integrations.flask_oauth2 import ResourceProtector, current_token
 
 require_auth = ResourceProtector()
 AUTH0_DOMAIN = "dev-2ex6kfwedwudpdul.eu.auth0.com"
@@ -22,7 +22,7 @@ def current_user_id():
     Auth0 sub claims look like "google-oauth2|<id>" - this app's Users table
     and the frontend (useMyUser.js) both key on the part after the first "|".
     """
-    sub = current_token.sub
+    sub = current_token['sub']
     return sub.split('|', 1)[1] if '|' in sub else sub
 
 
@@ -31,6 +31,13 @@ def is_mentor(user_id=None):
     from dynamoDB import setup
     user = setup.startSetup('Users').getUser(user_id or current_user_id())
     return user.get('role') == 'Mentor'
+
+
+def is_project_member(project, user_id):
+    """True if user_id is the creator or an admin of the given project dict."""
+    if not project or "ErrorMessage" in project or not user_id:
+        return False
+    return project.get('createdBy') == user_id or user_id in project.get('adminList', [])
 
 
 def require_mentor():

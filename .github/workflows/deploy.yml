@@ -21,7 +21,15 @@ jobs:
           cache-dependency-path: platform-frontend/package-lock.json
       - run: npm ci && npx next build
         working-directory: platform-frontend
-      - run: python -m compileall -q platform-backend/src
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+        working-directory: platform-backend
+      - run: python -m compileall -q src && python test_safe_name.py && python test_auth.py && python src/utils/utils.py
+        working-directory: platform-backend
+        env:
+          PYTHONPATH: src
 
   deploy:
     needs: check

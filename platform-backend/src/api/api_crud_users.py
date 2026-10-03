@@ -133,8 +133,7 @@ class API_CRUD_USERS:
         Returns:
             _type_: response
         """
-        userUpdated["activity"] = userJson["activity"]
-        return self.__dbCrudUsers.updateUser(userUpdated)
+        return self.__dbCrudUsers.updateActivity(userUpdated["id"], userJson["activity"])
 
     def deleteUser(self, idOfTheUser):
         """Delete a user from database

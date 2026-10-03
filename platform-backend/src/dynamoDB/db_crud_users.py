@@ -36,9 +36,13 @@ class DB_CRUD_USERS:
         Returns:
             list: list containing id, name, profile picture, profile picture extension and the role of the students
         """
-        response = self.__userTable.scan(AttributesToGet=['id', 'name', 'profile_picture', 'profile_picture_extension', 'role'])
-        sorted(response, key=lambda x:x[1])
-        return response
+        fields = ['id', 'name', 'profile_picture', 'profile_picture_extension', 'role']
+        response = self.__userTable.scan(AttributesToGet=fields)
+        items = response['Items']
+        while 'LastEvaluatedKey' in response:
+            response = self.__userTable.scan(AttributesToGet=fields, ExclusiveStartKey=response['LastEvaluatedKey'])
+            items.extend(response['Items'])
+        return sorted(items, key=lambda x: x.get('name', '').lower())
 
     def searchUser(self, username: str):
         """Search for all the users that match the username
@@ -50,7 +54,7 @@ class DB_CRUD_USERS:
             list: list of all matching users
         """
         response = self.__userTable.scan(FilterExpression=Attr('search_term').contains(username.lower()))
-        data = [{"name": x["name"], "profile_picture": x["profile_picture"], "profile_picture_extension": x["profile_picture_extension"], "role": x["role"]} for x in response["Items"]]
+        data = [{"id": x["id"], "name": x["name"], "profile_picture": x["profile_picture"], "profile_picture_extension": x["profile_picture_extension"], "role": x["role"]} for x in response["Items"]]
         return data
 
     def getUser(self, idOfTheUser):
@@ -90,6 +94,20 @@ class DB_CRUD_USERS:
                 "ErrorMessage": "User already exists"
             }
         return response
+
+    def updateActivity(self, idOfTheUser, activity):
+        """Write only the activity map, so it can't overwrite concurrent profile edits.
+
+        ponytail: still read-modify-write of the whole map - two requests from the same user
+        in the same instant can lose one counter increment. Switch to a nested ADD update
+        if activity counts ever need to be exact.
+        """
+        return self.__userTable.update_item(
+            Key={'id': idOfTheUser},
+            UpdateExpression="set #act = :a",
+            ExpressionAttributeNames={"#act": "activity"},
+            ExpressionAttributeValues={":a": activity},
+        )
 
     def updateUser(self, userJSONobj):
         """Update an user in the database
